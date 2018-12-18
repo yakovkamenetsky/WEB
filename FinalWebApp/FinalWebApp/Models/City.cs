@@ -9,5 +9,6 @@ namespace FinalWebApp.Models
     {
         public int Id { get; set; }
         public ICollection<Contry> Contries { get; set; }
+        public ICollection <Hotel> hotels{ get; set; }
     }
 }
