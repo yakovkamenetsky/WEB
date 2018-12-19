@@ -8,8 +8,8 @@ namespace FinalWebApp.Models
     public class Contry
     {
         public int Id { get; set; }
-        public string       Name  { get; set; }
-
+        public string   Name  { get; set; }
         public ICollection<City> cities { get; set; }
+
     }
 }

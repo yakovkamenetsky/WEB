@@ -12,6 +12,7 @@ namespace FinalWebApp.Models
         public int CityId { get; set; }
         public ICollection<Order> orders { get; set; }
         public string Address { get; set; }
-
+       
     }
+
 }
