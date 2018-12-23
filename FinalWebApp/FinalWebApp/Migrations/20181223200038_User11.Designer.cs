@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalWebApp.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20181223193442_User5")]
-    partial class User5
+    [Migration("20181223200038_User11")]
+    partial class User11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -111,6 +111,8 @@ namespace FinalWebApp.Migrations
 
                     b.Property<string>("ContryName");
 
+                    b.Property<int>("FamilyStatus");
+
                     b.Property<int?>("Gender");
 
                     b.Property<string>("Name");
@@ -118,8 +120,6 @@ namespace FinalWebApp.Migrations
                     b.Property<string>("Password");
 
                     b.Property<string>("Profession");
-
-                    b.Property<int>("Status");
 
                     b.HasKey("Id");
 

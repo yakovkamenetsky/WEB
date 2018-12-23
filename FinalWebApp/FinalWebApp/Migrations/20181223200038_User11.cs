@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FinalWebApp.Migrations
 {
-    public partial class User4 : Migration
+    public partial class User11 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,7 +34,7 @@ namespace FinalWebApp.Migrations
                     CityName = table.Column<string>(nullable: true),
                     ContryName = table.Column<string>(nullable: true),
                     Profession = table.Column<string>(nullable: true),
-                    Status = table.Column<int>(nullable: false)
+                    FamilyStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

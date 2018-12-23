@@ -2,7 +2,7 @@
 
 namespace FinalWebApp.Migrations
 {
-    public partial class User5 : Migration
+    public partial class User12 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

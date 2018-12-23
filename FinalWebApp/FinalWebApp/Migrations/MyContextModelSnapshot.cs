@@ -109,6 +109,8 @@ namespace FinalWebApp.Migrations
 
                     b.Property<string>("ContryName");
 
+                    b.Property<int>("FamilyStatus");
+
                     b.Property<int?>("Gender");
 
                     b.Property<string>("Name");
@@ -116,8 +118,6 @@ namespace FinalWebApp.Migrations
                     b.Property<string>("Password");
 
                     b.Property<string>("Profession");
-
-                    b.Property<int>("Status");
 
                     b.HasKey("Id");
 

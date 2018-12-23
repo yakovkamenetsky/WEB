@@ -32,6 +32,6 @@ namespace FinalWebApp.Models
 		public string CityName { get; set; }
 		public string ContryName { get; set; }
 		public string Profession { get; set; }
-		public FamilyStatus Status { get; set; }
+		public FamilyStatus FamilyStatus { get; set; }
 	}
 }
