@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalWebApp.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20181218100738_init")]
-    partial class init
+    [Migration("20181223200236_User12")]
+    partial class User12
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,7 +27,13 @@ namespace FinalWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ContryId");
+
+                    b.Property<string>("Name");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ContryId");
 
                     b.ToTable("City");
                 });
@@ -38,13 +44,9 @@ namespace FinalWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CityId");
-
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CityId");
 
                     b.ToTable("Contry");
                 });
@@ -55,11 +57,17 @@ namespace FinalWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address");
+
+                    b.Property<int>("Capacity");
+
                     b.Property<int>("CityId");
 
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.ToTable("Hotel");
                 });
@@ -70,24 +78,81 @@ namespace FinalWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CheckInDate");
+                    b.Property<DateTime>("CheckInDate");
 
-                    b.Property<string>("CheckOutDate");
+                    b.Property<DateTime>("CheckOutDate");
 
                     b.Property<string>("Email");
 
+                    b.Property<int>("HotelId");
+
                     b.Property<string>("Name");
 
+                    b.Property<int>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("HotelId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("FinalWebApp.Models.Contry", b =>
+            modelBuilder.Entity("FinalWebApp.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("Birthday");
+
+                    b.Property<string>("CityName");
+
+                    b.Property<string>("ContryName");
+
+                    b.Property<int>("FamilyStatus");
+
+                    b.Property<int?>("Gender");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Password");
+
+                    b.Property<string>("Profession");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("FinalWebApp.Models.City", b =>
+                {
+                    b.HasOne("FinalWebApp.Models.Contry", "Contry")
+                        .WithMany("Cities")
+                        .HasForeignKey("ContryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FinalWebApp.Models.Hotel", b =>
                 {
                     b.HasOne("FinalWebApp.Models.City")
-                        .WithMany("Contries")
-                        .HasForeignKey("CityId");
+                        .WithMany("Hotels")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FinalWebApp.Models.Order", b =>
+                {
+                    b.HasOne("FinalWebApp.Models.Hotel")
+                        .WithMany("Orders")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FinalWebApp.Models.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

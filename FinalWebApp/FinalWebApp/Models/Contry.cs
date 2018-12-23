@@ -9,7 +9,7 @@ namespace FinalWebApp.Models
     {
         public int Id { get; set; }
         public string   Name  { get; set; }
-        public ICollection<City> cities { get; set; }
+        public ICollection<City> Cities { get; set; }
 
     }
 }

@@ -27,6 +27,8 @@ namespace FinalWebApp.Migrations
 
                     b.Property<int>("ContryId");
 
+                    b.Property<string>("Name");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ContryId");
@@ -55,6 +57,8 @@ namespace FinalWebApp.Migrations
 
                     b.Property<string>("Address");
 
+                    b.Property<int>("Capacity");
+
                     b.Property<int>("CityId");
 
                     b.Property<string>("Name");
@@ -78,21 +82,52 @@ namespace FinalWebApp.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<int?>("HotelId");
+                    b.Property<int>("HotelId");
 
                     b.Property<string>("Name");
+
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("HotelId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("FinalWebApp.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("Birthday");
+
+                    b.Property<string>("CityName");
+
+                    b.Property<string>("ContryName");
+
+                    b.Property<int>("FamilyStatus");
+
+                    b.Property<int?>("Gender");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Password");
+
+                    b.Property<string>("Profession");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("FinalWebApp.Models.City", b =>
                 {
-                    b.HasOne("FinalWebApp.Models.Contry", "contry")
-                        .WithMany("cities")
+                    b.HasOne("FinalWebApp.Models.Contry", "Contry")
+                        .WithMany("Cities")
                         .HasForeignKey("ContryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -108,8 +143,14 @@ namespace FinalWebApp.Migrations
             modelBuilder.Entity("FinalWebApp.Models.Order", b =>
                 {
                     b.HasOne("FinalWebApp.Models.Hotel")
-                        .WithMany("orders")
-                        .HasForeignKey("HotelId");
+                        .WithMany("Orders")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FinalWebApp.Models.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

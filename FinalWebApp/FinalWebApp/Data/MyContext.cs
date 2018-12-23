@@ -21,5 +21,7 @@ namespace FinalWebApp.Models
         public DbSet<FinalWebApp.Models.Hotel> Hotel { get; set; }
 
         public DbSet<FinalWebApp.Models.Order> Order { get; set; }
+
+        public DbSet<FinalWebApp.Models.User> User { get; set; }
     }
 }
