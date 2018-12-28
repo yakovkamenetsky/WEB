@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\images\mainBackground.jpg" />
+    <Content Remove="wwwroot\images\mainBackground1.jpg" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\images\mainBackground.jpg" />
+    <None Include="wwwroot\images\mainBackground1.jpg" />
   </ItemGroup>
 
   <ItemGroup>
