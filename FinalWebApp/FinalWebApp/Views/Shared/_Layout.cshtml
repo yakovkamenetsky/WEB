@@ -17,34 +17,71 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">FinalWebApp</a>
+    <div class="container">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">FinalWebApp</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
+        </nav>
+
+        <div class="col-md-6 col-md-offset-3">
+            <br />
+            <div class="row">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-info" type="button">חפש</button>
+                    </span>
+                    <input dir="rtl" type="text" autofocus="true" class="form-control" placeholder="מלון, עיר, ארץ ...">
+                </div>
+            </div>
+            <br />
+            <div dir="rtl" class="row">
+                <label class="col-md-4 col-md-offset-2">תאריך יציאה</label>
+                <label class="col-md-4">תאריך כניסה</label>
+            </div>
+            <div dir="rtl" class="row">
+                <div class="col-md-4 col-md-offset-2">
+                    <input id="endDate" class="form-control" type="date" />
+                </div>
+                <div class="col-md-4">
+                    <input id="startDate" class="form-control" type="date" />
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group col-md-offset-4">
+                    <button class="btn btn-info" type="button" onclick="showOrHideFeatures()">נסה את החיפוש המיוחד שלנו</button>
+                </div>
+            </div>
+
+            <div id="featuresView" style="display: none">
+                @Html.Partial("~/Views/_ViewFeatures.cshtml")
             </div>
         </div>
-    </nav>
+    </div>
 
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content">
         @RenderBody()
-        <hr />
+        <!--<hr />-->
         <footer>
-            <p>&copy; 2018 - FinalWebApp</p>
+            <!--<p>&copy; 2018 - FinalWebApp</p>-->
         </footer>
     </div>
 
