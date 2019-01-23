@@ -1,0 +1,58 @@
+﻿@model List<Hotel>;
+
+@{
+	ViewData["Title"] = "Results";
+
+}
+
+<html>
+<head>
+	<environment include="Development">
+		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+		<link rel="stylesheet" href="~/css/features.css" />
+	</environment>
+	<environment exclude="Development">
+		<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+			  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+			  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+		<link rel="stylesheet" href="~/css/features.min.css" asp-append-version="true" />
+	</environment>
+</head>
+<body>
+	<ol>
+		@foreach (var hotel in Model)
+		{
+			<li>
+				<article class="container">
+					<div class="hotel-image">
+						<img src="~/images/HotelsImages/@hotel.Id/image.jpg" />
+					</div>
+					<div>
+						<div class="hotel-title">
+							<h2>
+								@hotel.Name
+							</h2>
+						</div>
+						<div class="hotel-location">
+							<h4>
+								@hotel.Address
+							</h4>
+						</div>
+					</div>
+					<div class="hotel-ofer">
+						<h2 class="price">
+							@hotel.Price
+						</h2>
+						<button>
+							View Offer
+						</button>
+					</div>
+				</article>
+			</li>
+		}
+
+	</ol>
+	<h2>Results</h2>
+
+</body>
+</html>

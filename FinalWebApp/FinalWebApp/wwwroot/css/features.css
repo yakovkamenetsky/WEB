@@ -17,3 +17,7 @@ td input {
 select {
     cursor: pointer;
 }
+
+.result {
+	background-color: white;
+}
