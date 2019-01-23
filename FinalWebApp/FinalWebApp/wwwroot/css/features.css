@@ -1,0 +1,19 @@
+﻿.feature {
+    background-color: #5bc0de;
+    margin: 5px;
+    padding-top: 3px;
+    padding-bottom: 7px;
+    text-align: center; 
+}
+
+p {
+    color: white;
+}
+
+td input {
+    text-align: center;
+}
+
+select {
+    cursor: pointer;
+}
