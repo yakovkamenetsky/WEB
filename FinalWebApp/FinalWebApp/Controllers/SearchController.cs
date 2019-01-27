@@ -29,6 +29,24 @@ namespace FinalWebApp.Controllers
 					Capacity = 10,
 					Price = 500,
 					Id = 1
+				},
+
+				new Hotel()
+				{
+					Address = "London",
+					Name = "hilton",
+					Capacity = 20,
+					Price = 5000,
+					Id = 2
+				},
+
+				new Hotel()
+				{
+					Address = "Eilat",
+					Name = "hilton",
+					Capacity = 22,
+					Price = 540,
+					Id = 3
 				}
 			};
 
