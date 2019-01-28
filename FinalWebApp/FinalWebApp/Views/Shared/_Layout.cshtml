@@ -72,6 +72,17 @@
             <div id="featuresView" style="display: none">
                 @Html.Partial("~/Views/_ViewFeatures.cshtml")
             </div>
+            <div class="row">
+                <div class="row align-items-start">
+                    <a href="~/Users/Register" class="btn btn-success" role="button" >Register</a>
+                    <a href="~/Users/Login" class="btn btn-primary" role="button" >Login</a>
+               
+                </div>
+            </div>
+
+            <div id="registerView" style="display: none">
+                @Html.Partial("~/Views/Users/RegisterView.cshtml")
+            </div>
         </div>
     </div>
 
