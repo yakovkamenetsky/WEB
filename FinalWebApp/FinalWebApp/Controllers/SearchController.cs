@@ -56,7 +56,7 @@ namespace FinalWebApp.Controllers
         }
 
 
-		public async Task<IActionResult> HotelDetails() //int Id
+		public async Task<IActionResult> HotelDetails(int id)
 		{
 			var results = new List<Hotel>
 			{
@@ -87,7 +87,7 @@ namespace FinalWebApp.Controllers
 					Id = 3
 				}
 			};
-			return View("OfferView, results");
+			return View("OfferView", results.Single(x => x.Id == id));
 		}
 
 	}
