@@ -46,9 +46,12 @@
 							<h2 class="price">
 								@hotel.Price
 							</h2>
-							<button>
-								View Offer
-							</button>
+
+							<form action="/Search/HotelDetails" method="get" id="offer-form">
+							</form>
+							<span class="input-group-btn">
+								<button class="btn btn-info" type="submit" form="offer-form">View Offer</button>
+							</span>
 						</div>
 					</div>
 
