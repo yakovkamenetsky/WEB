@@ -6,8 +6,7 @@ $(function () {
     var body = $('body');
     var backgrounds = new Array(
         'url(../Images/mainBackground1.jpg) no-repeat center fixed',
-        'url(../Images/mainBackground2.jpg) no-repeat center fixed',
-        'url(../Images/mainBackground3.jpg) no-repeat center fixed'
+        'url(../Images/mainBackground2.jpg) no-repeat center fixed'
     );
     var current = 0;
 

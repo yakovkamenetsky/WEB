@@ -25,18 +25,18 @@ namespace FinalWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ContryId");
+                    b.Property<int>("CountryId");
 
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContryId");
+                    b.HasIndex("CountryId");
 
                     b.ToTable("City");
                 });
 
-            modelBuilder.Entity("FinalWebApp.Models.Contry", b =>
+            modelBuilder.Entity("FinalWebApp.Models.Country", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,7 +46,7 @@ namespace FinalWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contry");
+                    b.ToTable("Country");
                 });
 
             modelBuilder.Entity("FinalWebApp.Models.Hotel", b =>
@@ -107,7 +107,7 @@ namespace FinalWebApp.Migrations
 
                     b.Property<string>("CityName");
 
-                    b.Property<string>("ContryName");
+                    b.Property<string>("CountryName");
 
                     b.Property<int>("FamilyStatus");
 
@@ -126,9 +126,9 @@ namespace FinalWebApp.Migrations
 
             modelBuilder.Entity("FinalWebApp.Models.City", b =>
                 {
-                    b.HasOne("FinalWebApp.Models.Contry", "Contry")
+                    b.HasOne("FinalWebApp.Models.Country", "Country")
                         .WithMany("Cities")
-                        .HasForeignKey("ContryId")
+                        .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
