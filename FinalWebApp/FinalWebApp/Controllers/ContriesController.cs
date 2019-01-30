@@ -9,22 +9,22 @@ using FinalWebApp.Models;
 
 namespace FinalWebApp.Controllers
 {
-    public class ContriesController : Controller
+    public class CountriesController : Controller
     {
         private readonly MyContext _context;
 
-        public ContriesController(MyContext context)
+        public CountriesController(MyContext context)
         {
             _context = context;
         }
 
-        // GET: Contries
+        // GET: Countries
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Contry.ToListAsync());
+            return View(await _context.Country.ToListAsync());
         }
 
-        // GET: Contries/Details/5
+        // GET: Countries/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace FinalWebApp.Controllers
                 return NotFound();
             }
 
-            var contry = await _context.Contry
+            var country = await _context.Country
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (contry == null)
+            if (country == null)
             {
                 return NotFound();
             }
 
-            return View(contry);
+            return View(country);
         }
 
-        // GET: Contries/Create
+        // GET: Countries/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Contries/Create
+        // POST: Countries/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Contry contry)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Country country)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(contry);
+                _context.Add(country);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(contry);
+            return View(country);
         }
 
-        // GET: Contries/Edit/5
+        // GET: Countries/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace FinalWebApp.Controllers
                 return NotFound();
             }
 
-            var contry = await _context.Contry.FindAsync(id);
-            if (contry == null)
+            var country = await _context.Country.FindAsync(id);
+            if (country == null)
             {
                 return NotFound();
             }
-            return View(contry);
+            return View(country);
         }
 
-        // POST: Contries/Edit/5
+        // POST: Countries/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Contry contry)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Country country)
         {
-            if (id != contry.Id)
+            if (id != country.Id)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace FinalWebApp.Controllers
             {
                 try
                 {
-                    _context.Update(contry);
+                    _context.Update(country);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContryExists(contry.Id))
+                    if (!CountryExists(country.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace FinalWebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(contry);
+            return View(country);
         }
 
-        // GET: Contries/Delete/5
+        // GET: Countries/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace FinalWebApp.Controllers
                 return NotFound();
             }
 
-            var contry = await _context.Contry
+            var country = await _context.Country
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (contry == null)
+            if (country == null)
             {
                 return NotFound();
             }
 
-            return View(contry);
+            return View(country);
         }
 
-        // POST: Contries/Delete/5
+        // POST: Countries/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contry = await _context.Contry.FindAsync(id);
-            _context.Contry.Remove(contry);
+            var country = await _context.Country.FindAsync(id);
+            _context.Country.Remove(country);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ContryExists(int id)
+        private bool CountryExists(int id)
         {
-            return _context.Contry.Any(e => e.Id == id);
+            return _context.Country.Any(e => e.Id == id);
         }
     }
 }
