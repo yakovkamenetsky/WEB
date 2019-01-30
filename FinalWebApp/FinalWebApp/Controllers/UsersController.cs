@@ -24,6 +24,47 @@ namespace FinalWebApp.Controllers
             return View(await _context.User.ToListAsync());
         }
 
+        [HttpGet]
+        public IActionResult Register()
+        {
+
+
+            return View("RegisterView");
+        }
+
+        [HttpPost]
+        public IActionResult Register(string email, string password)
+        {
+            var user = _context.User.Where(x => x.CityName.Equals(email));
+            if (user.Any())
+            {
+
+            }
+            
+            return View("RegisterView");
+        }
+
+        [HttpGet]
+        public IActionResult LOGIN()
+        {
+
+
+            return View("LoginView");
+        }
+
+        [HttpPost]
+        public IActionResult LOGIN(string email, string password)
+        {
+            var user = _context.User.Where(x => x.CityName.Equals(email));
+            if (user.Any())
+            {
+
+            }
+
+            return View("LoginView");
+        }
+
+
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
