@@ -30,7 +30,7 @@ namespace FinalWebApp.Models
 		public DateTime? Birthday { get; set; }
 		public Gender? Gender { get; set; }
 		public string CityName { get; set; }
-		public string ContryName { get; set; }
+		public string CountryName { get; set; }
 		public string Profession { get; set; }
 		public FamilyStatus FamilyStatus { get; set; }
 	}

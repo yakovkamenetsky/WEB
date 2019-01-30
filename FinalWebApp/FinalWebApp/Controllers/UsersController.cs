@@ -24,6 +24,47 @@ namespace FinalWebApp.Controllers
             return View(await _context.User.ToListAsync());
         }
 
+        [HttpGet]
+        public IActionResult Register()
+        {
+
+
+            return View("RegisterView");
+        }
+
+        [HttpPost]
+        public IActionResult Register(string email, string password)
+        {
+            var user = _context.User.Where(x => x.CityName.Equals(email));
+            if (user.Any())
+            {
+
+            }
+            
+            return View("RegisterView");
+        }
+
+        [HttpGet]
+        public IActionResult LOGIN()
+        {
+
+
+            return View("LoginView");
+        }
+
+        [HttpPost]
+        public IActionResult LOGIN(string email, string password)
+        {
+            var user = _context.User.Where(x => x.CityName.Equals(email));
+            if (user.Any())
+            {
+
+            }
+
+            return View("LoginView");
+        }
+
+
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -53,7 +94,7 @@ namespace FinalWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Password,Birthday,Gender,CityName,ContryName,Profession,FamilyStatus")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Name,Password,Birthday,Gender,CityName,CountryName,Profession,FamilyStatus")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +126,7 @@ namespace FinalWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Password,Birthday,Gender,CityName,ContryName,Profession,FamilyStatus")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Password,Birthday,Gender,CityName,CountryName,Profession,FamilyStatus")] User user)
         {
             if (id != user.Id)
             {

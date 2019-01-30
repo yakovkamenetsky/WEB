@@ -6,69 +6,69 @@
             <link rel="stylesheet" href="~/css/features.css" />
         </environment>
         <environment exclude="Development">
-            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.2.1/css/bootstrap.min.css"
                   asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
                   asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
             <link rel="stylesheet" href="~/css/features.min.css" asp-append-version="true" />
         </environment>
     </head>
     <body>
-        <table dir="rtl">
+        <table>
             <tbody>
                 <tr>
                     <td>
                         <div class="col-md-11 form-group feature">
-                            <p>מין</p>
+                            <p>Gender</p>
                             <select asp-items="Html.GetEnumSelectList<Gender>()" class="form-control" id="gender">
-                                <option>בחר/י</option>
+                                <option>choose</option>
                             </select>
                         </div>
                     </td>
                     <td>
                         <div class="col-md-11 form-group feature">
-                            <p>גיל</p>
-                            <input class="form-control" id="age" placeholder="שנים"/>
+                            <p>Age</p>
+                            <input class="form-control" id="age" placeholder="years"/>
                         </div>
                     </td>
                     <td>
                         <div class="col-md-11 form-group feature">
-                            <p>מצב משפחתי</p>
+                            <p>Family status</p>
                             <select asp-items="Html.GetEnumSelectList<FamilyStatus>()" class="form-control" id="familyStatus">
-                                <option>בחר/י</option>
+                                <option>choose</option>
                             </select>
                         </div>
                     </td>
                     <td>
                         <div class="col-md-11 form-group feature">
-                            <p>מקצוע</p>
-                            <input class="form-control" id="profession" placeholder="שכיר/עצמאי"/>
+                            <p>Profession</p>
+                            <input class="form-control" id="profession" placeholder="Independent/Employee"/>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div class="col-md-11 form-group feature">
-                            <p>תחביב</p>
-                            <input class="form-control" id="hobby" placeholder="שחיה/טיולים"/>
+                            <p>Hobby</p>
+                            <input class="form-control" id="hobby" placeholder="swimming/music"/>
                         </div>
                     </td>
                     <td>
                         <div class="col-md-11 form-group feature">
-                            <p>ארץ מוצא</p>
-                            <input class="form-control" id="contry" placeholder="מדינה"/>
+                            <p>Country of Origin</p>
+                            <input class="form-control" id="country" placeholder="country"/>
                         </div>
                     </td>
                     <td>
                         <div class="col-md-11 form-group feature">
-                            <p>עיר מוצא</p>
-                            <input class="form-control" id="city" placeholder="עיר במדינה"/>
+                            <p>City of origin</p>
+                            <input class="form-control" id="city" placeholder="city"/>
                         </div>
                     </td>
                     <td>
                         <div class="col-md-11 form-group feature">
-                            <p>סוג היציאה</p>
+                            <p>Trip's purpose</p>
                             <select class="form-control" id="kind">
-                                <option>בחר/י</option>
+                                <option>choose</option>
                                 <option value="solo">solo</option>
                                 <option value="couple">couple</option>
                                 <option value="friends">friends</option>
@@ -81,13 +81,6 @@
             </tbody>
         </table>
         <br />
-        <button class="btn btn-info col-md-4 col-md-offset-4">חיפוש מיוחד</button>
-        <!--
-        <environment include="Development">
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-            <script src="~/js/features.js" asp-append-version="true"></script>
-        </environment>
-            -->
+        <button class="btn btn-info col-md-4 col-md-offset-4">special search</button>
     </body>
 </html>

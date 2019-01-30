@@ -28,8 +28,10 @@
                 
             </div>
         </nav>
-
-        <div class="col-md-6 col-md-offset-3">
+    </div>
+    
+    <div class="container col-md-8 col-md-offset-2">
+        <div class="">
             <br />
             <div class="row">
 				<div class="input-group">
@@ -42,27 +44,39 @@
 				</div>
             </div>
             <br />
-            <div dir="rtl" class="row">
-                <label class="col-md-4 col-md-offset-2">תאריך יציאה</label>
-                <label class="col-md-4">תאריך כניסה</label>
-            </div>
-            <div dir="rtl" class="row">
-                <div class="col-md-4 col-md-offset-2">
+            <div class="row col-md-offset-3">
+                <span class="col-md-4">
+                    <label>Enter date</label>
                     <input id="endDate" class="form-control" type="date" />
-                </div>
-                <div class="col-md-4">
+                </span>
+
+                <span class="col-md-4">
+                    <label>Leave date</label>
                     <input id="startDate" class="form-control" type="date" />
-                </div>
+                </span>
             </div>
             <br />
             <div class="row">
-                <div class="form-group col-md-offset-4">
-                    <button class="btn btn-info" type="button" onclick="showOrHideFeatures()">נסה את החיפוש המיוחד שלנו</button>
+                <div class="form-group col-md-offset-5">
+                    <button class="btn btn-info col-md-4" type="button" onclick="showOrHideFeatures()">Try our special search</button>
+                </div>
+                <br />
+                <br />
+            </div>
+
+            <div class="col-md-12" id="featuresView" style="display: none">
+                @Html.Partial("~/Views/_ViewFeatures.cshtml")
+            </div>
+            <div class="row">
+                <div class="row align-items-start">
+                    <a href="~/Users/Register" class="btn btn-success" role="button" >Register</a>
+                    <a href="~/Users/Login" class="btn btn-primary" role="button" >Login</a>
+               
                 </div>
             </div>
 
-            <div id="featuresView" style="display: none">
-                @Html.Partial("~/Views/_ViewFeatures.cshtml")
+            <div id="registerView" style="display: none">
+                @Html.Partial("~/Views/Users/RegisterView.cshtml")
             </div>
         </div>
     </div>

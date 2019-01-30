@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FinalWebApp.Models
 {
-    public class Contry
+    public class Country
     {
         public int Id { get; set; }
         public string   Name  { get; set; }

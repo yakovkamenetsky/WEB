@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FinalWebApp.Migrations
 {
-    public partial class User11 : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Contry",
+                name: "Country",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -18,7 +18,7 @@ namespace FinalWebApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contry", x => x.Id);
+                    table.PrimaryKey("PK_Country", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,7 +32,7 @@ namespace FinalWebApp.Migrations
                     Birthday = table.Column<DateTime>(nullable: true),
                     Gender = table.Column<int>(nullable: true),
                     CityName = table.Column<string>(nullable: true),
-                    ContryName = table.Column<string>(nullable: true),
+                    CountryName = table.Column<string>(nullable: true),
                     Profession = table.Column<string>(nullable: true),
                     FamilyStatus = table.Column<int>(nullable: false)
                 },
@@ -48,15 +48,15 @@ namespace FinalWebApp.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    ContryId = table.Column<int>(nullable: false)
+                    CountryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_City", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_City_Contry_ContryId",
-                        column: x => x.ContryId,
-                        principalTable: "Contry",
+                        name: "FK_City_Country_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Country",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -114,9 +114,9 @@ namespace FinalWebApp.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_City_ContryId",
+                name: "IX_City_CountryId",
                 table: "City",
-                column: "ContryId");
+                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Hotel_CityId",
@@ -149,7 +149,7 @@ namespace FinalWebApp.Migrations
                 name: "City");
 
             migrationBuilder.DropTable(
-                name: "Contry");
+                name: "Country");
         }
     }
 }
