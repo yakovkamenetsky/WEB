@@ -20,12 +20,23 @@
     <div class="container">
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
-                <div>
+                <span>
 					<a  asp-area="" asp-controller="Home" asp-action="Index">
 						<img src="~/images/Logos/logo.png"  class="col-md-2" />
 					</a>
+                </span>
+                <div class="dropdown">
+                    <button class="btn btn-secondary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Edit
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="~/Hotels">Hotels</a>
+                        <a class="dropdown-item" href="~/Cities">Cities</a>
+                        <a class="dropdown-item" href="~/Countries">Countries</a>
+                        <a class="dropdown-item" href="~/Users">Users</a>
+                        <a class="dropdown-item" href="~/Orders">Orders</a>
+                    </div>
                 </div>
-                
             </div>
         </nav>
     

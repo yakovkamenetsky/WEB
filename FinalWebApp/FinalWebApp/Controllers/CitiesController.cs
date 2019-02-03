@@ -43,8 +43,13 @@ namespace FinalWebApp.Controllers
         }
 
         // GET: Cities/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var q = from c in _context.Country.Include(c => c.Name)
+                    select new { Value = c.Id, Text = c.Name };
+
+            ViewData["CountryId"] = new SelectList(await q.ToListAsync(), "Value", "Text");
+
             return View();
         }
 
