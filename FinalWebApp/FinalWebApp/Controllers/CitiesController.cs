@@ -21,7 +21,8 @@ namespace FinalWebApp.Controllers
         // GET: Cities
         public async Task<IActionResult> Index()
         {
-            return View(await _context.City.ToListAsync());
+            var databaseContext = _context.City.Include(c => c.Country);
+            return View(await databaseContext.ToListAsync());
         }
 
         // GET: Cities/Details/5
@@ -32,7 +33,7 @@ namespace FinalWebApp.Controllers
                 return NotFound();
             }
 
-            var city = await _context.City
+            var city = await _context.City.Include(c => c.Country)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (city == null)
             {
@@ -82,6 +83,9 @@ namespace FinalWebApp.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["CountryId"] = new SelectList(_context.Country, "Id", "Name", city.Country);
+
             return View(city);
         }
 
@@ -128,7 +132,7 @@ namespace FinalWebApp.Controllers
                 return NotFound();
             }
 
-            var city = await _context.City
+            var city = await _context.City.Include(c => c.Country)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (city == null)
             {
