@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using FinalWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,8 @@ namespace FinalWebApp.Controllers
 		public async Task<IActionResult> HotelDetails(int id)
 		{
 
-			var res = _context.Hotel.Single(x => x.Id == id);
+			var res = _context.Hotel.Include(x => x.City).ThenInclude(y => y.Country).Single(x => x.Id == id);
+			ViewBag.mapAddress = "https://maps.google.com/maps?q=" + UrlEncoder.Default.Encode(res.Address) + "&t=&z=13&ie=UTF8&iwloc=&output=embed";
 
 			return View("OfferView", res);
 		}
