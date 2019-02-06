@@ -17,18 +17,19 @@
     </environment>
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div>
-					<a  asp-area="" asp-controller="Home" asp-action="Index">
-						<img src="~/images/Logos/logo.png"  class="col-md-2" />
+
+	<div class="container">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div>
+					<a asp-area="" asp-controller="Home" asp-action="Index">
+						<img src="~/images/Logos/logo.png" class="col-md-2" />
 					</a>
-                </div>
-                
-            </div>
-        </nav>
-    
+				</div>
+
+			</div>
+		</nav>
+
 		<div class="container col-md-8 col-md-offset-2">
 			<br />
 			<div class="row">
@@ -66,51 +67,43 @@
 				@Html.Partial("~/Views/_ViewFeatures.cshtml")
 			</div>
 
-			<div class="row">
-				<div class="row align-items-start">
-					<a href="~/Users/Register" class="btn btn-success" role="button">Register</a>
-					<a href="~/Users/Login" class="btn btn-primary" role="button">Login</a>
-
-				</div>
-			</div>
-
 			<div id="registerView" style="display: none">
 				@Html.Partial("~/Views/Users/RegisterView.cshtml")
 			</div>
 		</div>
-    </div>
+	</div>
 
-    <partial name="_CookieConsentPartial" />
+	<partial name="_CookieConsentPartial" />
 
-    <div class="container body-content">
-        @RenderBody()
-        <!--<hr />-->
-        <footer>
-            <!--<p>&copy; 2018 - FinalWebApp</p>-->
-        </footer>
-    </div>
+	<div class="container body-content">
+		@RenderBody()
+		<!--<hr />-->
+		<footer>
+			<!--<p>&copy; 2018 - FinalWebApp</p>-->
+		</footer>
+	</div>
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
-        <script src="~/lib/bootstrap/js/bootstrap.js"
-                asp-fallback-src="~/lib/bootstrap/js/bootstrap.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+	<environment include="Development">
+		<script src="~/lib/jquery/dist/jquery.js"></script>
+		<script src="~/lib/bootstrap/js/bootstrap.js"></script>
+		<script src="~/js/site.js" asp-append-version="true"></script>
+	</environment>
+	<environment exclude="Development">
+		<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+				asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+				asp-fallback-test="window.jQuery"
+				crossorigin="anonymous"
+				integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+		</script>
+		<script src="~/lib/bootstrap/js/bootstrap.js"
+				asp-fallback-src="~/lib/bootstrap/js/bootstrap.js"
+				asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+				crossorigin="anonymous"
+				integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+		</script>
+		<script src="~/js/site.min.js" asp-append-version="true"></script>
+	</environment>
 
-    @RenderSection("Scripts", required: false)
+	@RenderSection("Scripts", required: false)
 </body>
 </html>
