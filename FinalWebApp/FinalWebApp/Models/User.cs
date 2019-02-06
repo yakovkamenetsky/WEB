@@ -33,5 +33,6 @@ namespace FinalWebApp.Models
 		public string CountryName { get; set; }
 		public string Profession { get; set; }
 		public FamilyStatus FamilyStatus { get; set; }
+		public bool IsAdmin { get; set; }
 	}
 }
