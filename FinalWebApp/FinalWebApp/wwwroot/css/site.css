@@ -38,4 +38,18 @@ body {
     }
 }
 
+.navbar-dark {
+    background-color: darkslategrey;
+}
 
+.search-item {
+    margin: 2rem 2rem 0 2rem;
+}
+
+.search-item .p {
+    margin-right: 1rem;
+}
+
+.search-form {
+    margin-top: 4rem;
+}

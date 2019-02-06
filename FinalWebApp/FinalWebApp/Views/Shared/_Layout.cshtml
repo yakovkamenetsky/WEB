@@ -17,78 +17,23 @@
     </environment>
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <span>
-					<a  asp-area="" asp-controller="Home" asp-action="Index">
-						<img src="~/images/Logos/logo.png"  class="col-md-2" />
-					</a>
-                </span>
-                <div class="dropdown">
-                    <button class="btn btn-secondary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Edit
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="~/Hotels">Hotels</a>
-                        <a class="dropdown-item" href="~/Cities">Cities</a>
-                        <a class="dropdown-item" href="~/Countries">Countries</a>
-                        <a class="dropdown-item" href="~/Users">Users</a>
-                        <a class="dropdown-item" href="~/Orders">Orders</a>
-                    </div>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <a asp-area="" asp-controller="Home" asp-action="Index">
+                <img src="~/images/Logos/logo.png" class="col-md-2" />
+            </a>
+            <div class="dropdown">
+                <button class="btn btn-secondary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Edit
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="~/Hotels">Hotels</a>
+                    <a class="dropdown-item" href="~/Cities">Cities</a>
+                    <a class="dropdown-item" href="~/Countries">Countries</a>
+                    <a class="dropdown-item" href="~/Users">Users</a>
+                    <a class="dropdown-item" href="~/Orders">Orders</a>
                 </div>
             </div>
         </nav>
-    
-        <div class="container col-md-8 col-md-offset-2">
-            <br />
-            <div class="row">
-				<div class="input-group">
-					<form action="/search" method="get" id="search-form">
-						<input type="text" autofocus="true" class="form-control" name="place" placeholder="Hotel, City, Country...">
-					</form>
-					<span class="input-group-btn">
-						<button class="btn btn-info" type="submit" form="search-form">Search</button>
-					</span>
-				</div>
-            </div>
-            <br />
-            <div class="row col-md-offset-3">
-                <span class="col-md-4">
-                    <label>Enter date</label>
-                    <input id="endDate" class="form-control" type="date" />
-                </span>
-
-                <span class="col-md-4">
-                    <label>Leave date</label>
-                    <input id="startDate" class="form-control" type="date" />
-                </span>
-            </div>
-            <br />
-            <div class="row">
-                <div class="form-group col-md-offset-5">
-                    <button class="btn btn-info" type="button" onclick="showOrHideFeatures()">Try our special search</button>
-                </div>
-                <br />
-                <br />
-            </div>
-
-            <div class="col-md-12" id="featuresView" style="display: none">
-                @Html.Partial("~/Views/_ViewFeatures.cshtml")
-            </div>
-            <div class="row">
-                <div class="row align-items-start">
-                    <a href="~/Users/Register" class="btn btn-success" role="button" >Register</a>
-                    <a href="~/Users/Login" class="btn btn-primary" role="button" >Login</a>
-               
-                </div>
-            </div>
-
-            <div id="registerView" style="display: none">
-                @Html.Partial("~/Views/Users/RegisterView.cshtml")
-            </div>
-        </div>
-    </div>
 
     <partial name="_CookieConsentPartial" />
 
