@@ -25,10 +25,7 @@
                 @Html.DisplayNameFor(model => model.Gender)
             </th>
             <th scope="col">
-                @Html.DisplayNameFor(model => model.CityName)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.CountryName)
+                @Html.DisplayNameFor(model => model.City.Name)
             </th>
             <th scope="col">
                 @Html.DisplayNameFor(model => model.Profession)
@@ -56,10 +53,7 @@
                     @Html.DisplayFor(modelItem => item.Gender)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CityName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CountryName)
+                    @Html.DisplayFor(modelItem => item.City.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Profession)

@@ -24,7 +24,6 @@ namespace FinalWebApp.Data.Seeds
                 {
                     context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT " + typeof(Country).Name + " ON");
                     context.SaveChanges();
-                    context.Database.ExecuteSqlCommand("DELETE FROM " + typeof(Country).Name);
                     context.Country.AddRange(countries);
                     context.SaveChanges();
                 }

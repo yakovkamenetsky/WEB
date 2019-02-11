@@ -21,8 +21,8 @@ namespace FinalWebApp.Controllers
         // GET: Hotels
         public async Task<IActionResult> Index()
         {
-            var databaseContext = _context.Hotel.Include(p => p.City);
-            return View(await databaseContext.ToListAsync());
+            var myContext = _context.Hotel.Include(h => h.City);
+            return View(await myContext.ToListAsync());
         }
 
         // GET: Hotels/Details/5
@@ -33,7 +33,8 @@ namespace FinalWebApp.Controllers
                 return NotFound();
             }
 
-            var hotel = await _context.Hotel.Include(p => p.City)
+            var hotel = await _context.Hotel
+                .Include(h => h.City)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (hotel == null)
             {
@@ -44,13 +45,9 @@ namespace FinalWebApp.Controllers
         }
 
         // GET: Hotels/Create
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            var q = from c in _context.City.Include(c => c.Name)
-                    select new { Value = c.Id, Text = c.Name };
-
-            ViewData["CityId"] = new SelectList(await q.ToListAsync(), "Value", "Text");
-
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Id");
             return View();
         }
 
@@ -59,7 +56,7 @@ namespace FinalWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,CityId")] Hotel hotel)
+        public async Task<IActionResult> Create([Bind("Id,Name,CityId,Address,Capacity,Price")] Hotel hotel)
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +64,7 @@ namespace FinalWebApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Id", hotel.CityId);
             return View(hotel);
         }
 
@@ -83,9 +81,7 @@ namespace FinalWebApp.Controllers
             {
                 return NotFound();
             }
-
-            ViewData["CityId"] = new SelectList(_context.City, "Id", "Name", hotel.City);
-
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Id", hotel.CityId);
             return View(hotel);
         }
 
@@ -94,7 +90,7 @@ namespace FinalWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CityId")] Hotel hotel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CityId,Address,Capacity,Price")] Hotel hotel)
         {
             if (id != hotel.Id)
             {
@@ -121,6 +117,7 @@ namespace FinalWebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Id", hotel.CityId);
             return View(hotel);
         }
 
@@ -132,7 +129,8 @@ namespace FinalWebApp.Controllers
                 return NotFound();
             }
 
-            var hotel = await _context.Hotel.Include(p => p.City)
+            var hotel = await _context.Hotel
+                .Include(h => h.City)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (hotel == null)
             {
