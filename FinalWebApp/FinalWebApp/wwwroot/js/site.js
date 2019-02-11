@@ -34,3 +34,12 @@ function showOrHideFeatures() {
         features.style.display = "none";
     }
 }
+
+function showOrHideWeather() {
+	var features = document.getElementById("weatherView");
+	if (features.style.display === "none") {
+		features.style.display = "block";
+	} else {
+		features.style.display = "none";
+	}
+}

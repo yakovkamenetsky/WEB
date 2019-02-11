@@ -17,8 +17,26 @@
 			  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
 		<link rel="stylesheet" href="~/css/features.min.css" asp-append-version="true" />
 	</environment>
+
+
 </head>
 <body>
+	<div class=" row">
+		<div class="col-md-3">
+			@*	<div class="list-group-item">
+				<label>Our tip: Choose your vacation by weather ..</label>
+				<iframe src='https://www.israelweather.co.il/weather_out.asp?code_width=200&height=200&code_color=white&code_font_color=black' width=200 height=200 dir=rtl name='in_frame' frameborder='0' scrolling='No'></iframe>
+			</div>*@
+
+			<div class="form-group col-md-offset-5 text-center search-item">
+				<button class="btn btn-info" type="button" onclick="showOrHideWeather()">Recommendation! Click here to check the weather before choosing your vacation!</button>
+			</div>
+
+			<div id="weatherView" style="display: none">
+				@Html.Partial("~/Views/ViewWeather.cshtml")
+			</div>
+		</div>
+	</div>
 	<ul class="list-group">
 		@foreach (var hotel in Model)
 		{
@@ -30,7 +48,7 @@
 					<div class="col-md-4 hotel-title list-group-item" style="height:200px">
 						<h2>
 							@hotel.Name
-							<br/>
+							<br />
 							@hotel.Address
 						</h2>
 					</div>
@@ -47,8 +65,7 @@
 								@hotel.Price
 							</h2>
 
-							<form action="/Search/HotelDetails" method="get" id="offer-form">
-							</form>
+							<form action="/Search/HotelDetails" method="get" id="offer-form"></form>
 							<span class="input-group-btn">
 								<button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer</button>
 							</span>

@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<environment include="Development">
+		<link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="~/css/features.css" />
+	</environment>
+	<environment exclude="Development">
+		<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.2.1/css/bootstrap.min.css"
+			  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+			  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+		<link rel="stylesheet" href="~/css/features.min.css" asp-append-version="true" />
+	</environment>
+</head>
+<body>
+	<div class="list-group-item">
+		<iframe src='https://www.israelweather.co.il/weather_out.asp?code_width=200&height=200&code_color=white&code_font_color=black' width=200 height=200 dir=rtl name='in_frame' frameborder='0' scrolling='No'></iframe>
+	</div>
+</body>
+</html>
+
+
