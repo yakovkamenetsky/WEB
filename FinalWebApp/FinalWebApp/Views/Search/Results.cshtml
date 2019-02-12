@@ -21,22 +21,6 @@
 
 </head>
 <body>
-	<div class=" row">
-		<div class="col-md-3">
-			@*	<div class="list-group-item">
-				<label>Our tip: Choose your vacation by weather ..</label>
-				<iframe src='https://www.israelweather.co.il/weather_out.asp?code_width=200&height=200&code_color=white&code_font_color=black' width=200 height=200 dir=rtl name='in_frame' frameborder='0' scrolling='No'></iframe>
-			</div>*@
-
-			<div class="form-group col-md-offset-5 text-center search-item">
-				<button class="btn btn-info" type="button" onclick="showOrHideWeather()">Recommendation! Click here to check the weather before choosing your vacation!</button>
-			</div>
-
-			<div id="weatherView" style="display: none">
-				@Html.Partial("~/Views/ViewWeather.cshtml")
-			</div>
-		</div>
-	</div>
 	<ul class="list-group">
 		@foreach (var hotel in Model)
 		{
