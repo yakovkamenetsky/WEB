@@ -21,7 +21,8 @@ namespace FinalWebApp.Controllers
         // GET: Hotels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Hotel.ToListAsync());
+            var databaseContext = _context.Hotel.Include(p => p.City);
+            return View(await databaseContext.ToListAsync());
         }
 
         // GET: Hotels/Details/5
@@ -32,7 +33,7 @@ namespace FinalWebApp.Controllers
                 return NotFound();
             }
 
-            var hotel = await _context.Hotel
+            var hotel = await _context.Hotel.Include(p => p.City)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (hotel == null)
             {
@@ -43,8 +44,13 @@ namespace FinalWebApp.Controllers
         }
 
         // GET: Hotels/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var q = from c in _context.City.Include(c => c.Name)
+                    select new { Value = c.Id, Text = c.Name };
+
+            ViewData["CityId"] = new SelectList(await q.ToListAsync(), "Value", "Text");
+
             return View();
         }
 
@@ -77,6 +83,9 @@ namespace FinalWebApp.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Name", hotel.City);
+
             return View(hotel);
         }
 
@@ -123,7 +132,7 @@ namespace FinalWebApp.Controllers
                 return NotFound();
             }
 
-            var hotel = await _context.Hotel
+            var hotel = await _context.Hotel.Include(p => p.City)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (hotel == null)
             {

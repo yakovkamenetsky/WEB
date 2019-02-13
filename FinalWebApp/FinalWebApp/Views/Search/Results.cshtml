@@ -1,0 +1,64 @@
+﻿@model List<Hotel>;
+
+@{
+	ViewData["Title"] = "Results";
+
+}
+
+<html>
+<head>
+	<environment include="Development">
+		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+		<link rel="stylesheet" href="~/css/features.css" />
+	</environment>
+	<environment exclude="Development">
+		<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.2.1/css/bootstrap.min.css"
+			  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+			  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+		<link rel="stylesheet" href="~/css/features.min.css" asp-append-version="true" />
+	</environment>
+</head>
+<body>
+	<ul class="list-group">
+		@foreach (var hotel in Model)
+		{
+			<li class="list-group-item">
+				<article class="container-fluid" style="background-color:white">
+					<div class="col-md-3 hotel-image list-group-item">
+						<img src="~/images/HotelsImages/@hotel.Id/image.jpg" style="object-fit:cover; width:100%" />
+					</div>
+					<div class="col-md-4 hotel-title list-group-item" style="height:200px">
+						<h2>
+							@hotel.Name
+							<br/>
+							@hotel.Address
+						</h2>
+					</div>
+					<div class="col-md-2 list-group-item" style="height:200px">
+						<div class="hotel-location">
+							<h4>
+								@hotel.Address
+							</h4>
+						</div>
+					</div>
+					<div class="col-md-3 list-group-item" style="height:200px">
+						<div class="hotel-ofer">
+							<h2 class="price">
+								@hotel.Price
+							</h2>
+
+							<form action="/Search/HotelDetails" method="get" id="offer-form">
+							</form>
+							<span class="input-group-btn">
+								<button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer</button>
+							</span>
+						</div>
+					</div>
+
+				</article>
+			</li>
+		}
+
+	</ul>
+</body>
+</html>

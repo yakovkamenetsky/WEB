@@ -8,8 +8,9 @@ namespace FinalWebApp.Models
     public class City
     {
         public int Id { get; set; }
-        public Contry contry { get; set; }
-        public int ContryId { get; set; }
+		public string Name { get; set; }
+		public Country Country { get; set; }
+        public int CountryId { get; set; }
         public ICollection <Hotel> Hotels{ get; set; }
     }
 }
