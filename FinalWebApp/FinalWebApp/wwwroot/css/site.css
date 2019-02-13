@@ -51,7 +51,8 @@ body {
 }
 
 .search-form {
-    margin-top: 4rem;
+    margin-top: 10rem;
+       
 }
 
 .mapouter {
@@ -68,4 +69,10 @@ body {
 .carousel-item img {
     height: 30rem;
     width: 50rem;
+}
+
+.page-footer{
+    background-color:darkslategray;
+    margin-top:10rem;
+    padding-top:0.5rem;
 }
