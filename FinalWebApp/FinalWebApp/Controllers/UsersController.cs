@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalWebApp.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FinalWebApp.Controllers
 {
@@ -37,13 +38,19 @@ namespace FinalWebApp.Controllers
         [HttpPost]
         public IActionResult Register(string email, string password)
         {
-            var user = _context.User.Where(x => x.Email.Equals(email) && x.Password.Equals(password));
+            var user = _context.User.Where(x => x.Email.Equals(email));
             if (user.Any())
             {
-
+                return View("RegisterView");
+                
+            } else if (password != null)
+            {
+                return View("LoginView");
+            } else
+            {
+                return View("RegisterView");
             }
 
-            return View("RegisterView");
         }
 
         [HttpGet]
