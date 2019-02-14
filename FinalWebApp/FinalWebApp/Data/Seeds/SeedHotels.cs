@@ -38,7 +38,6 @@ namespace FinalWebApp.Data.Seeds
                 {
                     context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT " + typeof(Hotel).Name + " ON");
                     context.SaveChanges();
-                    context.Database.ExecuteSqlCommand("DELETE FROM " + typeof(Hotel).Name);
                     context.Hotel.AddRange(hotels);
                     context.SaveChanges();
                 }

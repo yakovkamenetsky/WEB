@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalWebApp.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FinalWebApp.Controllers
 {
@@ -14,6 +16,7 @@ namespace FinalWebApp.Controllers
         private readonly MyContext _context;
 
         public UsersController(MyContext context)
+
         {
             _context = context;
         }
@@ -21,7 +24,8 @@ namespace FinalWebApp.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            var myContext = _context.User.Include(u => u.City);
+            return View(await myContext.ToListAsync());
         }
 
         [HttpGet]
@@ -35,17 +39,23 @@ namespace FinalWebApp.Controllers
         [HttpPost]
         public IActionResult Register(string email, string password)
         {
-            var user = _context.User.Where(x => x.CityName.Equals(email));
+            var user = _context.User.Where(x => x.Email.Equals(email));
             if (user.Any())
             {
-
+                return View("RegisterView");
+                
+            } else if (password != null)
+            {
+                return View("LoginView");
+            } else
+            {
+                return View("RegisterView");
             }
-            
-            return View("RegisterView");
+
         }
 
         [HttpGet]
-        public IActionResult LOGIN()
+        public IActionResult Login()
         {
 
 
@@ -53,17 +63,19 @@ namespace FinalWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult LOGIN(string email, string password)
+        public IActionResult Login(string email, string password)
         {
-            var user = _context.User.Where(x => x.CityName.Equals(email));
+            var user = _context.User.Where(x => x.Email.Equals(email) && x.Password.Equals(password));
             if (user.Any())
             {
+                HttpContext.Session.SetString("userEmail", email);
+                HttpContext.Session.SetString("isUserAdmin", user.First().IsAdmin ? "true" : "false");
 
+                return View();
             }
 
             return View("LoginView");
         }
-
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -74,6 +86,7 @@ namespace FinalWebApp.Controllers
             }
 
             var user = await _context.User
+                .Include(u => u.City)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -86,6 +99,7 @@ namespace FinalWebApp.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Id");
             return View();
         }
 
@@ -94,7 +108,7 @@ namespace FinalWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Password,Birthday,Gender,CityName,CountryName,Profession,FamilyStatus")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email,Password,Birthday,Gender,CityId,Profession,FamilyStatus,IsAdmin")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -102,6 +116,7 @@ namespace FinalWebApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Id", user.CityId);
             return View(user);
         }
 
@@ -118,6 +133,7 @@ namespace FinalWebApp.Controllers
             {
                 return NotFound();
             }
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Id", user.CityId);
             return View(user);
         }
 
@@ -126,7 +142,7 @@ namespace FinalWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Password,Birthday,Gender,CityName,CountryName,Profession,FamilyStatus")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Password,Birthday,Gender,CityId,Profession,FamilyStatus,IsAdmin")] User user)
         {
             if (id != user.Id)
             {
@@ -153,6 +169,7 @@ namespace FinalWebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Id", user.CityId);
             return View(user);
         }
 
@@ -165,6 +182,7 @@ namespace FinalWebApp.Controllers
             }
 
             var user = await _context.User
+                .Include(u => u.City)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {

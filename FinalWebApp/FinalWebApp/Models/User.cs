@@ -24,15 +24,16 @@ namespace FinalWebApp.Models
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
+        public string Email { get; set; }
 		public string Password { get; set; }
 		public ICollection<Order> Orders { get; set; }
 		[DataType(DataType.Date)]
 		public DateTime? Birthday { get; set; }
 		public Gender? Gender { get; set; }
-		public string CityName { get; set; }
-		public string CountryName { get; set; }
+        public City City { get; set; }
+		public int? CityId { get; set; }
 		public string Profession { get; set; }
 		public FamilyStatus FamilyStatus { get; set; }
 		public bool IsAdmin { get; set; }
-	}
+    }
 }

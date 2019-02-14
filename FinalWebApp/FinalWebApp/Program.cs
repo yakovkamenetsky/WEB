@@ -25,13 +25,13 @@ namespace FinalWebApp
                     SeedCountries.InitialCountries(services);
                     SeedCities.InitialCities(services);
                     SeedHotels.InitialHotels(services);
-                    /*SeedUsers.InitialUsers(services);
-                    SeedOrders.InitialOrders(services);*/
+                    SeedUsers.InitialUsers(services);
+                    SeedOrders.InitialOrders(services);
                 }
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error ocurred while seeding Games");
+                    logger.LogError(ex, "An error ocurred while seeding data");
                 }
             }
 
