@@ -26,6 +26,15 @@ $(function () {
     body.css('background-size', 'cover');
 });
 
+$(function () {
+    var editButton = this.getElementById("editButton");
+    if (sessionStorage.getItem("isUserAdmin") == "true") {
+        editButton.style.display == "block";
+    } else {
+        editButton.style.display == "none";
+    }
+});
+
 function showOrHideFeatures() {
     var features = document.getElementById("featuresView");
     if (features.style.display === "none") {

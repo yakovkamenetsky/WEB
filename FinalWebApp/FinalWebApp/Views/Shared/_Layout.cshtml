@@ -21,8 +21,10 @@
         <a asp-area="" asp-controller="Home" asp-action="Index">
             <img src="~/images/Logos/logo.png" class="col-md-2" />
         </a>
+        <div class="col-md-3"></div>
         <div class="dropdown">
-            <button class="btn btn-outline-info" id="editButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-outline-info" id="editButton" 
+                    type="button" data-toggle="dropdown" style="display: block">
                 Edit
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -36,7 +38,6 @@
         <button class="btn btn-outline-warning" id="loginButton" type="button" data-toggle="modal" data-target="#loginView">
             Login
         </button>
-
         <button class="btn btn-outline-success" id="registerButton" type="button" data-toggle="modal" data-target="#registerView">
             Rgister
         </button>

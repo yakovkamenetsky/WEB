@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -54,7 +55,7 @@ namespace FinalWebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult LOGIN()
+        public IActionResult Login()
         {
 
 
@@ -62,12 +63,15 @@ namespace FinalWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult LOGIN(string email, string password)
+        public IActionResult Login(string email, string password)
         {
             var user = _context.User.Where(x => x.Email.Equals(email) && x.Password.Equals(password));
             if (user.Any())
             {
+                HttpContext.Session.SetString("userEmail", email);
+                HttpContext.Session.SetString("isUserAdmin", user.First().IsAdmin ? "true" : "false");
 
+                return View();
             }
 
             return View("LoginView");
