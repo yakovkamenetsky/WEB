@@ -17,6 +17,8 @@
 			  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
 		<link rel="stylesheet" href="~/css/features.min.css" asp-append-version="true" />
 	</environment>
+
+
 </head>
 <body>
 	<ul class="list-group">
@@ -30,7 +32,7 @@
 					<div class="col-md-4 hotel-title list-group-item" style="height:200px">
 						<h2>
 							@hotel.Name
-							<br/>
+							<br />
 							@hotel.Address
 						</h2>
 					</div>
@@ -47,8 +49,7 @@
 								@hotel.Price
 							</h2>
 
-							<form action="/Search/HotelDetails" method="get" id="offer-form">
-							</form>
+							<form action="/Search/HotelDetails" method="get" id="offer-form"></form>
 							<span class="input-group-btn">
 								<button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer</button>
 							</span>

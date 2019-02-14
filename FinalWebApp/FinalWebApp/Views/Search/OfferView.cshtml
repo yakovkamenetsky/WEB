@@ -5,9 +5,6 @@
 }
 
 <div class="container ">
-	@*<video autoplay class="videoBlock">
-		<source src="~/images/HotelsImages/video.mp4" type="video/mp4" style="width:    ;">
-	</video>*@
 
 	<div class="offer">
 		<div class="row">
@@ -41,12 +38,16 @@
 				<button class="btn btn-success">Order now</button>
 			</div>
 
-			<div class="col-md-6">				
+			<div class="col-md-6">
 				<div class="mapouter">
 					<div class="gmap_canvas">
 						<iframe id="gmap_canvas" src=@ViewBag.mapAddress frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="100%" height="100%"></iframe>
 					</div>
 				</div>
+			</div>
+
+			<div>
+				<script type='text/javascript' src='https://darksky.net/widget/default/@ViewBag.coords/uk12/en.js?width=100%&height=350&title=Full Forecast&textColor=333333&bgColor=FFFFFF&transparency=false&skyColor=undefined&fontFamily=Default&customFont=&units=uk&htColor=333333&ltColor=C7C7C7&displaySum=yes&displayHeader=yes'></script>
 			</div>
 		</div>
 	</div>
