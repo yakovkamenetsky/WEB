@@ -90,3 +90,7 @@ body {
 .font {
 	font-family: 'Varela Round';
 }
+
+.navbar input {
+    margin-left: 4px;
+}

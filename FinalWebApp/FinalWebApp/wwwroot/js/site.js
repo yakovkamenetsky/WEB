@@ -25,15 +25,21 @@ $(function () {
     body.css('background', backgrounds[0]);  
     body.css('background-size', 'cover');
 });
-
+/*
 $(function () {
-    var editButton = this.getElementById("editButton");
-    if (sessionStorage.getItem("isUserAdmin") == "true") {
-        editButton.style.display == "block";
-    } else {
-        editButton.style.display == "none";
+
+    setTimeout(checkAdmin, 5000);
+
+    function checkAdmin() {
+        var editButton = document.getElementById("editButton");
+        if (sessionStorage.getItem("isUserAdmin") == "true") {
+            editButton.style.display = "block";
+        } else {
+            editButton.style.display = "none";
+        }
+        setTimeout(checkAdmin, 5000);
     }
-});
+});*/
 
 function showOrHideFeatures() {
     var features = document.getElementById("featuresView");
@@ -43,3 +49,29 @@ function showOrHideFeatures() {
         features.style.display = "none";
     }
 }
+
+$(document).ready(function () {
+
+    // Key up search the products
+    $(".LoginAndRegisterForm").submit(function (e) {
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function (data) {
+                if (data != null) {
+                    alert(data);
+                }
+                window.location = '/';
+            },
+            error: function (data) {
+                alert(data.responseText);
+            },
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+});

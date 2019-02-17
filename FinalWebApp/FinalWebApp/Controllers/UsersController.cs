@@ -8,12 +8,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalWebApp.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 
 namespace FinalWebApp.Controllers
 {
     public class UsersController : Controller
     {
         private readonly MyContext _context;
+        private readonly object ClientScript;
 
         public UsersController(MyContext context)
 
@@ -25,75 +27,8 @@ namespace FinalWebApp.Controllers
         public async Task<IActionResult> Index()
         {
             var myContext = _context.User.Include(u => u.City);
+            HttpContext.Session.SetString("isUserAdmin", "false");
             return View(await myContext.ToListAsync());
-        }
-
-        [HttpGet]
-        public IActionResult Register()
-        {
-
-
-            return View("RegisterView");
-        }
-
-        [HttpPost]
-        public IActionResult Register(string email, string password)
-        {
-            var user = _context.User.Where(x => x.Email.Equals(email));
-            if (user.Any())
-            {
-                return View("RegisterView");
-                
-            } else if (password != null)
-            {
-                return View("LoginView");
-            } else
-            {
-                return View("RegisterView");
-            }
-
-        }
-
-        [HttpGet]
-        public IActionResult Login()
-        {
-
-
-            return View("LoginView");
-        }
-
-        [HttpPost]
-        public IActionResult Login(string email, string password)
-        {
-            var user = _context.User.Where(x => x.Email.Equals(email) && x.Password.Equals(password));
-            if (user.Any())
-            {
-                HttpContext.Session.SetString("userEmail", email);
-                HttpContext.Session.SetString("isUserAdmin", user.First().IsAdmin ? "true" : "false");
-
-                return View();
-            }
-
-            return View("LoginView");
-        }
-
-        // GET: Users/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _context.User
-                .Include(u => u.City)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
         }
 
         // GET: Users/Create
