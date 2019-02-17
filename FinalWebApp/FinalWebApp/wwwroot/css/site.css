@@ -73,3 +73,7 @@ body {
 .navbar button {
     margin-left: 4px;
 }
+
+.navbar input {
+    margin-left: 4px;
+}
