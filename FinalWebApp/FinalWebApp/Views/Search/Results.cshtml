@@ -1,4 +1,4 @@
-﻿@model List<Hotel>;
+﻿@model List<FinalWebApp.Dto.HotelDto>;
 
 @{
 	ViewData["Title"] = "Results";
@@ -44,16 +44,19 @@
 						</div>
 					</div>
 					<div class="col-md-3 list-group-item" style="height:200px">
-						<div class="hotel-ofer">
-							<h2 class="price">
-								@hotel.Price
-							</h2>
+                        <div class="hotel-ofer">
+                            <h2 class="price">
+                                @hotel.Price
+                            </h2>
+                            <h2 class="price">
+                                @hotel.Available
+                            </h2>
 
-							<form action="/Search/HotelDetails" method="get" id="offer-form"></form>
-							<span class="input-group-btn">
-								<button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer</button>
-							</span>
-						</div>
+                            <form action="/Search/HotelDetails" method="get" id="offer-form"></form>
+                            <span class="input-group-btn">
+                                <button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer</button>
+                            </span>
+                        </div>
 					</div>
 
 				</article>

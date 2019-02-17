@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using FinalWebApp.Dto;
 using FinalWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -24,11 +25,23 @@ namespace FinalWebApp.Controllers
     
         public async Task<IActionResult> Index(string place, DateTime checkin, DateTime checkout)
         {
-			var res = await _context.Hotel
-				.Where(x => x.Name.Contains(place) || x.City.Name.Contains(place))
-				.ToListAsync();
-			
+            var senitized = place.Trim().ToUpper();
 
+            var res = await _context.Hotel
+                .Where(x => x.Name.ToUpper().Contains(place) || x.City.Name.ToUpper().Contains(place))
+                .Select(x => new HotelDto()
+                {
+                    Address = x.Address,
+                    City = x.City.Name,
+                    Id = x.Id,
+                    Name = x.Name,
+                    Price = x.Price,
+                    Available = x.Capacity - x.Orders.Where(o => (o.CheckInDate <= checkin && o.CheckOutDate >= checkin)
+                                                                || (o.CheckInDate >= checkin && o.CheckInDate <= checkout)
+                                                                || (o.CheckInDate <= checkin && o.CheckOutDate >= checkout)
+                                                            ).Count()
+                }).ToListAsync();
+				
             return View("Results", res);
         }
 

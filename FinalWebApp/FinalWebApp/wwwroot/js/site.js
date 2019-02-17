@@ -28,10 +28,10 @@ $(function () {
 
 $(function () {
     var editButton = this.getElementById("editButton");
-    if (sessionStorage.getItem("isUserAdmin") == "true") {
-        editButton.style.display == "block";
+    if (sessionStorage.getItem("isUserAdmin") === "true") {
+        editButton.style.display === "block";
     } else {
-        editButton.style.display == "none";
+        editButton.style.display === "none";
     }
 });
 
