@@ -70,13 +70,13 @@ body {
 .gmap_canvas {
     overflow: hidden;
     background: none !important;
-    height: 30rem;
-    width: 30rem;
+    height: 357px;
+    width: 357px;
 }
 
 .carousel-item img {
-    height: 30rem;
-    width: 50rem;
+    height: 300px;
+    width: 357px;
 }
 
 .navbar button {
@@ -93,4 +93,39 @@ body {
 
 .navbar input {
     margin-left: 4px;
+}
+
+.hotel-result-list {
+    margin-top: 2rem;   
+}
+
+.order-button {
+    position: relative;
+    margin: 1rem;   
+}
+
+.back-button{
+    position:absolute;
+    left: 0;
+}
+
+.order-now-button {
+    position: absolute;
+    right: 0;
+}
+
+.offer {
+    padding: 0.5rem;
+    background-color: whitesmoke;
+    margin-top: 8rem;
+    width: 100%;
+    height: 100%;
+}
+
+.hotel-result-list li {
+    background-color: whitesmoke;
+    padding-top: 1.5rem;
+    border-top-left-radius: inherit;
+    border: groove;
+    border-color: aqua;
 }
