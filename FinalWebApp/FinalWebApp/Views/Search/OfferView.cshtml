@@ -1,8 +1,11 @@
-﻿@model Hotel
+﻿@model FinalWebApp.Dto.HotelModel
 
 @{
     ViewData["Title"] = "OfferView";
+    var checkin = Model.Checkin;
+    var checkout = Model.Checkout;
 }
+
 
 <div class="container ">
 
@@ -37,7 +40,11 @@
                 </div>
                 <div class="order-button">
                     <button onclick="goBack()" class="btn btn-danger back-button">back</button>
-                    <button class="btn btn-warning order-now-button">Order now</button>
+                    <form action="/Orders/Confirm" method="post" id="orderNow" >
+                        <input class="btn btn-warning order-now-button" type="button", >
+                            Order now
+                        </input>
+                    </form>
                 </div>
             </div>
 
@@ -56,8 +63,35 @@
     </div>
 </div>
 
-
 <script>
+    $(document).ready(function () {
+
+    $("#orderNow").submit(function (e) {
+        var form = $(this);
+        var url = form.attr('action');
+
+        var order = { "checkin": "@checkin" };
+        alert(order.checkin);
+
+        //$.ajax({
+        //    type: "POST",
+        //    url: url,
+        //    data: form.serialize(), // serializes the form's elements.
+        //    success: function (data) {
+        //        if (data != null) {
+        //            alert(data);
+        //        }
+        //        window.location = '/';
+        //    },
+        //    error: function (data) {
+        //        alert(data.responseText);
+        //    },
+        //});
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+});
+
     function goBack() {
         window.history.back();
     }

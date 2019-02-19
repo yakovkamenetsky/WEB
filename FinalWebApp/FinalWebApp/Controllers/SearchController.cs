@@ -29,7 +29,7 @@ namespace FinalWebApp.Controllers
 
             var res = await _context.Hotel
                 .Where(x => x.Name.ToUpper().Contains(place) || x.City.Name.ToUpper().Contains(place))
-                .Select(x => new HotelDto()
+                .Select(x => new HotelModel()
                 {
                     Address = x.Address,
                     City = x.City.Name,
@@ -41,20 +41,31 @@ namespace FinalWebApp.Controllers
                                                                 || (o.CheckInDate <= checkin && o.CheckOutDate >= checkout)
                                                             ).Count()
                 }).ToListAsync();
-				
-            return View("Results", res);
+
+            var model = new ResultModel()
+            {
+                hotels = res,
+                checkin = checkin,
+                checkout = checkout
+            };
+            
+            return View("Results", model);
         }
 
-
-		public async Task<IActionResult> HotelDetails(int id)
+        [HttpPost]
+		public async Task<IActionResult> HotelDetails(HotelModel hotelModel)
 		{
-			var res = _context.Hotel.Include(x => x.City).ThenInclude(y => y.Country).Single(x => x.Id == id);
+			var res = _context.Hotel.Include(x => x.City).ThenInclude(y => y.Country).Single(x => x.Id == hotelModel.Id);
 			ViewBag.mapAddress = "https://maps.google.com/maps?q=" + UrlEncoder.Default.Encode(res.Address) + "&t=&z=13&ie=UTF8&iwloc=&output=embed";
 
 			var coordinates = await GetHotelCoords(res.Address);
 			ViewBag.coords = coordinates;
 
-			return View("OfferView", res);
+            hotelModel.Address = res.Address;
+            hotelModel.Name = res.Name;
+            hotelModel.Price = res.Price;
+
+			return View("OfferView", hotelModel);
 		}
 
 		private async Task<string> GetHotelCoords(string address)

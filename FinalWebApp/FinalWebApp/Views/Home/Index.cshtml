@@ -3,28 +3,28 @@
 }
 
 <div class="container-fluid">
-		<div class="row search-form">
-			<div class="col-md-4">
-				<div class="search-item">
-					<form action="/search" method="get" id="search-form">
-						<input type="text" autofocus="true" class="form-control" name="place" placeholder="Hotel, City, Country...">
-					</form>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<label>Enter date</label>
-				<input id="endDate" class="form-control" type="date" />
-			</div>
-			<div class="col-md-3">
-				<label>Leave date</label>
-				<input id="startDate" class="form-control" type="date" />
-			</div>
-			<div class="col-md-2">
-				<div class="input-group-btn search-item">
-					<button class="btn btn-info" type="submit" form="search-form">Search</button>
-				</div>
-			</div>
-		</div>
+    <div class="row search-form">
+        <form action="/search" method="get" id="search-form">
+            <div class="col-md-4">
+                <div class="search-item">
+                        <input type="text" autofocus="true" class="" name="place" placeholder="Hotel, City, Country...">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Enter date</label>
+                <input id="endDate" class="" type="date" name="checkin" />
+            </div>
+            <div class="col-md-3">
+                <label>Leave date</label>
+                <input id="startDate" class="" type="date" name="checkout" />
+            </div>
+            <div class="col-md-2">
+                <div class="input-group-btn search-item">
+                    <button class="btn btn-info" type="submit" form="search-form">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
 		<div class="form-group col-md-offset-5 text-center search-item">
 			<button class="btn btn-info" type="button" onclick="showOrHideFeatures()">Try our special search</button>

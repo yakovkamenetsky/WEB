@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalWebApp.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace FinalWebApp.Controllers
 {
@@ -149,10 +150,22 @@ namespace FinalWebApp.Controllers
             return _context.Order.Any(e => e.Id == id);
         }
 
-        [HttpPost("order/{id}")]
-        public async Task<IActionResult> OrderHotel(int id)
+        [HttpPost("Confirm")]
+        public async Task<IActionResult> OrderHotel(Order order)
         {
-            
+            var userId = Globals.getConnectedUser(HttpContext.Session)?.Id ?? -1;
+
+            if (userId == -1)
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, "Please log in or register");
+            }
+
+            order.UserId = userId;
+            await _context.Order.AddAsync(order);
+
+             await _context.SaveChangesAsync();
+
+            return View(order.Id);
         }
     }
 }
