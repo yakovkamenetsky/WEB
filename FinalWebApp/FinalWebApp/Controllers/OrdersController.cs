@@ -148,5 +148,11 @@ namespace FinalWebApp.Controllers
         {
             return _context.Order.Any(e => e.Id == id);
         }
+
+        [HttpPost("order/{id}")]
+        public async Task<IActionResult> OrderHotel(int id)
+        {
+            
+        }
     }
 }

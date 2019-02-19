@@ -2,7 +2,15 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+
 $(function () {
+    
+    Date.prototype.toDateInputValue = (function () {
+        var local = new Date(this);
+        local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+        return local.toJSON().slice(0, 10);
+    });
     var body = $('body');
     var backgrounds = new Array(
         'url(../Images/mainBackground1.jpg) no-repeat center fixed',
@@ -43,3 +51,7 @@ function showOrHideFeatures() {
         features.style.display = "none";
     }
 }
+
+$(document).ready(function () {
+    $('#startDate').val(new Date().toDateInputValue());
+});​
