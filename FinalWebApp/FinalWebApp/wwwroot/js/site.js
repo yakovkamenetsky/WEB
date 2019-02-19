@@ -2,15 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-
-
 $(function () {
-    
-    Date.prototype.toDateInputValue = (function () {
-        var local = new Date(this);
-        local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-        return local.toJSON().slice(0, 10);
-    });
     var body = $('body');
     var backgrounds = new Array(
         'url(../Images/mainBackground1.jpg) no-repeat center fixed',
@@ -33,15 +25,21 @@ $(function () {
     body.css('background', backgrounds[0]);  
     body.css('background-size', 'cover');
 });
-
+/*
 $(function () {
-    var editButton = this.getElementById("editButton");
-    if (sessionStorage.getItem("isUserAdmin") === "true") {
-        editButton.style.display === "block";
-    } else {
-        editButton.style.display === "none";
+
+    setTimeout(checkAdmin, 5000);
+
+    function checkAdmin() {
+        var editButton = document.getElementById("editButton");
+        if (sessionStorage.getItem("isUserAdmin") == "true") {
+            editButton.style.display = "block";
+        } else {
+            editButton.style.display = "none";
+        }
+        setTimeout(checkAdmin, 5000);
     }
-});
+});*/
 
 function showOrHideFeatures() {
     var features = document.getElementById("featuresView");
@@ -53,5 +51,27 @@ function showOrHideFeatures() {
 }
 
 $(document).ready(function () {
-    $('#startDate').val(new Date().toDateInputValue());
-});​
+
+    // Key up search the products
+    $(".LoginAndRegisterForm").submit(function (e) {
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function (data) {
+                if (data != null) {
+                    alert(data);
+                }
+                window.location = '/';
+            },
+            error: function (data) {
+                alert(data.responseText);
+            },
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+});
