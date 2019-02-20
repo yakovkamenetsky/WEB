@@ -58,7 +58,17 @@ namespace FinalWebApp.Controllers
 			var res = _context.Hotel.Include(x => x.City).ThenInclude(y => y.Country).Single(x => x.Id == hotelModel.Id);
 			ViewBag.mapAddress = "https://maps.google.com/maps?q=" + UrlEncoder.Default.Encode(res.Address) + "&t=&z=13&ie=UTF8&iwloc=&output=embed";
 
-			var coordinates = await GetHotelCoords(res.Address);
+            string coordinates = null;
+
+            try
+            {
+                coordinates = await GetHotelCoords(res.Address);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Cant recieve coordinates");
+            }
+                
 			ViewBag.coords = coordinates;
 
             hotelModel.Address = res.Address;

@@ -150,8 +150,8 @@ namespace FinalWebApp.Controllers
             return _context.Order.Any(e => e.Id == id);
         }
 
-        [HttpPost("Confirm")]
-        public async Task<IActionResult> OrderHotel(Order order)
+        [HttpPost]
+        public async Task<IActionResult> Confirm(Order order)
         {
             var userId = Globals.getConnectedUser(HttpContext.Session)?.Id ?? -1;
 

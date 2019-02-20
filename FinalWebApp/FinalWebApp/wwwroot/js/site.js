@@ -65,7 +65,7 @@ $(document).ready(function () {
                 if (data != null) {
                     alert(data);
                 }
-                window.location = '/';
+                //window.location = '/';
             },
             error: function (data) {
                 alert(data.responseText);
@@ -74,5 +74,29 @@ $(document).ready(function () {
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
     });
+
+   
+    $("#orderNow").submit(function (e) {
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "post",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function (data) {
+                window.location = '/Orders/summery?orderid=' + data.id;
+            },
+            error: function (data) {
+                if (data.status === 401) {
+                    alert("You must log in");
+                    $('#LoginForm').show();
+                }
+            }
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+
 });
 

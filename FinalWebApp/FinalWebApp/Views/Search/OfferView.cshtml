@@ -4,6 +4,13 @@
     ViewData["Title"] = "OfferView";
     var checkin = Model.Checkin;
     var checkout = Model.Checkout;
+    Order order = new Order()
+    {
+        CheckInDate = Model.Checkin,
+        CheckOutDate = Model.Checkout,
+        HotelId = Model.Id
+    };
+
 }
 
 
@@ -40,10 +47,11 @@
                 </div>
                 <div class="order-button">
                     <button onclick="goBack()" class="btn btn-danger back-button">back</button>
-                    <form action="/Orders/Confirm" method="post" id="orderNow" >
-                        <input class="btn btn-warning order-now-button" type="button", >
-                            Order now
-                        </input>
+                    <form action="/Orders/Confirm" method="post" id="orderNow">
+                        <input class="btn btn-warning order-now-button" type="submit" value="Order now" form="orderNow" />
+                        <input name="CheckInDate" value="@Model.Checkin" hidden form="orderNow" />
+                        <input name="CheckOutDate" value="@Model.Checkout" hidden form="orderNow" />
+                        <input name="HotelId" value="@Model.Id" hidden form="orderNow" />
                     </form>
                 </div>
             </div>
@@ -64,33 +72,8 @@
 </div>
 
 <script>
-    $(document).ready(function () {
 
-    $("#orderNow").submit(function (e) {
-        var form = $(this);
-        var url = form.attr('action');
-
-        var order = { "checkin": "@checkin" };
-        alert(order.checkin);
-
-        //$.ajax({
-        //    type: "POST",
-        //    url: url,
-        //    data: form.serialize(), // serializes the form's elements.
-        //    success: function (data) {
-        //        if (data != null) {
-        //            alert(data);
-        //        }
-        //        window.location = '/';
-        //    },
-        //    error: function (data) {
-        //        alert(data.responseText);
-        //    },
-        //});
-
-        e.preventDefault(); // avoid to execute the actual submit of the form.
-    });
-});
+    
 
     function goBack() {
         window.history.back();
