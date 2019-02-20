@@ -85,7 +85,7 @@ $(document).ready(function () {
             url: url,
             data: form.serialize(), // serializes the form's elements.
             success: function (data) {
-                window.location = '/Orders/summery?orderid=' + data.id;
+                window.location = '/Orders/summery?id=' + data.id;
             },
             error: function (data) {
                 if (data.status === 401) {
@@ -98,5 +98,18 @@ $(document).ready(function () {
         e.preventDefault(); // avoid to execute the actual submit of the form.
     });
 
+
+    var today = new Date();
+    var tomorrow = new Date(new Date().getTime() + 48 * 60 * 60 * 1000);
+
+    $('#endDate').val(getDateString(today));
+    $('#startDate').val(getDateString(tomorrow));
+
+    function getDateString(date) {
+        var day = ("0" + date.getDate()).slice(-2);
+        var month = ("0" + (date.getMonth() + 1)).slice(-2);
+
+        return date.getFullYear() + "-" + (month) + "-" + (day);
+    }
 });
 

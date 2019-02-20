@@ -163,9 +163,16 @@ namespace FinalWebApp.Controllers
             order.UserId = userId;
             await _context.Order.AddAsync(order);
 
-             await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-            return View(order.Id);
+            return Ok(order.Id);
+        }
+
+        
+        public IActionResult Summery(int id)
+        {
+            ViewBag.orderId = id;
+            return View("SummeryView");
         }
     }
 }
