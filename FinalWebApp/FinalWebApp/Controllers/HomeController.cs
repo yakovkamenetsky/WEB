@@ -63,20 +63,22 @@ namespace FinalWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(User usr)
+        public async Task<IActionResult> Login(User usr)
         {
             if (!(usr.Email == null || usr.Email.Trim() == ""))
             {
 
-                var user = _context.User.Where(x => x.Email.Equals(usr.Email.Trim()) && x.Password.Equals(usr.Password));
-                if (user.Any())
+                var user = await _context.User
+                    .SingleOrDefaultAsync(x => x.Email == usr.Email.Trim() && x.Password == usr.Password);
+
+                if (user != null)
                 {
-                    if (user.First().IsAdmin)
+                    if (user.IsAdmin)
                     {
                         HttpContext.Session.SetString(Globals.ADMIN_SESSION_KEY, "true");
                     }
 
-                    string jsonUser = JsonConvert.SerializeObject(usr);
+                    string jsonUser = JsonConvert.SerializeObject(user);
                     HttpContext.Session.SetString(Globals.USER_SESSION_KEY, jsonUser);
 
                     return Ok(null);

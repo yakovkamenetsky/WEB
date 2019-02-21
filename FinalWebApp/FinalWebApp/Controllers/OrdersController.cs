@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalWebApp.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace FinalWebApp.Controllers
 {
@@ -147,6 +148,31 @@ namespace FinalWebApp.Controllers
         private bool OrderExists(int id)
         {
             return _context.Order.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Confirm(Order order)
+        {
+            var userId = Globals.getConnectedUser(HttpContext.Session)?.Id ?? -1;
+
+            if (userId == -1)
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, "Please log in or register");
+            }
+
+            order.UserId = userId;
+            await _context.Order.AddAsync(order);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(order.Id);
+        }
+
+        
+        public IActionResult Summery(int id)
+        {
+            ViewBag.orderId = id;
+            return View("SummeryView");
         }
     }
 }
