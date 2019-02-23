@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using FinalWebApp.Dto;
 using FinalWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -24,24 +25,57 @@ namespace FinalWebApp.Controllers
     
         public async Task<IActionResult> Index(string place, DateTime checkin, DateTime checkout)
         {
-			var res = await _context.Hotel
-				.Where(x => x.Name.Contains(place) || x.City.Name.Contains(place))
-				.ToListAsync();
-			
+            var senitized = place.Trim().ToUpper();
 
-            return View("Results", res);
+            var res = await _context.Hotel
+                .Where(x => x.Name.ToUpper().Contains(place) || x.City.Name.ToUpper().Contains(place))
+                .Select(x => new HotelModel()
+                {
+                    Address = x.Address,
+                    City = x.City.Name,
+                    Id = x.Id,
+                    Name = x.Name,
+                    Price = x.Price,
+                    Available = x.Capacity - x.Orders.Where(o => (o.CheckInDate <= checkin && o.CheckOutDate >= checkin)
+                                                                || (o.CheckInDate >= checkin && o.CheckInDate <= checkout)
+                                                                || (o.CheckInDate <= checkin && o.CheckOutDate >= checkout)
+                                                            ).Count()
+                }).ToListAsync();
+
+            var model = new ResultModel()
+            {
+                hotels = res,
+                checkin = checkin,
+                checkout = checkout
+            };
+            
+            return View("Results", model);
         }
 
-
-		public async Task<IActionResult> HotelDetails(int id)
+        [HttpPost]
+		public async Task<IActionResult> HotelDetails(HotelModel hotelModel)
 		{
-			var res = _context.Hotel.Include(x => x.City).ThenInclude(y => y.Country).Single(x => x.Id == id);
+			var res = _context.Hotel.Include(x => x.City).ThenInclude(y => y.Country).Single(x => x.Id == hotelModel.Id);
 			ViewBag.mapAddress = "https://maps.google.com/maps?q=" + UrlEncoder.Default.Encode(res.Address) + "&t=&z=13&ie=UTF8&iwloc=&output=embed";
 
-			var coordinates = await GetHotelCoords(res.Address);
+            string coordinates = null;
+
+            try
+            {
+                coordinates = await GetHotelCoords(res.Address);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Cant recieve coordinates");
+            }
+                
 			ViewBag.coords = coordinates;
 
-			return View("OfferView", res);
+            hotelModel.Address = res.Address;
+            hotelModel.Name = res.Name;
+            hotelModel.Price = res.Price;
+
+			return View("OfferView", hotelModel);
 		}
 
 		private async Task<string> GetHotelCoords(string address)

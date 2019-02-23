@@ -1,39 +1,49 @@
-﻿@model List<Hotel>;
+﻿@model FinalWebApp.Dto.ResultModel
 
 @{
-	ViewData["Title"] = "Results";
-
+    ViewData["Title"] = "Results";
+    var checkin = Model.checkin;
+    var checkout = Model.checkout;
 }
-<div class="container col-md-10">
-    <ul class="hotel-result-list">
-        @foreach (var hotel in Model)
-        {
-            <li class="row">
-                <div class="col-md-4 hotel-image">
-                    <img src="~/images/HotelsImages/@hotel.Id/image.jpg" style="object-fit:cover; width:100%" />
+
+
+<ul class="hotel-result-list">
+    @foreach (var hotel in Model.hotels)
+    {
+        <li class="row">
+            <div class="col-md-3 hotel-image">
+                <img src="~/images/HotelsImages/@hotel.Id/image.jpg" style="object-fit:cover; width:100%" />
+            </div>
+            <div class="col-md-4 hotel-title" style="height:200px">
+                <h2>
+                    @hotel.Name
+                    <br />
+                    @hotel.Address
+                </h2>
+            </div>
+            <div class="col-md-2" style="height:200px">
+                <div class="hotel-location">
+                    <h4>
+                        @hotel.Address
+                    </h4>
                 </div>
-                <div class="col-md-5 hotel-title" style="height:200px">
-                    <h2>
-                        @hotel.Name
-                        <br />
-                        </h2>
-                        <h4>
-                            @hotel.Address
-                        </h4>
-                </div>
-                <div class="col-md-3" >
+            </div>
+            <div class="col-md-3" style="height:200px">
+                <div class="hotel-ofer">
                     <h2 class="price">
-                        @hotel.Price $
+                        @hotel.Price
                     </h2>
 
-                    <form action="/Search/HotelDetails" method="get" id="offer-form"></form>
+                    <form action="/Search/HotelDetails" method="post" id="offer-form"></form>
                     <span class="input-group-btn">
-                        <button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer ></button>
+                        <input value="@checkin" name="checkin" form="offer-form" hidden/>
+                        <input value="@checkout" name="checkout" form="offer-form" hidden/>
+                        <button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer</button>
                     </span>
                 </div>
+            </div>
 
-            </li>
-        }
+        </li>
+    }
 
-    </ul>
-</div>
+</ul>
