@@ -154,6 +154,8 @@ namespace FinalWebApp.Controllers
         public async Task<IActionResult> Confirm(Order order)
         {
             var userId = Globals.getConnectedUser(HttpContext.Session)?.Id ?? -1;
+            var userEmail = Globals.getConnectedUser(HttpContext.Session)?.Email ?? "";
+            var userName = Globals.getConnectedUser(HttpContext.Session)?.Name   ?? "";
 
             if (userId == -1)
             {
@@ -161,6 +163,9 @@ namespace FinalWebApp.Controllers
             }
 
             order.UserId = userId;
+            order.Email = userEmail;
+            order.Name = userName;
+
             await _context.Order.AddAsync(order);
 
             await _context.SaveChangesAsync();
@@ -171,8 +176,8 @@ namespace FinalWebApp.Controllers
         
         public IActionResult Summery(int id)
         {
-            ViewBag.orderId = id;
-            return View("SummeryView");
+            Order order = _context.Order.First(e => e.Id == id);
+            return View("SummeryView", order);
         }
     }
 }

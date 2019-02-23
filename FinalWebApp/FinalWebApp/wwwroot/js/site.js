@@ -62,6 +62,9 @@ $(document).ready(function () {
         e.preventDefault(); // avoid to execute the actual submit of the form.
     });
 
+    $("#ok-order").on('click', function (e) {
+        window.history.back();
+    })
    
     $("#orderNow").submit(function (e) {
         var form = $(this);
@@ -72,12 +75,12 @@ $(document).ready(function () {
             url: url,
             data: form.serialize(), // serializes the form's elements.
             success: function (data) {
-                window.location = '/Orders/summery?id=' + data.id;
+                window.location = '/Orders/summery?id=' + data;
             },
             error: function (data) {
                 if (data.status === 401) {
                     alert("You must log in");
-                    $('#LoginForm').show();
+                    $('#loginButton').click();
                 }
             }
         });

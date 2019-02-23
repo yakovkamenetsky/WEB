@@ -129,3 +129,9 @@ body {
     border: groove;
     border-color: aqua;
 }
+
+.summery-view{
+    background-color: white;
+    margin-top: 4rem;
+    padding: 3rem;
+}
