@@ -28,7 +28,8 @@ namespace FinalWebApp.Controllers
             var senitized = place.Trim().ToUpper();
 
             var res = await _context.Hotel
-                .Where(x => x.Name.ToUpper().Contains(place) || x.City.Name.ToUpper().Contains(place))
+                .Where(x => x.Name.ToUpper().Contains(place) || x.City.Name.ToUpper().Contains(place) 
+				|| x.City.Country.Name.ToUpper().Contains(place))
                 .Select(x => new HotelModel()
                 {
                     Address = x.Address,
