@@ -51,7 +51,8 @@ $(document).ready(function () {
                 if (data != null) {
                     alert(data);
                 }
-                //window.location = '/';
+                window.location = "/";
+                window.history.go();
             },
             error: function (data) {
                 alert(data.responseText);
