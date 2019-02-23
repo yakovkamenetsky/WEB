@@ -4,41 +4,36 @@
 	ViewData["Title"] = "Results";
 
 }
-<ul class="hotel-result-list">
-	@foreach (var hotel in Model)
-	{
-		<li class="row">
-				<div class="col-md-3 hotel-image">
-					<img src="~/images/HotelsImages/@hotel.Id/image.jpg" style="object-fit:cover; width:100%" />
-				</div>
-				<div class="col-md-4 hotel-title" style="height:200px">
-					<h2>
-						@hotel.Name
-						<br />
-						@hotel.Address
-					</h2>
-				</div>
-				<div class="col-md-2" style="height:200px">
-					<div class="hotel-location">
-						<h4>
-							@hotel.Address
-						</h4>
-					</div>
-				</div>
-				<div class="col-md-3" style="height:200px">
-					<div class="hotel-ofer">
-						<h2 class="price">
-							@hotel.Price
-						</h2>
+<div class="container col-md-10">
+    <ul class="hotel-result-list">
+        @foreach (var hotel in Model)
+        {
+            <li class="row">
+                <div class="col-md-4 hotel-image">
+                    <img src="~/images/HotelsImages/@hotel.Id/image.jpg" style="object-fit:cover; width:100%" />
+                </div>
+                <div class="col-md-5 hotel-title" style="height:200px">
+                    <h2>
+                        @hotel.Name
+                        <br />
+                        </h2>
+                        <h4>
+                            @hotel.Address
+                        </h4>
+                </div>
+                <div class="col-md-3" >
+                    <h2 class="price">
+                        @hotel.Price $
+                    </h2>
 
-						<form action="/Search/HotelDetails" method="get" id="offer-form"></form>
-						<span class="input-group-btn">
-							<button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer</button>
-						</span>
-					</div>
-				</div>
+                    <form action="/Search/HotelDetails" method="get" id="offer-form"></form>
+                    <span class="input-group-btn">
+                        <button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer ></button>
+                    </span>
+                </div>
 
-		</li>
-	}
+            </li>
+        }
 
-</ul>
+    </ul>
+</div>
