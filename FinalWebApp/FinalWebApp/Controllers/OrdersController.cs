@@ -154,34 +154,30 @@ namespace FinalWebApp.Controllers
         public async Task<IActionResult> Confirm(Order order)
         {
             var userId = Globals.getConnectedUser(HttpContext.Session)?.Id ?? -1;
+            var userEmail = Globals.getConnectedUser(HttpContext.Session)?.Email ?? "";
+            var userName = Globals.getConnectedUser(HttpContext.Session)?.Name   ?? "";
 
-			if (userId == -1)
+            if (userId == -1)
             {
                 return StatusCode(StatusCodes.Status401Unauthorized, "Please log in or register");
             }
 
-			var email = Globals.getConnectedUser(HttpContext.Session)?.Email;
+            order.UserId = userId;
+            order.Email = userEmail;
+            order.Name = userName;
 
-			order.UserId = userId;
-			order.Email = email;
-	
             await _context.Order.AddAsync(order);
 
-            
+            await _context.SaveChangesAsync();
 
-			var hotel = _context.Hotel.FindAsync(order.HotelId);
-			hotel.Result.Capacity--;
-
-			await _context.SaveChangesAsync();
-
-			return Ok(order.Id);
+            return Ok(order.Id);
         }
 
         
         public IActionResult Summery(int id)
         {
-            ViewBag.orderId = id;
-            return View("SummeryView");
+            Order order = _context.Order.First(e => e.Id == id);
+            return View("SummeryView", order);
         }
     }
 }

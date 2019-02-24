@@ -1,9 +1,40 @@
-﻿
+﻿@model FinalWebApp.Models.Order
+
 @{
     ViewData["Title"] = "SummeryView";
 }
 
-<h2>Order Succeseded</h2>
-<h4>No. @ViewBag.orderId</h4>
-
-<div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#Products" data-numposts="5" data-order-by="time"></div>
+<div class="container col-md-8 col-lg-offset-2 summery-view">
+    <h4>Order Successfuly saved!</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Order number</td>
+                <td>@Html.DisplayFor(model => model.Id)</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>@Html.DisplayFor(model => model.Name)</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>@Html.DisplayFor(model => model.Email)</td>
+            </tr>
+            <tr>
+                <td>Check In Date</td>
+                <td>@Html.DisplayFor(model => model.CheckInDate)</td>
+            </tr>
+            <tr>
+                <td>Check out date</td>
+                <td>@Html.DisplayFor(model => model.CheckOutDate)</td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-info" id="ok-order">OK</button>
+</div>
