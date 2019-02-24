@@ -26,7 +26,7 @@
         <div class="hello-user col-md-3">
             @if (Globals.getConnectedUser(Context.Session) != null)
             {
-            <span>Hello @Globals.getConnectedUser(Context.Session).Name</span>
+                <span>Hello @Globals.getConnectedUser(Context.Session).Name</span>
             }
         </div>
         <div class="dropdown">
@@ -49,6 +49,13 @@
                 </div>
             }
         </div>
+        @if (Globals.isAdminConnected(Context.Session))
+        {
+            <button class="btn btn-outline-info" id="statisticButton" data-target="#statisticView" data-toggle="modal"
+                    type="button">
+                Statistics
+            </button>
+        }
         @if (Globals.getConnectedUser(Context.Session) == null)
         {
             <button class="btn btn-outline-warning" id="loginButton" type="button" data-toggle="modal" data-target="#loginView">
@@ -76,6 +83,10 @@
         <div class="modal fade" id="registerView" role="dialog">
             @Html.Partial("~/Views/Users/Register.cshtml")
         </div>
+
+		<div class="modal fade" id="statisticView">
+			@Html.Partial("~/Views/_ViewStatistics.cshtml")
+		</div>
 
         <partial name="_CookieConsentPartial" />
 

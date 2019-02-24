@@ -47,12 +47,12 @@
                 </div>
                 <div class="order-button">
                     <button onclick="goBack()" class="btn btn-danger back-button">back</button>
-                    <form action="/Orders/Confirm" method="post" id="orderNow">
-                        <input class="btn btn-warning order-now-button" type="submit" value="Order now" form="orderNow" />
-                        <input name="CheckInDate" value="@Model.Checkin" hidden form="orderNow" />
-                        <input name="CheckOutDate" value="@Model.Checkout" hidden form="orderNow" />
-                        <input name="HotelId" value="@Model.Id" hidden form="orderNow" />
-                    </form>
+					<form action="/Orders/Confirm" method="post" id="orderNow">
+						<input class="btn btn-warning order-now-button" type="submit" value="Order now" form="orderNow" />
+						<input name="CheckInDate" value="@Model.Checkin" hidden form="orderNow" />
+						<input name="CheckOutDate" value="@Model.Checkout" hidden form="orderNow" />
+						<input name="HotelId" value="@Model.Id" hidden form="orderNow" />
+					</form>
                 </div>
             </div>
 

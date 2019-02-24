@@ -11,5 +11,24 @@ namespace FinalWebApp.Dto
         public DateTime checkin { get; set; }
         public DateTime checkout { get; set; }
         public List<HotelModel> hotels { get; set; }
+        public string place { get; set; }
+        public int fromPrice { get; set; }
+        public int toPrice { get; set; }
+        public PriceAggregationModel Price { get; set; }
+        public string CityName { get; set; }
+        public List<CityAggregationModel> cityAggregation { get; set; }
+        public List<PriceAggregationModel> PriceAggregation { get; set; }
+    }
+
+    public class CityAggregationModel
+    {
+        public string CityName { get; set; }
+        public int Count { get; set; }
+    }
+
+    public class PriceAggregationModel
+    {
+        public float minPrice { get; set; }
+        public float MaxPrice { get; set; }
     }
 }

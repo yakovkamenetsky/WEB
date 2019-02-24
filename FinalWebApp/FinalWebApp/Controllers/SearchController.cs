@@ -23,13 +23,14 @@ namespace FinalWebApp.Controllers
 			_context = context;
 		}
     
-        public async Task<IActionResult> Index(string place, DateTime checkin, DateTime checkout)
+        public async Task<IActionResult> Index(ResultModel resultModel)
         {
-            var senitized = place.Trim().ToUpper();
+            var senitized = resultModel.place.Trim().ToUpper();
 
-            var res = await _context.Hotel
-                .Where(x => x.Name.ToUpper().Contains(place) || x.City.Name.ToUpper().Contains(place) 
-				|| x.City.Country.Name.ToUpper().Contains(place))
+            var res = _context.Hotel
+                .Where(x => x.Name.ToUpper().Contains(resultModel.place) 
+                        || x.City.Name.ToUpper().Contains(resultModel.place) 
+				        || x.City.Country.Name.ToUpper().Contains(resultModel.place))
                 .Select(x => new HotelModel()
                 {
                     Address = x.Address,
@@ -37,20 +38,55 @@ namespace FinalWebApp.Controllers
                     Id = x.Id,
                     Name = x.Name,
                     Price = x.Price,
-                    Available = x.Capacity - x.Orders.Where(o => (o.CheckInDate <= checkin && o.CheckOutDate >= checkin)
-                                                                || (o.CheckInDate >= checkin && o.CheckInDate <= checkout)
-                                                                || (o.CheckInDate <= checkin && o.CheckOutDate >= checkout)
+                    Available = x.Capacity - x.Orders.Where(o => (o.CheckInDate <= resultModel.checkin && o.CheckOutDate >= resultModel.checkin)
+                                                                || (o.CheckInDate >= resultModel.checkin && o.CheckInDate <= resultModel.checkout)
+                                                                || (o.CheckInDate <= resultModel.checkin && o.CheckOutDate >= resultModel.checkout)
                                                             ).Count()
-                }).ToListAsync();
+                });
 
-            var model = new ResultModel()
+            if (resultModel.toPrice != 0)
             {
-                hotels = res,
-                checkin = checkin,
-                checkout = checkout
+                res = res.Where(x => x.Price >= resultModel.fromPrice && x.Price <= resultModel.toPrice);
+            }
+
+            if (!string.IsNullOrEmpty(resultModel.CityName))
+            {
+                res = res.Where(x => x.City == resultModel.CityName);
+            }
+
+            res = res.OrderBy(x => x.Price);
+
+            resultModel.hotels = await res.ToListAsync();
+
+            await AddAggregations(res, resultModel);
+
+            return View("Results", resultModel);
+        }
+
+        private async Task AddAggregations(IQueryable<HotelModel> query, ResultModel resultModel)
+        {
+            if (string.IsNullOrEmpty(resultModel.CityName))
+            {
+                resultModel.cityAggregation = await query.GroupBy(x => x.City).Select(x => new CityAggregationModel()
+                {
+                    CityName = x.Key,
+                    Count = x.Count()
+                }).ToListAsync();
+            }
+
+            resultModel.PriceAggregation = new List<PriceAggregationModel>()
+            {
+                new PriceAggregationModel()
+                {
+                    minPrice = await query.MinAsync(x => x.Price),
+                    MaxPrice = await query.AverageAsync(x => x.Price)
+                },
+                new PriceAggregationModel()
+                {
+                    minPrice = await query.AverageAsync(x => x.Price),
+                    MaxPrice = await query.MaxAsync(x => x.Price)
+                }
             };
-            
-            return View("Results", model);
         }
 
         [HttpPost]
