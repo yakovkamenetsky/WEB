@@ -155,17 +155,26 @@ namespace FinalWebApp.Controllers
         {
             var userId = Globals.getConnectedUser(HttpContext.Session)?.Id ?? -1;
 
-            if (userId == -1)
+			if (userId == -1)
             {
                 return StatusCode(StatusCodes.Status401Unauthorized, "Please log in or register");
             }
 
-            order.UserId = userId;
+			var email = Globals.getConnectedUser(HttpContext.Session)?.Email;
+
+			order.UserId = userId;
+			order.Email = email;
+	
             await _context.Order.AddAsync(order);
 
-            await _context.SaveChangesAsync();
+            
 
-            return Ok(order.Id);
+			var hotel = _context.Hotel.FindAsync(order.HotelId);
+			hotel.Result.Capacity--;
+
+			await _context.SaveChangesAsync();
+
+			return Ok(order.Id);
         }
 
         

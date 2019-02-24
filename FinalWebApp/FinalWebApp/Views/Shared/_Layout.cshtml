@@ -19,46 +19,55 @@
     </environment>
 </head>
 <body class="font">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <a asp-area="" asp-controller="Home" asp-action="Index">
-            <img src="~/images/Logos/logo.png" class="col-md-2" />
-        </a>
-        <div class="col-md-3"></div>
-        <div class="dropdown">
-            @if (Globals.isAdminConnected(Context.Session))
-            {
-            <button class="btn btn-outline-info" id="editButton"
-                    type="button" data-toggle="dropdown">
-                Edit
-            </button>
-            }
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="~/Hotels">Hotels</a>
-                <a class="dropdown-item" href="~/Cities">Cities</a>
-                <a class="dropdown-item" href="~/Countries">Countries</a>
-                <a class="dropdown-item" href="~/Users">Users</a>
-                <a class="dropdown-item" href="~/Orders">Orders</a>
-            </div>
-        </div>
-        @if (Globals.getConnectedUser(Context.Session) == null)
-        {
-            <button class="btn btn-outline-warning" id="loginButton" type="button" data-toggle="modal" data-target="#loginView">
-                Login
-            </button>
-        }
-        @if (Globals.getConnectedUser(Context.Session) != null)
-        {
-            <form action="/Home/Logout" method="post">
-                <input value="Logout" class="btn btn-outline-danger" id="logoutButton" type="submit" data-toggle="modal">
-            </form>
-        }
-        @if (Globals.getConnectedUser(Context.Session) == null)
-        {
-            <button class="btn btn-outline-success" id="registerButton" type="button" data-toggle="modal" data-target="#registerView">
-                Register
-            </button>
-        }
-    </nav>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<a asp-area="" asp-controller="Home" asp-action="Index">
+			<img src="~/images/Logos/logo.png" class="col-md-2" />
+		</a>
+		<div class="col-md-3"></div>
+		<div class="dropdown">
+			@if (Globals.isAdminConnected(Context.Session))
+			{
+				<button class="btn btn-outline-info" id="editButton"
+						type="button" data-toggle="dropdown">
+					Edit
+				</button>
+			}
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" href="~/Hotels">Hotels</a>
+				<a class="dropdown-item" href="~/Cities">Cities</a>
+				<a class="dropdown-item" href="~/Countries">Countries</a>
+				<a class="dropdown-item" href="~/Users">Users</a>
+				<a class="dropdown-item" href="~/Orders">Orders</a>
+			</div>
+		</div>
+
+		@if (Globals.isAdminConnected(Context.Session))
+		{
+			<button class="btn btn-outline-info" id="statisticButton" data-target="#statisticView" data-toggle="modal"
+					type="button">
+				Show statistics
+			</button>
+		}
+
+		@if (Globals.getConnectedUser(Context.Session) == null)
+		{
+			<button class="btn btn-outline-warning" id="loginButton" type="button" data-toggle="modal" data-target="#loginView">
+				Login
+			</button>
+		}
+		@if (Globals.getConnectedUser(Context.Session) != null)
+		{
+			<form action="/Home/Logout" method="post">
+				<input value="Logout" class="btn btn-outline-danger" id="logoutButton" type="submit" data-toggle="modal">
+			</form>
+		}
+		@if (Globals.getConnectedUser(Context.Session) == null)
+		{
+			<button class="btn btn-outline-success" id="registerButton" type="button" data-toggle="modal" data-target="#registerView">
+				Register
+			</button>
+		}
+	</nav>
 
         <div class="modal fade" id="loginView" role="dialog">
             @Html.Partial("~/Views/Users/Login.cshtml")
@@ -67,6 +76,10 @@
         <div class="modal fade" id="registerView" role="dialog">
             @Html.Partial("~/Views/Users/Register.cshtml")
         </div>
+
+		<div class="modal fade" id="statisticView">
+			@Html.Partial("~/Views/_ViewStatistics.cshtml")
+		</div>
 
         <partial name="_CookieConsentPartial" />
 
