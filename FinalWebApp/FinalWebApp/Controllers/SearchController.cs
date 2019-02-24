@@ -46,7 +46,7 @@ namespace FinalWebApp.Controllers
 
             if (resultModel.toPrice != 0)
             {
-                res = res.Where(x => x.Price >= resultModel.fromPrice && x.Price <= resultModel.toPrice);
+                res = res.Where(x => x.Price <= resultModel.toPrice);
             }
 
             if (!string.IsNullOrEmpty(resultModel.CityName))

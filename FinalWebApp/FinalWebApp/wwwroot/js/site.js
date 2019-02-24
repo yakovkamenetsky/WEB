@@ -28,79 +28,79 @@ $(function () {
 });*/
 
 function showOrHideFeatures() {
-    var features = document.getElementById("featuresView");
-    if (features.style.display === "none") {
-        features.style.display = "block";
-    } else {
-        features.style.display = "none";
-    }
+	var features = document.getElementById("featuresView");
+	if (features.style.display === "none") {
+		features.style.display = "block";
+	} else {
+		features.style.display = "none";
+	}
 }
 
 $(document).ready(function () {
 
-    // Key up search the products
-    $(".LoginAndRegisterForm").submit(function (e) {
-        var form = $(this);
-        var url = form.attr('action');
+	// Key up search the products
+	$(".LoginAndRegisterForm").submit(function (e) {
+		var form = $(this);
+		var url = form.attr('action');
 
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: form.serialize(), // serializes the form's elements.
-            success: function (data) {
-                if (data != null) {
-                    alert(data);
-                }
-                window.location = "/";
-                window.history.go();
-            },
-            error: function (data) {
-                alert(data.responseText);
-            },
-        });
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: form.serialize(), // serializes the form's elements.
+			success: function (data) {
+				if (data != null) {
+					alert(data);
+				}
+				window.location = "/";
+				window.history.go();
+			},
+			error: function (data) {
+				alert(data.responseText);
+			},
+		});
 
-        e.preventDefault(); // avoid to execute the actual submit of the form.
-    });
+		e.preventDefault(); // avoid to execute the actual submit of the form.
+	});
 
-    $("#ok-order").on('click', function (e) {
-        window.history.back();
-    })
-   
-    $("#orderNow").submit(function (e) {
-        var form = $(this);
-        var url = form.attr('action');
+	$("#ok-order").on('click', function (e) {
+		window.history.back();
+	})
 
-        $.ajax({
-            type: "post",
-            url: url,
-            data: form.serialize(), // serializes the form's elements.
-            success: function (data) {
-                window.location = '/Orders/summery?id=' + data;
-            },
-            error: function (data) {
-                if (data.status === 401) {
-                    alert("You must log in");
-                    $('#loginButton').click();
-                }
-            }
-        });
+	$("#orderNow").submit(function (e) {
+		var form = $(this);
+		var url = form.attr('action');
 
-        e.preventDefault(); // avoid to execute the actual submit of the form.
-    });
+		$.ajax({
+			type: "post",
+			url: url,
+			data: form.serialize(), // serializes the form's elements.
+			success: function (data) {
+				window.location = '/Orders/summery?id=' + data;
+			},
+			error: function (data) {
+				if (data.status === 401) {
+					alert("You must log in");
+					$('#loginButton').click();
+				}
+			}
+		});
+
+		e.preventDefault(); // avoid to execute the actual submit of the form.
+	});
 
 
-    var today = new Date();
-    var tomorrow = new Date(new Date().getTime() + 48 * 60 * 60 * 1000);
+	var today = new Date();
+	var tomorrow = new Date(new Date().getTime() + 48 * 60 * 60 * 1000);
 
-    $('#endDate').val(getDateString(today));
-    $('#startDate').val(getDateString(tomorrow));
+	$('#endDate').val(getDateString(today));
+	$('#startDate').val(getDateString(tomorrow));
 
-    function getDateString(date) {
-        var day = ("0" + date.getDate()).slice(-2);
-        var month = ("0" + (date.getMonth() + 1)).slice(-2);
+	function getDateString(date) {
+		var day = ("0" + date.getDate()).slice(-2);
+		var month = ("0" + (date.getMonth() + 1)).slice(-2);
 
-        return date.getFullYear() + "-" + (month) + "-" + (day);
-    }
+		return date.getFullYear() + "-" + (month) + "-" + (day);
+	}
 
 });
 
