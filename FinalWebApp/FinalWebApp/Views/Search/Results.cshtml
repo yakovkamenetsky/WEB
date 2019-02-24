@@ -18,14 +18,13 @@
 		{
 			<input value="@cityName" name="cityName" form="filter" hidden />
 		}
-		<input value="@toPrice" name="toPrice" form="filter" hidden />
 	</form>
 	<div>
 		@if (Model.cityAggregation != null)
 		{
 			foreach (var name in Model.cityAggregation)
 			{
-				<input type="submit" value="@name.CityName (@name.Count)" name="cityName" form="filter" />
+				<input type="submit" value="@name.CityName" name="cityName" form="filter" />
 			}
 		}
 	</div>
@@ -33,7 +32,7 @@
 	<div>
 		@foreach (var price in Model.PriceAggregation)
 		{
-			<input type="submit" title="@price.minPrice - @price.MaxPrice" value="@price" name="price" form="filter"/>
+			<input type="submit" value="@price.MaxPrice" name="toprice" form="filter"/>
 		}
 		
 	</div>

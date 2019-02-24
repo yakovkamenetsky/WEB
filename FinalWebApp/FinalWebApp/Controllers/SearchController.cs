@@ -58,7 +58,8 @@ namespace FinalWebApp.Controllers
 
             resultModel.hotels = await res.ToListAsync();
 
-            await AddAggregations(res, resultModel);
+            if (res.Count() > 0)
+                await AddAggregations(res, resultModel);
 
             return View("Results", resultModel);
         }
@@ -74,19 +75,24 @@ namespace FinalWebApp.Controllers
                 }).ToListAsync();
             }
 
-            resultModel.PriceAggregation = new List<PriceAggregationModel>()
+            var agg = new List<PriceAggregationModel>();
+
+            for (int i = 1; i*500 < query.Max(x => x.Price); i++)
             {
-                new PriceAggregationModel()
+                agg.Add(new PriceAggregationModel()
                 {
-                    minPrice = await query.MinAsync(x => x.Price),
-                    MaxPrice = await query.AverageAsync(x => x.Price)
-                },
-                new PriceAggregationModel()
-                {
-                    minPrice = await query.AverageAsync(x => x.Price),
-                    MaxPrice = await query.MaxAsync(x => x.Price)
-                }
-            };
+                    minPrice = (i - 1) * 500,
+                    MaxPrice = i * 500
+                });
+            }
+
+            agg.Add(new PriceAggregationModel()
+            {
+                minPrice = agg.Max(x => x.MaxPrice),
+                MaxPrice = query.Max(x => x.Price)
+            });
+
+            resultModel.PriceAggregation = agg;
         }
 
         [HttpPost]

@@ -8,6 +8,12 @@ namespace FinalWebApp.Dto
 {
     public class ResultModel
     {
+        public ResultModel()
+        {
+            cityAggregation = new List<CityAggregationModel>();
+            PriceAggregation = new List<PriceAggregationModel>();
+        }
+
         public DateTime checkin { get; set; }
         public DateTime checkout { get; set; }
         public List<HotelModel> hotels { get; set; }
