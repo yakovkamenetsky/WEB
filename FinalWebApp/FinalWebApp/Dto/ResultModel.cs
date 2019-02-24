@@ -14,6 +14,7 @@ namespace FinalWebApp.Dto
         public string place { get; set; }
         public int fromPrice { get; set; }
         public int toPrice { get; set; }
+        public PriceAggregationModel Price { get; set; }
         public string CityName { get; set; }
         public List<CityAggregationModel> cityAggregation { get; set; }
         public List<PriceAggregationModel> PriceAggregation { get; set; }
