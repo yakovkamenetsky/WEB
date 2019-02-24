@@ -7,7 +7,7 @@
         <div class="col-md-4">
             <div class="search-item">
                 <form action="/search" method="get" id="search-form">
-                    <input type="text" autofocus required class="form-control" name="place" placeholder="Hotel, City, Country...">
+                    <input id="placeinput" required type="text" autofocus="true" class="form-control" name="place" placeholder="Hotel, City, Country...">
                 </form>
             </div>
         </div>
@@ -21,7 +21,7 @@
         </div>
         <div class="col-md-2">
             <div class="input-group-btn search-item">
-                <button class="btn btn-info" type="submit" form="search-form">Search</button>
+                <button id="placeinputbutton" class="btn btn-info" type="submit" form="search-form">Search</button>
             </div>
         </div>
     </div>

@@ -1,49 +1,80 @@
 ﻿@model FinalWebApp.Dto.ResultModel
 
 @{
-    ViewData["Title"] = "Results";
-    var checkin = Model.checkin;
-    var checkout = Model.checkout;
+	ViewData["Title"] = "Results";
+	var checkin = Model.checkin;
+	var checkout = Model.checkout;
+	var cityName = Model.CityName;
+	var toPrice = Model.toPrice;
+	var place = Model.place;
 }
 
+<aside>
+	<form action="/search" id="filter" hidden>
+		<input value="@checkin" name="checkin" form="filter" hidden />
+		<input value="@checkout" name="checkout" form="filter" hidden />
+		<input value="@place" name="place" form="filter" hidden />
+		@if (!string.IsNullOrEmpty(Model.CityName))
+		{
+			<input value="@cityName" name="cityName" form="filter" hidden />
+		}
+	</form>
+	<div>
+		@if (Model.cityAggregation != null)
+		{
+			foreach (var name in Model.cityAggregation)
+			{
+				<input type="submit" value="@name.CityName" name="cityName" form="filter" />
+			}
+		}
+	</div>
+
+	<div>
+		@foreach (var price in Model.PriceAggregation)
+		{
+			<input type="submit" value="@price.MaxPrice" name="toprice" form="filter"/>
+		}
+		
+	</div>
+</aside>
 
 <ul class="hotel-result-list">
-    @foreach (var hotel in Model.hotels)
-    {
-        <li class="row">
-            <div class="col-md-3 hotel-image">
-                <img src="~/images/HotelsImages/@hotel.Id/image.jpg" style="object-fit:cover; width:100%" />
-            </div>
-            <div class="col-md-4 hotel-title" style="height:200px">
-                <h2>
-                    @hotel.Name
-                    <br />
-                    @hotel.Address
-                </h2>
-            </div>
-            <div class="col-md-2" style="height:200px">
-                <div class="hotel-location">
-                    <h4>
-                        @hotel.Address
-                    </h4>
-                </div>
-            </div>
-            <div class="col-md-3" style="height:200px">
-                <div class="hotel-ofer">
-                    <h2 class="price">
-                        @hotel.Price
-                    </h2>
+	@foreach (var hotel in Model.hotels)
+	{
+		<li class="row">
+			<div class="col-md-3 hotel-image">
+				<img src="~/images/HotelsImages/@hotel.Id/image.jpg" style="object-fit:cover; width:100%" />
+			</div>
+			<div class="col-md-4 hotel-title" style="height:200px">
+				<h2>
+					@hotel.Name
+					<br />
+					@hotel.Address
+				</h2>
+			</div>
+			<div class="col-md-2" style="height:200px">
+				<div class="hotel-location">
+					<h4>
+						@hotel.Address
+					</h4>
+				</div>
+			</div>
+			<div class="col-md-3" style="height:200px">
+				<div class="hotel-ofer">
+					<h2 class="price">
+						@hotel.Price
+					</h2>
 
-                    <form action="/Search/HotelDetails" method="post" id="offer-form"></form>
-                    <span class="input-group-btn">
-                        <input value="@checkin" name="checkin" form="offer-form" hidden/>
-                        <input value="@checkout" name="checkout" form="offer-form" hidden/>
-                        <button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer</button>
-                    </span>
-                </div>
-            </div>
+					<form action="/Search/HotelDetails" method="post" id="offer-form"></form>
+					<span class="input-group-btn">
+						<input value="@checkin" name="checkin" form="offer-form" hidden />
+						<input value="@checkout" name="checkout" form="offer-form" hidden />
+						<button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer</button>
+					</span>
+				</div>
+			</div>
 
-        </li>
-    }
+		</li>
+	}
 
 </ul>
