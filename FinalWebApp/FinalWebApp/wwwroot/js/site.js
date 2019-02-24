@@ -101,5 +101,6 @@ $(document).ready(function () {
 
         return date.getFullYear() + "-" + (month) + "-" + (day);
     }
+
 });
 
