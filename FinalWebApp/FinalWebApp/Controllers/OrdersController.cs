@@ -174,9 +174,11 @@ namespace FinalWebApp.Controllers
         }
 
         
-        public IActionResult Summery(int id)
+        public async Task<IActionResult> Summery(int id)
         {
-            Order order = _context.Order.First(e => e.Id == id);
+            Order order = await _context.Order.Include(o => o.Hotel)
+                .FirstOrDefaultAsync(h => h.Id == id);
+
             return View("SummeryView", order);
         }
     }
