@@ -2,6 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+/*
 $(function () {
     var body = $('body');
     var backgrounds = new Array(
@@ -24,21 +25,6 @@ $(function () {
     setTimeout(nextBackground, 5000);
     body.css('background', backgrounds[0]);  
     body.css('background-size', 'cover');
-});
-/*
-$(function () {
-
-    setTimeout(checkAdmin, 5000);
-
-    function checkAdmin() {
-        var editButton = document.getElementById("editButton");
-        if (sessionStorage.getItem("isUserAdmin") == "true") {
-            editButton.style.display = "block";
-        } else {
-            editButton.style.display = "none";
-        }
-        setTimeout(checkAdmin, 5000);
-    }
 });*/
 
 function showOrHideFeatures() {
@@ -65,7 +51,8 @@ $(document).ready(function () {
                 if (data != null) {
                     alert(data);
                 }
-                //window.location = '/';
+                window.location = "/";
+                window.history.go();
             },
             error: function (data) {
                 alert(data.responseText);
@@ -75,6 +62,9 @@ $(document).ready(function () {
         e.preventDefault(); // avoid to execute the actual submit of the form.
     });
 
+    $("#ok-order").on('click', function (e) {
+        window.history.back();
+    })
    
     $("#orderNow").submit(function (e) {
         var form = $(this);
@@ -85,12 +75,12 @@ $(document).ready(function () {
             url: url,
             data: form.serialize(), // serializes the form's elements.
             success: function (data) {
-                window.location = '/Orders/summery?id=' + data.id;
+                window.location = '/Orders/summery?id=' + data;
             },
             error: function (data) {
                 if (data.status === 401) {
                     alert("You must log in");
-                    $('#LoginForm').show();
+                    $('#loginButton').click();
                 }
             }
         });
