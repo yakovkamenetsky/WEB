@@ -26,6 +26,10 @@ namespace FinalWebApp.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             var myContext = _context.User.Include(u => u.City);
             HttpContext.Session.SetString("isUserAdmin", "false");
             return View(await myContext.ToListAsync());
@@ -34,6 +38,10 @@ namespace FinalWebApp.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             ViewData["CityId"] = new SelectList(_context.City, "Id", "Id");
             return View();
         }
@@ -45,6 +53,10 @@ namespace FinalWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Email,Password,Birthday,Gender,CityId,Profession,FamilyStatus,IsAdmin")] User user)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(user);
@@ -58,6 +70,11 @@ namespace FinalWebApp.Controllers
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session) &&
+                id != Globals.getConnectedUser(HttpContext.Session)?.Id)
+            {
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -79,6 +96,10 @@ namespace FinalWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Password,Birthday,Gender,CityId,Profession,FamilyStatus,IsAdmin")] User user)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (id != user.Id)
             {
                 return NotFound();
@@ -111,6 +132,10 @@ namespace FinalWebApp.Controllers
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -132,6 +157,10 @@ namespace FinalWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             var user = await _context.User.FindAsync(id);
             _context.User.Remove(user);
             await _context.SaveChangesAsync();

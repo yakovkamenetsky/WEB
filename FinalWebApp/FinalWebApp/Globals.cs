@@ -17,7 +17,7 @@ namespace FinalWebApp
                 return null;
 
             return JsonConvert.DeserializeObject<User>(userJson);
-;        }
+        }
 
         static public bool isAdminConnected(ISession session)
         {

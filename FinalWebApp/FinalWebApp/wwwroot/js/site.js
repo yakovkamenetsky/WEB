@@ -62,6 +62,28 @@ $(document).ready(function () {
         e.preventDefault(); // avoid to execute the actual submit of the form.
     });
 
+    $("#LogoutForm").submit(function (e) {
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function (data) {
+                if (data != null) {
+                    alert(data);
+                }
+                window.location = "/";
+            },
+            error: function (data) {
+                alert(data.responseText);
+            },
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+
     $("#ok-order").on('click', function (e) {
         window.history.back();
     })

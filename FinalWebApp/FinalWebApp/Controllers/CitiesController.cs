@@ -21,6 +21,10 @@ namespace FinalWebApp.Controllers
         // GET: Cities
         public async Task<IActionResult> Index()
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             var databaseContext = _context.City.Include(c => c.Country);
             return View(await databaseContext.ToListAsync());
         }
@@ -28,6 +32,10 @@ namespace FinalWebApp.Controllers
         // GET: Cities/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -46,6 +54,10 @@ namespace FinalWebApp.Controllers
         // GET: Cities/Create
         public async Task<IActionResult> Create()
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             var q = from c in _context.Country.Include(c => c.Name)
                     select new { Value = c.Id, Text = c.Name };
 
@@ -61,6 +73,10 @@ namespace FinalWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id")] City city)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(city);
@@ -73,6 +89,10 @@ namespace FinalWebApp.Controllers
         // GET: Cities/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -96,6 +116,10 @@ namespace FinalWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id")] City city)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (id != city.Id)
             {
                 return NotFound();
@@ -127,6 +151,10 @@ namespace FinalWebApp.Controllers
         // GET: Cities/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -147,6 +175,10 @@ namespace FinalWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             var city = await _context.City.FindAsync(id);
             _context.City.Remove(city);
             await _context.SaveChangesAsync();

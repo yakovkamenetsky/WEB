@@ -135,3 +135,12 @@ body {
     margin-top: 2rem;
     padding: 1.5rem;
 }
+
+.hello-user{
+    color: whitesmoke;
+    text-align: right;
+}
+
+.navbar-buttons{
+    right: 0;
+}

@@ -23,22 +23,31 @@
         <a asp-area="" asp-controller="Home" asp-action="Index">
             <img src="~/images/Logos/logo.png" class="col-md-2" />
         </a>
-        <div class="col-md-3"></div>
-        <div class="dropdown">
-            @if (Globals.isAdminConnected(Context.Session))
+        <div class="hello-user col-md-3">
+            @if (Globals.getConnectedUser(Context.Session) != null)
             {
-            <button class="btn btn-outline-info" id="editButton"
-                    type="button" data-toggle="dropdown">
-                Edit
-            </button>
+            <span>Hello @Globals.getConnectedUser(Context.Session).Name</span>
             }
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="~/Hotels">Hotels</a>
-                <a class="dropdown-item" href="~/Cities">Cities</a>
-                <a class="dropdown-item" href="~/Countries">Countries</a>
-                <a class="dropdown-item" href="~/Users">Users</a>
-                <a class="dropdown-item" href="~/Orders">Orders</a>
-            </div>
+        </div>
+        <div class="dropdown">
+            @if (Globals.getConnectedUser(Context.Session) != null)
+            {
+                <button class="btn btn-outline-info" id="editButton"
+                        type="button" data-toggle="dropdown">
+                    Edit
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    @if (Globals.isAdminConnected(Context.Session))
+                    {
+                        <a class="dropdown-item" href="~/Hotels">Hotels</a>
+                        <a class="dropdown-item" href="~/Cities">Cities</a>
+                        <a class="dropdown-item" href="~/Countries">Countries</a>
+                        <a class="dropdown-item" href="~/Users">Users</a>
+                    }
+                    <a class="dropdown-item" href="~/Orders">Orders</a>
+                    <a class="dropdown-item" href="~/Users/Edit?id=@(Globals.getConnectedUser(Context.Session).Id)">Profile</a>
+                </div>
+            }
         </div>
         @if (Globals.getConnectedUser(Context.Session) == null)
         {
@@ -48,8 +57,8 @@
         }
         @if (Globals.getConnectedUser(Context.Session) != null)
         {
-            <form action="/Home/Logout" method="post">
-                <input value="Logout" class="btn btn-outline-danger" id="logoutButton" type="submit" data-toggle="modal">
+            <form id="LogoutForm" action="/Home/Logout" method="post">
+                <input value="Logout" class="btn btn-outline-danger" id="logoutButton" type="submit">
             </form>
         }
         @if (Globals.getConnectedUser(Context.Session) == null)
