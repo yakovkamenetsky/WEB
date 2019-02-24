@@ -49,11 +49,44 @@ namespace FinalWebApp.Controllers
                 res = res.Where(x => x.Price >= resultModel.fromPrice && x.Price <= resultModel.toPrice);
             }
 
+            if (!string.IsNullOrEmpty(resultModel.CityName))
+            {
+                res = res.Where(x => x.City == resultModel.CityName);
+            }
+
             res = res.OrderBy(x => x.Price);
 
             resultModel.hotels = await res.ToListAsync();
 
+            await AddAggregations(res, resultModel);
+
             return View("Results", resultModel);
+        }
+
+        private async Task AddAggregations(IQueryable<HotelModel> query, ResultModel resultModel)
+        {
+            if (string.IsNullOrEmpty(resultModel.CityName))
+            {
+                resultModel.cityAggregation = await query.GroupBy(x => x.City).Select(x => new CityAggregationModel()
+                {
+                    CityName = x.Key,
+                    Count = x.Count()
+                }).ToListAsync();
+            }
+
+            resultModel.PriceAggregation = new List<PriceAggregationModel>()
+            {
+                new PriceAggregationModel()
+                {
+                    minPrice = await query.MinAsync(x => x.Price),
+                    MaxPrice = await query.AverageAsync(x => x.Price)
+                },
+                new PriceAggregationModel()
+                {
+                    minPrice = await query.AverageAsync(x => x.Price),
+                    MaxPrice = await query.MaxAsync(x => x.Price)
+                }
+            };
         }
 
         [HttpPost]

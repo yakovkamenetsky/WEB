@@ -27,7 +27,7 @@ namespace FinalWebApp.Dto
 
     public class PriceAggregationModel
     {
-        public int minPrice { get; set; }
-        public int MaxPrice { get; set; }
+        public float minPrice { get; set; }
+        public float MaxPrice { get; set; }
     }
 }
