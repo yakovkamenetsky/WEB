@@ -93,7 +93,7 @@ namespace FinalWebApp.Controllers
             HttpContext.Session.SetString(Globals.ADMIN_SESSION_KEY, "false");
             HttpContext.Session.Remove(Globals.USER_SESSION_KEY);
 
-            return View("Index");
+            return Ok(null);
         }
 
         // GET: Users/Details/5

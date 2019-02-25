@@ -21,12 +21,20 @@ namespace FinalWebApp.Controllers
         // GET: Countries
         public async Task<IActionResult> Index()
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             return View(await _context.Country.ToListAsync());
         }
 
         // GET: Countries/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -45,6 +53,10 @@ namespace FinalWebApp.Controllers
         // GET: Countries/Create
         public IActionResult Create()
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             return View();
         }
 
@@ -55,6 +67,10 @@ namespace FinalWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] Country country)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(country);
@@ -67,6 +83,10 @@ namespace FinalWebApp.Controllers
         // GET: Countries/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -87,6 +107,10 @@ namespace FinalWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Country country)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (id != country.Id)
             {
                 return NotFound();
@@ -118,6 +142,10 @@ namespace FinalWebApp.Controllers
         // GET: Countries/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -138,6 +166,10 @@ namespace FinalWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             var country = await _context.Country.FindAsync(id);
             _context.Country.Remove(country);
             await _context.SaveChangesAsync();

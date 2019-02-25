@@ -22,7 +22,20 @@ namespace FinalWebApp.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Order.ToListAsync());
+            if (Globals.getConnectedUser(HttpContext.Session) == null)
+            {
+                return NotFound();
+            }
+            if (Globals.isAdminConnected(HttpContext.Session))
+            {
+                return View(await _context.Order.ToListAsync());
+            }
+            else
+            {
+                return View(await _context.Order
+                    .Where(o => o.UserId == Globals.getConnectedUser(HttpContext.Session).Id)
+                    .ToListAsync());
+            }
         }
 
         // GET: Orders/Details/5
@@ -35,7 +48,8 @@ namespace FinalWebApp.Controllers
 
             var order = await _context.Order
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (order == null)
+            if (order == null || (Globals.getConnectedUser(HttpContext.Session) == null || (!Globals.isAdminConnected(HttpContext.Session) &&
+                   order.UserId != Globals.getConnectedUser(HttpContext.Session).Id)))
             {
                 return NotFound();
             }
@@ -46,7 +60,12 @@ namespace FinalWebApp.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            return View();
+            if (Globals.getConnectedUser(HttpContext.Session) != null)
+            {
+                return View();
+            }
+
+            return NotFound();
         }
 
         // POST: Orders/Create
@@ -56,13 +75,17 @@ namespace FinalWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Email,CheckInDate,CheckOutDate,UserId,HotelId")] Order order)
         {
-            if (ModelState.IsValid)
+            if (Globals.getConnectedUser(HttpContext.Session) != null)
             {
-                _context.Add(order);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(order);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(order);
             }
-            return View(order);
+            return NotFound();
         }
 
         // GET: Orders/Edit/5
@@ -74,7 +97,8 @@ namespace FinalWebApp.Controllers
             }
 
             var order = await _context.Order.FindAsync(id);
-            if (order == null)
+            if (order == null || (Globals.getConnectedUser(HttpContext.Session) == null || (!Globals.isAdminConnected(HttpContext.Session) &&
+                   order.UserId != Globals.getConnectedUser(HttpContext.Session).Id)))
             {
                 return NotFound();
             }
@@ -88,7 +112,8 @@ namespace FinalWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,CheckInDate,CheckOutDate,UserId,HotelId")] Order order)
         {
-            if (id != order.Id)
+            if (id != order.Id || (Globals.getConnectedUser(HttpContext.Session) == null || (!Globals.isAdminConnected(HttpContext.Session) &&
+                   order.UserId != Globals.getConnectedUser(HttpContext.Session).Id)))
             {
                 return NotFound();
             }
@@ -117,9 +142,10 @@ namespace FinalWebApp.Controllers
         }
 
         // GET: Orders/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, int userId)
         {
-            if (id == null)
+            if (id == null || (Globals.getConnectedUser(HttpContext.Session) == null || (!Globals.isAdminConnected(HttpContext.Session) &&
+                   userId != Globals.getConnectedUser(HttpContext.Session).Id)))
             {
                 return NotFound();
             }
@@ -137,8 +163,14 @@ namespace FinalWebApp.Controllers
         // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, int userId)
         {
+            if (Globals.getConnectedUser(HttpContext.Session) == null || (!Globals.isAdminConnected(HttpContext.Session) &&
+                   userId != Globals.getConnectedUser(HttpContext.Session).Id))
+            {
+                return NotFound();
+            }
+
             var order = await _context.Order.FindAsync(id);
             _context.Order.Remove(order);
             await _context.SaveChangesAsync();
@@ -174,9 +206,11 @@ namespace FinalWebApp.Controllers
         }
 
         
-        public IActionResult Summery(int id)
+        public async Task<IActionResult> Summery(int id)
         {
-            Order order = _context.Order.First(e => e.Id == id);
+            Order order = await _context.Order.Include(o => o.Hotel)
+                .FirstOrDefaultAsync(h => h.Id == id);
+
             return View("SummeryView", order);
         }
     }
