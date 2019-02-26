@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using FinalWebApp.Models;
+using FinalWebApp.ML;
 
 namespace FinalWebApp
 {
@@ -33,6 +34,7 @@ namespace FinalWebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+			services.AddSingleton<PredictionEngine>();
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>

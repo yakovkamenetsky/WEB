@@ -31,8 +31,15 @@ function showOrHideFeatures() {
 	var features = document.getElementById("featuresView");
 	if (features.style.display === "none") {
 		features.style.display = "block";
+		document.getElementById("startDate").setAttribute("form", "pred");
+		document.getElementById("endDate").setAttribute("form", "pred");
+		document.getElementById("placeinputbutton").style.display = "none";
 	} else {
 		features.style.display = "none";
+		document.getElementById("placeinputbutton").style.display = "block";
+
+		document.getElementById("startDate").form = "search-form";
+		document.getElementById("endDate").form = "search-form";
 	}
 }
 

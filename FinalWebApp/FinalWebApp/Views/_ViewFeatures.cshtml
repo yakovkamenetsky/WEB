@@ -19,7 +19,7 @@
                     <td>
                         <div class="col-md-11 form-group feature">
                             <p>Gender</p>
-                            <select asp-items="Html.GetEnumSelectList<Gender>()" class="form-control" id="gender">
+                            <select asp-items="Html.GetEnumSelectList<Gender>()" class="form-control" id="gender" form="pred" name="Gender">
                                 <option>choose</option>
                             </select>
                         </div>
@@ -27,13 +27,13 @@
                     <td>
                         <div class="col-md-11 form-group feature">
                             <p>Age</p>
-                            <input class="form-control" id="age" placeholder="years"/>
+                            <input class="form-control" id="age" placeholder="years" form="pred" name="Age"/>
                         </div>
                     </td>
                     <td>
                         <div class="col-md-11 form-group feature">
                             <p>Family status</p>
-                            <select asp-items="Html.GetEnumSelectList<FamilyStatus>()" class="form-control" id="familyStatus">
+                            <select asp-items="Html.GetEnumSelectList<FamilyStatus>()" class="form-control" id="familyStatus" form="pred" name="FamilyStatus">
                                 <option>choose</option>
                             </select>
                         </div>
@@ -41,7 +41,7 @@
                     <td>
                         <div class="col-md-11 form-group feature">
                             <p>Profession</p>
-                            <input class="form-control" id="profession" placeholder="Independent/Employee"/>
+                            <input class="form-control" id="profession" placeholder="Independent/Employee" form="pred" name="Profession"/>
                         </div>
                     </td>
                 </tr>
@@ -49,7 +49,7 @@
                     <td>
                         <div class="col-md-11 form-group feature">
                             <p>Hobby</p>
-                            <input class="form-control" id="hobby" placeholder="swimming/music"/>
+                            <input class="form-control" id="hobby" placeholder="swimming/music" form="pred" name="hobby"/>
                         </div>
                     </td>
                     <td>
@@ -67,7 +67,7 @@
                     <td>
                         <div class="col-md-11 form-group feature">
                             <p>Trip's purpose</p>
-                            <select class="form-control" id="kind">
+                            <select class="form-control" id="kind" form="pred" name="purpose">
                                 <option>choose</option>
                                 <option value="solo">solo</option>
                                 <option value="couple">couple</option>
@@ -81,8 +81,10 @@
             </tbody>
         </table>
         <br />
-        <div class="text-center">
-            <button class="btn btn-info col-md-4 col-md-offset-4">special search</button>
-        </div>
+		<div class="text-center">
+			<form action="/search/Predict" id="pred" method="post">
+				<button class="btn btn-info col-md-4 col-md-offset-4">special search</button>
+			</form>
+		</div>
     </body>
 </html>
