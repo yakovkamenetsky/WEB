@@ -8,7 +8,7 @@ namespace FinalWebApp.ML
 {
 	public class HotelPrediction
 	{
-		[ColumnName("hotel id")]
-		public int PredictedHotel { get; set; }
+		[ColumnName("hotelId")]
+		public int hotelId { get; set; }
 	}
 }

@@ -24,21 +24,28 @@ namespace FinalWebApp.ML
 		other
 	};
 
+
+	public enum Profession
+	{
+		independent,
+		employee
+	};
+
 	public class OrdersData
 	{
 		[Column("0")]
 		public int Age { get; set; }
 		[Column("1")]
-		public Gender? Gender { get; set; }
+		public string Gender { get; set; }
 		[Column("2")]
 		public string Profession { get; set; }
 		[Column("3")]
-		public FamilyStatus FamilyStatus { get; set; }
+		public string FamilyStatus { get; set; }
 		[Column("4")]
-		public Hobby hobby { get; set; }
+		public string hobby { get; set; }
 		[Column("5")]
-		public Purpose purpose { get; set; }
-		[Column("6", name:"Lable")]
+		public string purpose { get; set; }
+		[Column("6")]
 		public int hotelId { get; set; }
 	}
 }
