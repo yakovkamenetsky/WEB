@@ -220,7 +220,16 @@ $(document).ready(function () {
 	var tomorrow = new Date(new Date().getTime() + 48 * 60 * 60 * 1000);
 
 	$('#endDate').val(getDateString(today));
-	$('#startDate').val(getDateString(tomorrow));
+    $('#startDate').val(getDateString(tomorrow));
+    //$('#startDate').val(getDateString(today));
+
+    $('#endDate').attr('min', getDateString(today));
+    $('#startDate').attr('min', document.getElementById('endDate').getAttribute('min'));
+
+    $('#endDate').on('change', function () {
+        $('#startDate').val(getDateString(new Date(new Date(document.getElementById('endDate').value).getTime() + 48 * 60 * 60 * 1000)));
+        $('#startDate').attr('min', document.getElementById('endDate').value);
+    });
 
 	function getDateString(date) {
 		var day = ("0" + date.getDate()).slice(-2);

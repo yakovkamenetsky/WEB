@@ -7,17 +7,21 @@
         <div class="col-md-4">
             <div class="search-item">
                 <form action="/search" method="get" id="search-form">
-                    <input id="placeinput" required type="text" autofocus="true" class="form-control" name="place" placeholder="Hotel, City, Country...">
+                    <input id="placeinput" pattern="^[A-Za-z0-9].*" required 
+                           type="text" autofocus class="form-control" 
+                           name="place" placeholder="Hotel, City, Country...">
                 </form>
             </div>
         </div>
         <div class="col-md-3">
             <label>Check In</label>
-            <input id="endDate" class="form-control" type="date" form="search-form" name="checkin" />
+            <input id="endDate" class="form-control" type="date"
+                   form="search-form" name="checkin"  onkeydown="return false"/>
         </div>
         <div class="col-md-3">
             <label>Check Out</label>
-            <input id="startDate" class="form-control" type="date" form="search-form" name="checkout"/>
+            <input id="startDate" class="form-control" type="date"
+                   form="search-form" name="checkout"  onkeydown="return false"/>
         </div>
         <div class="col-md-2">
             <div class="input-group-btn search-item">

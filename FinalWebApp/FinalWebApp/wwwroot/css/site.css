@@ -149,9 +149,9 @@ body {
 .hotel-result-list li {
     background-color: whitesmoke;
     padding-top: 1.5rem;
-    border-top-left-radius: inherit;
     border: groove;
     border-color: aqua;
+    margin-bottom: .5rem;
 }
 
 .summery-view{
@@ -175,4 +175,9 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
+}
+
+.hotel-result {
+    overflow: hidden;
+    border-radius: .8rem;
 }
