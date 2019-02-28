@@ -18,6 +18,7 @@ for details on configuring this project to bundle and minify static web assets. 
     text-align: center;
     background-color: whitesmoke;
     border-radius: 1rem;
+    height: 80%;
 }
 .statistics-container span {
     margin: 2.5rem;
@@ -29,6 +30,7 @@ for details on configuring this project to bundle and minify static web assets. 
 body {
     height: 100%;
     padding-top: 50px;
+    padding-bottom: 50px;
     background-size: cover;
     background: url(../images/mainBackground1.jpg) no-repeat center fixed;
 }
@@ -164,9 +166,6 @@ body {
 
 .navbar-buttons{
     right: 0;
-}
-body .container{
-    height:100%;
 }
 
 .footer {
