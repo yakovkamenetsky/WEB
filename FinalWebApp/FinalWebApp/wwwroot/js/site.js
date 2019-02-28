@@ -27,6 +27,14 @@ $(function () {
     body.css('background-size', 'cover');
 });*/
 
+function homeView() {
+    window.location = "/Home/Index";
+}
+
+function aboutView() {
+    window.location = "/Home/About";
+}
+
 function showOrHideFeatures() {
 	var features = document.getElementById("featuresView");
 	if (features.style.display === "none") {
