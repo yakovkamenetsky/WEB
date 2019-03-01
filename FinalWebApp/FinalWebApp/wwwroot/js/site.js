@@ -35,6 +35,10 @@ function aboutView() {
     window.location = "/Home/About";
 }
 
+function historyGo() {
+    window.history.go();
+}
+
 function showOrHideFeatures() {
 	var features = document.getElementById("featuresView");
 	if (features.style.display === "none") {
@@ -127,7 +131,6 @@ $(document).ready(function () {
             url: url,
             data: form.serialize(), // serializes the form's elements.
             success: function (data) {
-                d3.select("svg").remove();
                 histogramChart1(data.items[0]);
                 histogramChart2(data.items[1]);
             },
@@ -145,7 +148,7 @@ $(document).ready(function () {
             r = 100,                            //radius
             color = d3.scale.category20c();     //builtin range of colors
 
-
+        d3.select("#StatisticsGraph1").select("svg").remove();
         var vis = d3.select("#StatisticsGraph1")
             .append("svg:svg")              //create the SVG element inside the <body>
             .data([data])                   //associate our data with the document
@@ -187,7 +190,7 @@ $(document).ready(function () {
             h = 200,                            //height
             r = 100,                            //radius
             color = d3.scale.category20c();     //builtin range of colors
-
+        d3.select("#StatisticsGraph2").select("svg").remove();
         var vis = d3.select("#StatisticsGraph2")
             .append("svg:svg")              //create the SVG element inside the <body>
             .data([data])                   //associate our data with the document
