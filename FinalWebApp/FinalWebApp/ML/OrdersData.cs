@@ -34,18 +34,18 @@ namespace FinalWebApp.ML
 	public class OrdersData
 	{
 		[Column("0")]
-		public int Age { get; set; }
+		public float Age { get; set; }
 		[Column("1")]
-		public string Gender { get; set; }
+		public float Gender { get; set; }
 		[Column("2")]
-		public string Profession { get; set; }
+		public float Profession { get; set; }
 		[Column("3")]
-		public string FamilyStatus { get; set; }
+		public float FamilyStatus { get; set; }
 		[Column("4")]
-		public string hobby { get; set; }
+		public float hobby { get; set; }
 		[Column("5")]
-		public string purpose { get; set; }
+		public float purpose { get; set; }
 		[Column("6")]
-		public int hotelId { get; set; }
+		public float PriceForHotelId { get; set; }
 	}
 }

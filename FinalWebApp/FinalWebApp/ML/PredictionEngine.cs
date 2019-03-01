@@ -14,8 +14,8 @@ namespace FinalWebApp.ML
 	public class PredictionEngine
 	{
 
-		static readonly string _trainDataPath = Path.Combine(Environment.CurrentDirectory,  "TrainingData1.csv");
-		static readonly string _testDataPath = Path.Combine(Environment.CurrentDirectory,  "TestData1.csv");
+		static readonly string _trainDataPath = Path.Combine(Environment.CurrentDirectory,  "TrainingData.csv");
+		static readonly string _testDataPath = Path.Combine(Environment.CurrentDirectory,  "TestData.csv");
 		static readonly string _modelPath = Path.Combine(Environment.CurrentDirectory, "Model.zip");
 		static TextLoader _textLoader;
 
@@ -26,42 +26,24 @@ namespace FinalWebApp.ML
 
 		private static void Init()
 		{
-			MLContext mlContext = new MLContext(seed: 0);
 
-			_textLoader = mlContext.Data.CreateTextLoader(new TextLoader.Arguments()
-			{
-				Separators = new[] { ',' },
-				HasHeader = true,
-				Column = new[]
-				{
-					new TextLoader.Column("Age", DataKind.Num, 0),
-					new TextLoader.Column("Gender", DataKind.Text, 1),
-					new TextLoader.Column("Profession", DataKind.Text, 2),
-					new TextLoader.Column("FamilyStatus", DataKind.Text, 3),
-					new TextLoader.Column("hobby", DataKind.Text, 4),
-					new TextLoader.Column("purpose", DataKind.Text, 5),
-					new TextLoader.Column("hotelId", DataKind.Num, 6)
-				}
-			}
-			);
-
-			var model = Train(mlContext, _trainDataPath);
-			Evaluate(mlContext, model);
-			TestSinglePrediction(mlContext);
 		}
 
 		public static ITransformer Train(MLContext mlContext, string dataPath)
 		{
 			IDataView dataView = _textLoader.Read(dataPath);
 
-			var pipeline = mlContext.Transforms.CopyColumns(inputColumnName: "hotelId", outputColumnName: "Label")
-				.Append(mlContext.Transforms.Categorical.OneHotEncoding("Gender"))
-				.Append(mlContext.Transforms.Categorical.OneHotEncoding("Profession"))
-				.Append(mlContext.Transforms.Categorical.OneHotEncoding("FamilyStatus"))
-				.Append(mlContext.Transforms.Categorical.OneHotEncoding("hobby"))
-				.Append(mlContext.Transforms.Categorical.OneHotEncoding("purpose"))
+			var pipeline = mlContext.Transforms.CopyColumns(inputColumnName: "PriceForHotelId", outputColumnName: "Label")
+				//.Append(mlContext.Transforms.Categorical.OneHotEncoding("Gender"))
+				//.Append(mlContext.Transforms.Categorical.OneHotEncoding("Profession"))
+				//.Append(mlContext.Transforms.Categorical.OneHotEncoding("FamilyStatus"))
+				//.Append(mlContext.Transforms.Categorical.OneHotEncoding("hobby"))
+				//.Append(mlContext.Transforms.Categorical.OneHotEncoding("purpose"))
 				.Append(mlContext.Transforms.Concatenate("Features", "Age", "Gender", "Profession", "FamilyStatus", "hobby", "purpose"))
 				.Append(mlContext.Regression.Trainers.FastTree());
+
+
+
 
 			var model = pipeline.Fit(dataView);
 			SaveModelAsFile(mlContext, model);
@@ -72,30 +54,25 @@ namespace FinalWebApp.ML
 		{
 			IDataView dataView = _textLoader.Read(_testDataPath);
 			var predictions = model.Transform(dataView);
-			var metrics = mlContext.Regression.Evaluate(predictions, "Label", "hotelId");
+			var metrics = mlContext.Regression.Evaluate(predictions, "Label", "Score");
 		}
 
 		private static void TestSinglePrediction(MLContext mlContext)
 		{
-			ITransformer loadedModel;
-			using (var stream = new FileStream(_modelPath, FileMode.Open, FileAccess.Read, FileShare.Read))
-			{
-				loadedModel = mlContext.Model.Load(stream);
-			}
-			var predictionFunction = loadedModel.CreatePredictionEngine<OrdersData, HotelPrediction>(mlContext);
+			
 
 			var taxiTripSample = new OrdersData()
 			{
-				Age = 20,
-				Gender = "Male",
-				Profession = "employee",
-				FamilyStatus = "MarriedPlus",
-				hobby = "football",
-				purpose = "friends",
-				hotelId = 0 // To predict. Actual/Observed = 15.5
+				Age = 30,
+				Gender = 1,
+				Profession = 0,
+				FamilyStatus = 3,
+				hobby = 1,
+				purpose = 1,
+				PriceForHotelId = 0 // To predict. Actual/Observed = 15.5
 			};
 
-			var prediction = predictionFunction.Predict(taxiTripSample);
+			//var prediction = predictionFunction.Predict(taxiTripSample);
 
 		}
 
@@ -106,8 +83,49 @@ namespace FinalWebApp.ML
 		}
 		public int GetPrediction(FeaturesModel model)
 		{
-			Init();
-			return 1;
+			MLContext mlContext = new MLContext(seed: 0);
+
+			_textLoader = mlContext.Data.CreateTextLoader(new TextLoader.Arguments()
+			{
+				Separators = new[] { ',' },
+				HasHeader = true,
+				Column = new[]
+				{
+					new TextLoader.Column("Age", DataKind.Num, 0),
+					new TextLoader.Column("Gender", DataKind.Num, 1),
+					new TextLoader.Column("Profession", DataKind.Num, 2),
+					new TextLoader.Column("FamilyStatus", DataKind.Num, 3),
+					new TextLoader.Column("hobby", DataKind.Num, 4),
+					new TextLoader.Column("purpose", DataKind.Num, 5),
+					new TextLoader.Column("PriceForHotelId", DataKind.Num, 6)
+				}
+			}
+			);
+
+			var MLModel = Train(mlContext, _trainDataPath);
+			Evaluate(mlContext, MLModel);
+
+			ITransformer loadedModel;
+			using (var stream = new FileStream(_modelPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+			{
+				loadedModel = mlContext.Model.Load(stream);
+			}
+			var predictionFunction = loadedModel.CreatePredictionEngine<OrdersData, HotelPrediction>(mlContext);
+
+			var taxiTripSample = new OrdersData()
+			{
+				Age = model.Age,
+				Gender = model.Gender,
+				Profession = model.Profession,
+				FamilyStatus = model.FamilyStatus,
+				hobby = model.hobby,
+				purpose = model.purpose,
+				PriceForHotelId = 0 // To predict.
+			};
+
+			var prediction = predictionFunction.Predict(taxiTripSample);
+
+			return (int) prediction.PriceForHotelId;
 		}
 
 	}

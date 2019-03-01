@@ -13,11 +13,33 @@ namespace FinalWebApp.Models
 		Other
 	}
 
+	public enum Profession
+	{
+		Independent,
+		Employee
+	}
+
+	public enum Purpose
+	{
+		solo,
+		couple,
+		friends,
+		family,
+		other
+	}
+
 	public enum FamilyStatus{
 		Singel,
 		Married,
 		MarriedPlus,
 		Other
+	}
+
+	public enum Hobby
+	{
+		Swimming,
+		Music,
+		Sports
 	}
 
 	public class User

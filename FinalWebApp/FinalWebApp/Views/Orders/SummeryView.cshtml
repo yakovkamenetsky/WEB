@@ -5,44 +5,53 @@
 }
 
 <div class="container col-md-8 col-lg-offset-2 summery-view">
-    <h4>Order Successfuly saved!</h4>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Order number</td>
-                <td>@Html.DisplayFor(model => model.Id)</td>
-            </tr>
-            <tr>
-                <td>Name</td>
-                <td>@Html.DisplayFor(model => model.Name)</td>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td>@Html.DisplayFor(model => model.Email)</td>
-            </tr>
-            <tr>
-                <td>Hotel name</td>
-                <td>@Html.DisplayFor(model => model.Hotel.Name)</td>
-            </tr>
-            <tr>
-                <td>Hotel address</td>
-                <td>@Html.DisplayFor(model => model.Hotel.Address)</td>
-            </tr>
-            <tr>
-                <td>Check In Date</td>
-                <td>@Html.DisplayFor(model => model.CheckInDate)</td>
-            </tr>
-            <tr>
-                <td>Check out date</td>
-                <td>@Html.DisplayFor(model => model.CheckOutDate)</td>
-            </tr>
-        </tbody>
-    </table>
-    <button type="button" class="btn btn-info" id="ok-order">OK</button>
+	<div style="text-align: center;" class="container">
+		<canvas id="myCanvas" width="400" height="100" style="border:1px solid #d3d3d3;"></canvas>
+	</div>
+	<script>
+		var c = document.getElementById("myCanvas");
+		var ctx = c.getContext("2d");
+		ctx.font = "30px Arial";
+		ctx.strokeText("Order Successfuly saved!",10,50);
+	</script>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col"></th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Order number</td>
+				<td>@Html.DisplayFor(model => model.Id)</td>
+			</tr>
+			<tr>
+				<td>Name</td>
+				<td>@Html.DisplayFor(model => model.Name)</td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td>@Html.DisplayFor(model => model.Email)</td>
+			</tr>
+			<tr>
+				<td>Hotel name</td>
+				<td>@Html.DisplayFor(model => model.Hotel.Name)</td>
+			</tr>
+			<tr>
+				<td>Hotel address</td>
+				<td>@Html.DisplayFor(model => model.Hotel.Address)</td>
+			</tr>
+			<tr>
+				<td>Check In Date</td>
+				<td>@Html.DisplayFor(model => model.CheckInDate)</td>
+			</tr>
+			<tr>
+				<td>Check out date</td>
+				<td>@Html.DisplayFor(model => model.CheckOutDate)</td>
+			</tr>
+		</tbody>
+	</table>
+	<button type="button" class="btn btn-info" id="ok-order">OK</button>
 </div>

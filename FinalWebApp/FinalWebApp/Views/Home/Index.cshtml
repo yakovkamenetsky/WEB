@@ -20,7 +20,7 @@
             <input id="startDate" class="dates" type="date" form="search-form" name="checkout"/>
         </div>
         <div class="col-md-2">
-            <div class="input-group-btn search-item">
+            <div class="search-item">
                 <button id="placeinputbutton" class="btn btn-info" type="submit" form="search-form">Search</button>
             </div>
         </div>
@@ -29,7 +29,7 @@
     <div class="form-group col-md-offset-5 text-center search-item">
         <button class="btn btn-info" type="button" onclick="showOrHideFeatures()">Try our special search</button>
     </div>
-
+	
     <div class="col-md-12" id="featuresView" style="display: none">
         @Html.Partial("~/Views/_ViewFeatures.cshtml")
     </div>

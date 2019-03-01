@@ -27,7 +27,7 @@
                     <td>
                         <div class="col-md-11 form-group feature">
                             <p>Age</p>
-                            <input class="form-control" id="age" placeholder="years" form="pred" name="Age"/>
+                            <input type="number" min="1" max="120" class="form-control" id="age" placeholder="years" form="pred" name="Age"/>
                         </div>
                     </td>
                     <td>
@@ -39,43 +39,30 @@
                         </div>
                     </td>
                     <td>
-                        <div class="col-md-11 form-group feature">
-                            <p>Profession</p>
-                            <input class="form-control" id="profession" placeholder="Independent/Employee" form="pred" name="Profession"/>
-                        </div>
+						<div class="col-md-11 form-group feature">
+							<p>Profession</p>
+							<select asp-items="Html.GetEnumSelectList<Profession>()" class="form-control" id="profession" form="pred" name="Profession">
+								<option>choose</option>
+							</select>
+				</div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="col-md-11 form-group feature">
-                            <p>Hobby</p>
-                            <input class="form-control" id="hobby" placeholder="swimming/music" form="pred" name="hobby"/>
-                        </div>
+						<div class="col-md-11 form-group feature">
+							<p>Hobby</p>
+							<select asp-items="Html.GetEnumSelectList<Hobby>()" class="form-control" id="hobby" form="pred" name="hobby">
+								<option>choose</option>
+							</select>
+						</div>
                     </td>
                     <td>
-                        <div class="col-md-11 form-group feature">
-                            <p>Country of Origin</p>
-                            <input class="form-control" id="country" placeholder="country"/>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="col-md-11 form-group feature">
-                            <p>City of origin</p>
-                            <input class="form-control" id="city" placeholder="city"/>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="col-md-11 form-group feature">
-                            <p>Trip's purpose</p>
-                            <select class="form-control" id="kind" form="pred" name="purpose">
-                                <option>choose</option>
-                                <option value="solo">solo</option>
-                                <option value="couple">couple</option>
-                                <option value="friends">friends</option>
-                                <option value="family">family</option>
-                                <option value="other">other</option>
-                            </select>
-                        </div>
+						<div class="col-md-11 form-group feature">
+							<p>Trip's purpose</p>
+							<select asp-items="Html.GetEnumSelectList<Purpose>()" class="form-control" id="kind" form="pred" name="purpose">
+								<option>choose</option>
+							</select>
+					</div>
                     </td>
                 </tr>
             </tbody>

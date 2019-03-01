@@ -29,8 +29,11 @@ namespace FinalWebApp.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Predict(FeaturesModel featuresModel)
 		{
-			var hotelId = _predictionEngine.GetPrediction(featuresModel);
-			var hotelModel = _context.Hotel.Where(x => x.Id == hotelId).Select(x => new HotelModel()
+			var hotelPrice = _predictionEngine.GetPrediction(featuresModel);
+			var hotelModel = _context.Hotel
+				.OrderBy(x => Math.Abs(x.Price - hotelPrice))
+				.Take(3)
+				.Select(x => new HotelModel()
 			{
 				Address = x.Address,
 				City = x.City.Name,
