@@ -13,7 +13,7 @@ namespace FinalWebApp.ML
 {
 	public class PredictionEngine
 	{
-
+		MLContext mlContext;
 		static readonly string _trainDataPath = Path.Combine(Environment.CurrentDirectory,  "TrainingData.csv");
 		static readonly string _testDataPath = Path.Combine(Environment.CurrentDirectory,  "TestData.csv");
 		static readonly string _modelPath = Path.Combine(Environment.CurrentDirectory, "Model.zip");
@@ -21,12 +21,24 @@ namespace FinalWebApp.ML
 
 		public PredictionEngine()
 		{
-			
-		}
+			 mlContext = new MLContext(seed: 0);
 
-		private static void Init()
-		{
-
+			_textLoader = mlContext.Data.CreateTextLoader(new TextLoader.Arguments()
+			{
+				Separators = new[] { ',' },
+				HasHeader = true,
+				Column = new[]
+	{
+					new TextLoader.Column("Age", DataKind.Num, 0),
+					new TextLoader.Column("Gender", DataKind.Num, 1),
+					new TextLoader.Column("Profession", DataKind.Num, 2),
+					new TextLoader.Column("FamilyStatus", DataKind.Num, 3),
+					new TextLoader.Column("hobby", DataKind.Num, 4),
+					new TextLoader.Column("purpose", DataKind.Num, 5),
+					new TextLoader.Column("PriceForHotelId", DataKind.Num, 6)
+				}
+			}
+);
 		}
 
 		public static ITransformer Train(MLContext mlContext, string dataPath)
@@ -34,16 +46,8 @@ namespace FinalWebApp.ML
 			IDataView dataView = _textLoader.Read(dataPath);
 
 			var pipeline = mlContext.Transforms.CopyColumns(inputColumnName: "PriceForHotelId", outputColumnName: "Label")
-				//.Append(mlContext.Transforms.Categorical.OneHotEncoding("Gender"))
-				//.Append(mlContext.Transforms.Categorical.OneHotEncoding("Profession"))
-				//.Append(mlContext.Transforms.Categorical.OneHotEncoding("FamilyStatus"))
-				//.Append(mlContext.Transforms.Categorical.OneHotEncoding("hobby"))
-				//.Append(mlContext.Transforms.Categorical.OneHotEncoding("purpose"))
 				.Append(mlContext.Transforms.Concatenate("Features", "Age", "Gender", "Profession", "FamilyStatus", "hobby", "purpose"))
-				.Append(mlContext.Regression.Trainers.FastTree());
-
-
-
+				.Append(mlContext.Regression.Trainers.FastTree()); // Predict a target using a decision tree 
 
 			var model = pipeline.Fit(dataView);
 			SaveModelAsFile(mlContext, model);
@@ -59,8 +63,6 @@ namespace FinalWebApp.ML
 
 		private static void TestSinglePrediction(MLContext mlContext)
 		{
-			
-
 			var taxiTripSample = new OrdersData()
 			{
 				Age = 30,
@@ -69,7 +71,7 @@ namespace FinalWebApp.ML
 				FamilyStatus = 3,
 				hobby = 1,
 				purpose = 1,
-				PriceForHotelId = 0 // To predict. Actual/Observed = 15.5
+				PriceForHotelId = 0
 			};
 
 			//var prediction = predictionFunction.Predict(taxiTripSample);
@@ -83,25 +85,6 @@ namespace FinalWebApp.ML
 		}
 		public int GetPrediction(FeaturesModel model)
 		{
-			MLContext mlContext = new MLContext(seed: 0);
-
-			_textLoader = mlContext.Data.CreateTextLoader(new TextLoader.Arguments()
-			{
-				Separators = new[] { ',' },
-				HasHeader = true,
-				Column = new[]
-				{
-					new TextLoader.Column("Age", DataKind.Num, 0),
-					new TextLoader.Column("Gender", DataKind.Num, 1),
-					new TextLoader.Column("Profession", DataKind.Num, 2),
-					new TextLoader.Column("FamilyStatus", DataKind.Num, 3),
-					new TextLoader.Column("hobby", DataKind.Num, 4),
-					new TextLoader.Column("purpose", DataKind.Num, 5),
-					new TextLoader.Column("PriceForHotelId", DataKind.Num, 6)
-				}
-			}
-			);
-
 			var MLModel = Train(mlContext, _trainDataPath);
 			Evaluate(mlContext, MLModel);
 

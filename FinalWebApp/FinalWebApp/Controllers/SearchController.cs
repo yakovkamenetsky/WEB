@@ -32,15 +32,16 @@ namespace FinalWebApp.Controllers
 			var hotelPrice = _predictionEngine.GetPrediction(featuresModel);
 			var hotelModel = _context.Hotel
 				.OrderBy(x => Math.Abs(x.Price - hotelPrice))
-				.Take(3)
+				.Take(2)
 				.Select(x => new HotelModel()
-			{
-				Address = x.Address,
-				City = x.City.Name,
-				Id = x.Id,
-				Name = x.Name,
-				Price = x.Price,
-				Available = x.Capacity - x.Orders.Where(o => (o.CheckInDate <= featuresModel.checkin && o.CheckOutDate >= featuresModel.checkin)
+				{
+					isAiSearch = true,
+					Address = x.Address,
+					City = x.City.Name,
+					Id = x.Id,
+					Name = x.Name,
+					Price = x.Price,
+					Available = x.Capacity - x.Orders.Where(o => (o.CheckInDate <= featuresModel.checkin && o.CheckOutDate >= featuresModel.checkin)
 															|| (o.CheckInDate >= featuresModel.checkin && o.CheckInDate <= featuresModel.checkout)
 															|| (o.CheckInDate <= featuresModel.checkin && o.CheckOutDate >= featuresModel.checkout)
 															).Count()
@@ -50,6 +51,8 @@ namespace FinalWebApp.Controllers
 				hotels = await hotelModel.ToListAsync(),
 				checkin = featuresModel.checkin,
 				checkout = featuresModel.checkout,
+				isAiSearch = true, 
+				Features = featuresModel
 			};
 
 			return View("Results", resultModel);
