@@ -1,12 +1,13 @@
 ﻿@model FinalWebApp.Dto.ResultModel
 
 @{
-    ViewData["Title"] = "Results";
-    var checkin = Model.checkin;
-    var checkout = Model.checkout;
-    var cityName = Model.CityName;
-    var toPrice = Model.toPrice;
-    var place = Model.place;
+	ViewData["Title"] = "Results";
+	var checkin = Model.checkin;
+	var checkout = Model.checkout;
+	var cityName = Model.CityName;
+	var toPrice = Model.toPrice;
+	var place = Model.place;
+	var isAi = Model.isAiSearch;
 }
 <div class="row">
     <div class="col-md-3"></div>
@@ -65,14 +66,20 @@
                             @hotel.Price
                         </h2>
 
-                        <form action="/Search/HotelDetails" method="post" id="offer-form"></form>
-                        <span class="input-group-btn">
-                            <input value="@checkin" name="checkin" form="offer-form" hidden />
-                            <input value="@checkout" name="checkout" form="offer-form" hidden />
-                            <button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer</button>
-                        </span>
-                    </div>
-                </div>
+					<form action="/Search/HotelDetails" method="post" id="offer-form"></form>
+					<span class="input-group-btn">
+						<input value="@checkin" name="checkin" form="offer-form" hidden />
+						<input value="@checkout" name="checkout" form="offer-form" hidden />
+						<input value="@isAi.ToString()" name="isAiSearch" form="offer-form" hidden />
+						<input value="@Model.Features.Age" name="userAge" form="offer-form" hidden />
+						<input value="@Model.Features.Gender" name="userGender" form="offer-form" hidden />
+						<input value="@Model.Features.FamilyStatus" name="userFamilyStatus" form="offer-form" hidden />
+						<input value="@Model.Features.hobby" name="userHobby" form="offer-form" hidden />
+						<input value="@Model.Features.purpose" name="userPurpose" form="offer-form" hidden />
+						<button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer</button>
+					</span>
+				</div>
+			</div>
 
             </li>
         }

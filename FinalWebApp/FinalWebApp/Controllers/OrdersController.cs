@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalWebApp.Models;
 using Microsoft.AspNetCore.Http;
+using FinalWebApp.Dto;
+using System.IO;
 
 namespace FinalWebApp.Controllers
 {
@@ -182,31 +184,46 @@ namespace FinalWebApp.Controllers
             return _context.Order.Any(e => e.Id == id);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Confirm(Order order)
-        {
-            var userId = Globals.getConnectedUser(HttpContext.Session)?.Id ?? -1;
-            var userEmail = Globals.getConnectedUser(HttpContext.Session)?.Email ?? "";
-            var userName = Globals.getConnectedUser(HttpContext.Session)?.Name   ?? "";
+		[HttpPost]
+		public async Task<IActionResult> Confirm(OrderModel orderModel)
+		{
+			var userId = Globals.getConnectedUser(HttpContext.Session)?.Id ?? -1;
+			var userEmail = Globals.getConnectedUser(HttpContext.Session)?.Email ?? "";
+			var userName = Globals.getConnectedUser(HttpContext.Session)?.Name ?? "";
 
-            if (userId == -1)
-            {
-                return StatusCode(StatusCodes.Status401Unauthorized, "Please log in or register");
-            }
+			if (userId == -1)
+			{
+				return StatusCode(StatusCodes.Status401Unauthorized, "Please log in or register");
+			}
 
-            order.UserId = userId;
-            order.Email = userEmail;
-            order.Name = userName;
+			var order = new Order()
+			{
+				UserId = userId,
+				Email = userEmail,
+				Name = userName,
+				HotelId = orderModel.HotelId
+			};
 
             await _context.Order.AddAsync(order);
 
             await _context.SaveChangesAsync();
 
+			if (orderModel.isAi)
+			{
+				SaveToTrainData(orderModel);
+			}
+
             return Ok(order.Id);
         }
 
-        
-        public async Task<IActionResult> Summery(int id)
+		private void SaveToTrainData(OrderModel orderModel)
+		{
+			var price = _context.Hotel.FirstOrDefault(x => x.Id == orderModel.HotelId)?.Price;
+			var line = "\n" + string.Join(",", orderModel.userAge, orderModel.userGender, orderModel.userProfession, orderModel.userFamilyStatus, orderModel.userHobby, orderModel.userPurpose, price);
+			System.IO.File.AppendAllTextAsync("TrainingData.csv", line);
+		}
+
+		public async Task<IActionResult> Summery(int id)
         {
             Order order = await _context.Order.Include(o => o.Hotel)
                 .FirstOrDefaultAsync(h => h.Id == id);

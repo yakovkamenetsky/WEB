@@ -1,4 +1,5 @@
-﻿using FinalWebApp.Models;
+﻿using FinalWebApp.ML;
+using FinalWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,9 @@ namespace FinalWebApp.Dto
             PriceAggregation = new List<PriceAggregationModel>();
         }
 
-        public DateTime checkin { get; set; }
+		public FeaturesModel Features { get; set; }
+		public bool isAiSearch { get; set; }
+		public DateTime checkin { get; set; }
         public DateTime checkout { get; set; }
         public List<HotelModel> hotels { get; set; }
         public string place { get; set; }

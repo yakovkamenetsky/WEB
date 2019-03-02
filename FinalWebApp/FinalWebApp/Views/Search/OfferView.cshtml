@@ -1,15 +1,17 @@
 ﻿@model FinalWebApp.Dto.HotelModel
 
 @{
-    ViewData["Title"] = "OfferView";
-    var checkin = Model.Checkin;
-    var checkout = Model.Checkout;
-    Order order = new Order()
-    {
-        CheckInDate = Model.Checkin,
-        CheckOutDate = Model.Checkout,
-        HotelId = Model.Id
-    };
+	ViewData["Title"] = "OfferView";
+	var checkin = Model.Checkin;
+	var checkout = Model.Checkout;
+	var isAi = Model.isAiSearch;
+	FinalWebApp.Dto.OrderModel order = new FinalWebApp.Dto.OrderModel()
+	{
+		CheckInDate = Model.Checkin,
+		CheckOutDate = Model.Checkout,
+		HotelId = Model.Id,
+		isAi = Model.isAiSearch
+	};
 
 }
 
@@ -51,6 +53,12 @@
 						<input class="btn btn-warning order-now-button" type="submit" value="Order now" form="orderNow" />
 						<input name="CheckInDate" value="@Model.Checkin" hidden form="orderNow" />
 						<input name="CheckOutDate" value="@Model.Checkout" hidden form="orderNow" />
+						<input name="isAi" value="@Model.isAiSearch.ToString()" hidden form="orderNow" />
+						<input value="@Model.userAge" name="userAge" form="orderNow" hidden />
+						<input value="@Model.userGender" name="userGender" form="orderNow" hidden />
+						<input value="@Model.userFamilyStatus" name="userFamilyStatus" form="orderNow" hidden />
+						<input value="@Model.userHobby" name="userHobby" form="orderNow" hidden />
+						<input value="@Model.userPurpose" name="userPurpose" form="orderNow" hidden />
 						<input name="HotelId" value="@Model.Id" hidden form="orderNow" />
 					</form>
                 </div>
