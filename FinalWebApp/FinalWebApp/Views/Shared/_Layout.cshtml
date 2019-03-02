@@ -19,9 +19,9 @@
     </environment>
 </head>
 <body class="font">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <a asp-area="" asp-controller="Home" asp-action="Index">
-            <img src="~/images/Logos/logo.png" class="col-md-2" />
+            <img src="~/images/Logos/logo.png" class="logo col-md-2" />
         </a>
         <div class="hello-user col-md-3">
             @if (Globals.getConnectedUser(Context.Session) != null)
@@ -32,7 +32,7 @@
         <div class="dropdown">
             @if (Globals.getConnectedUser(Context.Session) != null)
             {
-                <button class="btn btn-outline-info" id="editButton"
+                <button class="input btn btn-outline-info" id="editButton"
                         type="button" data-toggle="dropdown">
                     Edit
                 </button>
@@ -51,26 +51,26 @@
         </div>
         @if (Globals.isAdminConnected(Context.Session))
         {
-            <button class="btn btn-outline-info" id="statisticButton" data-target="#statisticView" data-toggle="modal"
+            <button class="input btn btn-outline-info" id="statisticButton" data-target="#statisticView" data-toggle="modal"
                     type="button">
                 Statistics
             </button>
         }
         @if (Globals.getConnectedUser(Context.Session) == null)
         {
-            <button class="btn btn-outline-warning" id="loginButton" type="button" data-toggle="modal" data-target="#loginView">
+            <button class="input btn btn-outline-warning" id="loginButton" type="button" data-toggle="modal" data-target="#loginView">
                 Login
             </button>
         }
         @if (Globals.getConnectedUser(Context.Session) != null)
         {
             <form id="LogoutForm" action="/Home/Logout" method="post">
-                <input value="Logout" class="btn btn-outline-danger" id="logoutButton" type="submit">
+                <input value="Logout" class="input btn btn-outline-danger" id="logoutButton" type="submit">
             </form>
         }
         @if (Globals.getConnectedUser(Context.Session) == null)
         {
-            <button class="btn btn-outline-success" id="registerButton" type="button" data-toggle="modal" data-target="#registerView">
+            <button class="input btn btn-outline-success" id="registerButton" type="button" data-toggle="modal" data-target="#registerView">
                 Register
             </button>
         }

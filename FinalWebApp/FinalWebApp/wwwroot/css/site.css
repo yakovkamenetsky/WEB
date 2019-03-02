@@ -12,8 +12,11 @@ for details on configuring this project to bundle and minify static web assets. 
 body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background: url(../images/mainBackground1.jpg) no-repeat center fixed;
+    background: url(../images/backslplash2.png) no-repeat center fixed;
     background-size: cover;
+}
+.navbar{
+    background-color:dimgrey;
 }
 
 /* Wrapping element */
@@ -47,12 +50,39 @@ body {
     }
 }
 
+.logo{
+    margin-left:4rem;
+}
+
+.headline{
+    margin-top:10rem;
+    font-size:50px !important;
+    font-weight:800;
+    color: dimgray;
+    text-align:center;
+    margin-right: auto;
+    margin-left: auto;  
+}
+
+.input {
+    border-radius: 40px !important;
+    border-width: 1.5px !important;
+    border-color: darkcyan !important;
+    
+}
+
+label{
+    color:gray;
+    font-size:small;
+    font-style:italic;
+}
+
 .navbar-dark {
     background-color: darkslategrey;
 }
 
 .search-item {
-    margin: 2rem 2rem 0 2rem;
+    margin: 2rem 0rem 0 0rem;
 }
 
 .search-item .p {
@@ -79,6 +109,10 @@ body {
     width: 357px;
 }
 
+.ai{
+    margin-top:3rem ;
+    padding: 20px !important;
+}
 .navbar button {
     margin-left: 4px;
 }
