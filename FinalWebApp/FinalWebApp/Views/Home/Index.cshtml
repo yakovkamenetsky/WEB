@@ -1,37 +1,41 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<div class="col-md-10 center-block headline">
+    Welcome to Holidai
 
+</div>
 <div class="container-fluid">
     <div class="row search-form">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="search-item">
                 <form action="/search" method="get" id="search-form">
                     <input id="placeinput" pattern="^[A-Za-z0-9].*" required 
-                           type="text" autofocus class="form-control" 
+                           type="text" autofocus class="input form-control" 
                            name="place" placeholder="Hotel, City, Country...">
                 </form>
             </div>
         </div>
+        
         <div class="col-md-3">
             <label>Check In</label>
-            <input id="endDate" class="form-control" type="date"
+            <input id="endDate" class="input form-control" type="date"
                    form="search-form" name="checkin"  onkeydown="return false"/>
         </div>
         <div class="col-md-3">
             <label>Check Out</label>
-            <input id="startDate" class="form-control" type="date"
+            <input id="startDate" class="input form-control" type="date"
                    form="search-form" name="checkout"  onkeydown="return false"/>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-1">
             <div class="input-group-btn search-item">
-                <button id="placeinputbutton" class="btn btn-info" type="submit" form="search-form">Search</button>
+                <button id="placeinputbutton" class="input btn btn-info input" type="submit" form="search-form">Search</button>
             </div>
         </div>
     </div>
 
     <div class="form-group col-md-offset-5 text-center search-item">
-        <button class="btn btn-info" type="button" onclick="showOrHideFeatures()">Try our special search</button>
+        <button class="input btn btn-info ai" type="button" onclick="showOrHideFeatures()">Try our AI-based search</button>
     </div>
 
     <div class="col-md-12" id="featuresView" style="display: none">

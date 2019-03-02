@@ -56,7 +56,7 @@ $(document).ready(function () {
 			url: url,
 			data: form.serialize(), // serializes the form's elements.
 			success: function (data) {
-				if (data != null) {
+				if (data !== null) {
 					alert(data);
 				}
 				window.location = "/";
@@ -79,7 +79,7 @@ $(document).ready(function () {
             url: url,
             data: form.serialize(), // serializes the form's elements.
             success: function (data) {
-                if (data != null) {
+                if (data === null) {
                     alert(data);
                 }
                 window.location = "/";
