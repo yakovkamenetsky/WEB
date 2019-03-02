@@ -8,10 +8,29 @@ for details on configuring this project to bundle and minify static web assets. 
 	src: local('Varela Round Regular'), local('VarelaRound-Regular'), url(https://fonts.gstatic.com/s/varelaround/v10/w8gdH283Tvk__Lua32TysjIfp8uP.woff2) format('woff2');
 	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+.statistics-container  {
+    margin-top: 5rem;
+    padding: 5rem;
+    text-align: center;
+    background-color: whitesmoke;
+    border-radius: 1rem;
+    height: 80%;
+}
+.statistics-container span {
+    margin: 2.5rem;
+}
+.statistics-container button {
+    bottom: 0.5rem;
+}
 
 body {
+    height: 100%;
     padding-top: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 50px;
     background: url(../images/backslplash2.png) no-repeat center fixed;
     background-size: cover;
 }
@@ -85,12 +104,15 @@ label{
     margin: 2rem 0rem 0 0rem;
 }
 
-.search-item .p {
-    margin-right: 1rem;
-}
+    .search-item .p {
+        margin-right: 1rem;
+        margin-top: 2rem;
+        
+    }
 
 .search-form {
-    margin-top: 4rem;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
 }
 
 .mapouter {
@@ -159,9 +181,9 @@ label{
 .hotel-result-list li {
     background-color: whitesmoke;
     padding-top: 1.5rem;
-    border-top-left-radius: inherit;
     border: groove;
     border-color: aqua;
+    margin-bottom: .5rem;
 }
 
 .summery-view{
@@ -177,4 +199,35 @@ label{
 
 .navbar-buttons{
     right: 0;
+}
+
+.footer {
+    position: fixed;
+    text-align: center;
+    column-count: 3;
+    background-color: darkslategray;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.footer div{
+    padding-top: 1rem;
+}
+
+.hotel-result {
+    overflow: hidden;
+    border-radius: .8rem;
+}
+
+.footer-link:hover {
+    cursor: pointer;
+}
+
+p {
+    color: white;
+}
+
+footer {
+    bottom: 0;
 }

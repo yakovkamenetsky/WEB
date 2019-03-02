@@ -10,18 +10,22 @@
         <div class="col-md-5">
             <div class="search-item">
                 <form action="/search" method="get" id="search-form">
-                    <input id="placeinput" required type="text" autofocus="true" class="input form-control" name="place" placeholder="Hotel, City, Country...">
+                    <input id="placeinput" pattern="^[A-Za-z0-9].*" required 
+                           type="text" autofocus class="input form-control" 
+                           name="place" placeholder="Hotel, City, Country...">
                 </form>
             </div>
         </div>
         
         <div class="col-md-3">
-            <label>Check-in</label>
-            <input id="endDate" class="input form-control" type="date" form="search-form" name="checkin" />
+            <label>Check In</label>
+            <input id="endDate" class="input form-control" type="date"
+                   form="search-form" name="checkin"  onkeydown="return false"/>
         </div>
         <div class="col-md-3">
-            <label>Check-out</label>
-            <input id="startDate" class="input form-control " type="date" form="search-form" name="checkout"/>
+            <label>Check Out</label>
+            <input id="startDate" class="input form-control" type="date"
+                   form="search-form" name="checkout"  onkeydown="return false"/>
         </div>
         <div class="col-md-1">
             <div class="input-group-btn search-item">

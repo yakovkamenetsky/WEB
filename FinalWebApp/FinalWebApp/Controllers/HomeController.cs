@@ -56,6 +56,30 @@ namespace FinalWebApp.Controllers
             return StatusCode(StatusCodes.Status401Unauthorized, "Enter Email and Password correctly!");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Statistics()
+        {
+            var orderPerCity = await _context.Order
+                .GroupBy(
+                    p => p.Hotel.City.Name).Select(x => new { Name = x.Key, Count = x.Count() }
+                ).ToListAsync();
+
+            var topCityCount = orderPerCity.Max(city => city.Count);
+            var topCity = orderPerCity.First(city => city.Count == topCityCount);
+
+            var ordersPerHotel = await _context.Order.Where(o => o.Hotel.City.Name == topCity.Name)
+                .GroupBy(
+                    p => p.Hotel.Name).Select(x => new { Name = x.Key, Count = x.Count() }
+                ).ToListAsync();
+
+            var results = new
+            {
+                items = new[] { orderPerCity, ordersPerHotel }
+            };
+
+            return Json(results);
+        }
+
         [HttpGet]
         public IActionResult Login()
         {
