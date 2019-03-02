@@ -12,8 +12,32 @@ for details on configuring this project to bundle and minify static web assets. 
     float: none;
     margin: 0 auto;
 }
-.statistics-container  {
-    margin-top: 5rem;
+.modal-statistics {
+    max-width: 800px;
+    margin: 1.75rem auto;
+}
+
+@media (min-width: 576px) {
+    .modal-dialog.modal-statistics {
+        max-width: 100%;
+    }
+}
+
+.filter {
+    position: fixed;
+    background-color: white;
+    padding-left: 1rem;
+}
+
+#filter {
+    padding: 2rem;
+}
+
+.filter-label {
+    margin-top: 2rem;
+}
+
+.statistics-container {
     padding: 5rem;
     text-align: center;
     background-color: whitesmoke;
@@ -114,7 +138,7 @@ label{
 
 .search-form {
     margin-top: 5rem;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
 }
 
 .mapouter {
@@ -179,7 +203,7 @@ label{
 .offer {
     padding: 0.5rem;
     background-color: whitesmoke;
-    margin-top: 8rem;
+    margin-top: 3rem;
     width: 100%;
     height: 100%;
 }
@@ -236,4 +260,8 @@ p {
 
 footer {
     bottom: 0;
+}
+
+.statistics-graphs {
+    width: 800px;
 }
