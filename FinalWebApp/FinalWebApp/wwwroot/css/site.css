@@ -34,8 +34,10 @@ body {
     background: url(../images/backslplash2.png) no-repeat center fixed;
     background-size: cover;
 }
-.navbar{
-    background-color:dimgrey;
+.navbar {
+    background-color: darkslategray;
+    padding-left: 8rem !important;
+    padding-right: 8rem !important;
 }
 
 /* Wrapping element */
@@ -70,7 +72,7 @@ body {
 }
 
 .logo{
-    margin-left:4rem;
+    
 }
 
 .headline{
@@ -129,6 +131,10 @@ label{
 .carousel-item img {
     height: 300px;
     width: 357px;
+}
+
+.welcom{
+    margin-bottom:2rem;
 }
 
 .ai{
