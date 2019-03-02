@@ -8,87 +8,88 @@
     var toPrice = Model.toPrice;
     var place = Model.place;
 }
-
-<aside>
-    <form action="/search" id="filter" hidden>
-        <input value="@checkin" name="checkin" form="filter" hidden />
-        <input value="@checkout" name="checkout" form="filter" hidden />
-        <input value="@place" name="place" form="filter" hidden />
-        @if (!string.IsNullOrEmpty(Model.CityName))
-        {
-            <input value="@cityName" name="cityName" form="filter" hidden />
-        }
-    </form>
-    <div>
-        @if (Model.cityAggregation != null)
-        {
-            foreach (var name in Model.cityAggregation)
+<div class="row">
+    <div class="col-md-3"></div>
+    <aside class="filter hotel-result-list col-md-2">
+        <form action="/search" id="filter" hidden>
+            <input value="@checkin" name="checkin" form="filter" hidden />
+            <input value="@checkout" name="checkout" form="filter" hidden />
+            <input value="@place" name="place" form="filter" hidden />
+            @if (!string.IsNullOrEmpty(Model.CityName))
             {
-                <input type="submit" value="@name.CityName" name="cityName" form="filter" />
+                <input value="@cityName" name="cityName" form="filter" hidden />
+                <br />
             }
-        }
-    </div>
-
-    <div>
-        @foreach (var price in Model.PriceAggregation)
-        {
-            <input type="submit" value="@price.MaxPrice" name="toprice" form="filter" />
-        }
-
-    </div>
-</aside>
-
-<ul class="hotel-result-list">
-    @foreach (var hotel in Model.hotels)
-    {
-        <li class="row hotel-result">
-            <div class="col-md-3 hotel-image">
-                <img src="~/images/HotelsImages/@hotel.Id/image.jpg" style="object-fit:cover; width:100%" />
-            </div>
-            <div class="col-md-4 hotel-title" style="height:200px">
-                <h2>
-                    @hotel.Name
+        </form>
+        <div>
+            @if (Model.cityAggregation.Count() != 0)
+            {
+                <div class="filter-label">Filter by city</div>
+                foreach (var name in Model.cityAggregation)
+                {
+                    <input type="submit" value="@name.CityName" name="cityName" form="filter" />
                     <br />
-                    @hotel.Address
-                </h2>
-            </div>
-            <div class="col-md-2" style="height:200px">
-                <div class="hotel-location">
-                    <h4>
-                        @hotel.Address
-                    </h4>
-                </div>
-            </div>
-            <div class="col-md-3" style="height:200px">
-                <div class="hotel-ofer">
-                    <h2 class="price">
-                        @hotel.Price
-                    </h2>
+                }
+            }
+        </div>
 
-                    <form action="/Search/HotelDetails" method="post" id="offer-form"></form>
-                    <span class="input-group-btn">
-                        <input value="@checkin" name="checkin" form="offer-form" hidden />
-                        <input value="@checkout" name="checkout" form="offer-form" hidden />
-                        <button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer</button>
-                    </span>
-                </div>
-            </div>
+        <div class="filter-label">Filter by price</div>
+        <div>
+            @foreach (var price in Model.PriceAggregation.OrderByDescending(x => x.MaxPrice))
+            {
+                <input type="submit" value="Less then @price.MaxPrice" name="toprice" form="filter" />
+                <br />
+            }
 
-        </li>
-    }
-    @if (Model.hotels.Count == 0)
-    {
-        var text =  "" + Model.place + "'";
-        if (Model.toPrice != 0)
+        </div>
+    </aside>
+    <ul class="hotel-result-list col-md-9 col-md-offset-3">
+        @foreach (var hotel in Model.hotels)
         {
-            text += " and lower than " + Model.toPrice;
+            <li class="row hotel-result col-md-9 col-md-offset-3">
+                <div class="col-md-3 hotel-image">
+                    <img src="~/images/HotelsImages/@hotel.Id/image.jpg" style="object-fit:cover; width:100%" />
+                </div>
+                <div class="col-md-4 hotel-title" style="height:200px">
+                    <h2>
+                        @hotel.Name
+                        <br />
+                    </h2>
+                    <h5>
+                        @hotel.Address
+                    </h5>
+                </div>
+                <div class="col-md-3" style="height:200px">
+                    <div class="hotel-ofer">
+                        <h2 class="price">
+                            @hotel.Price
+                        </h2>
+
+                        <form action="/Search/HotelDetails" method="post" id="offer-form"></form>
+                        <span class="input-group-btn">
+                            <input value="@checkin" name="checkin" form="offer-form" hidden />
+                            <input value="@checkout" name="checkout" form="offer-form" hidden />
+                            <button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer</button>
+                        </span>
+                    </div>
+                </div>
+
+            </li>
+        }
+        @if (Model.hotels.Count == 0)
+        {
+            var text = "" + Model.place + "'";
+            if (Model.toPrice != 0)
+            {
+                text += " and lower than " + Model.toPrice;
+            }
+
+            <div class="no-results">
+                <h4>
+                    no results found for  '@text'
+                </h4>
+            </div>
         }
 
-        <div class="no-results">
-            <h4>
-                no results found for  '@text'
-            </h4>
-        </div>
-    }
-
-</ul>
+    </ul>
+</div>
