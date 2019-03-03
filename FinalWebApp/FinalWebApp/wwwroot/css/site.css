@@ -16,6 +16,21 @@ for details on configuring this project to bundle and minify static web assets. 
     max-width: 1000px;
     margin: 1.75rem auto;
 }
+.centertext{
+    text-align:center;
+}
+.ordernow{
+    margin-top: 2rem;
+    height:3rem;
+    width:10rem;
+    background-color:forestgreen;
+}
+.notavailable{
+    color:darkred;
+}
+.availabe{
+    color:darkgreen;
+}
 
 @media (min-width: 576px) {
     .modal-dialog.modal-statistics {

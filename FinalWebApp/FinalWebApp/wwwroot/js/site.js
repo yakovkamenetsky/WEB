@@ -50,8 +50,8 @@ function showOrHideFeatures() {
 		features.style.display = "none";
 		document.getElementById("placeinputbutton").style.display = "block";
 
-		document.getElementById("startDate").form = "search-form";
-		document.getElementById("endDate").form = "search-form";
+		document.getElementById("startDate").setAttribute("form", "search-form");
+		document.getElementById("endDate").setAttribute ("form","search-form");
 	}
 }
 
