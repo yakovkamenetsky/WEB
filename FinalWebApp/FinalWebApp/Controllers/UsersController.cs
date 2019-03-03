@@ -85,7 +85,7 @@ namespace FinalWebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["CityId"] = new SelectList(_context.City, "Id", "Id", user.CityId);
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Name", user.CityId);
             return View(user);
         }
 
