@@ -27,6 +27,7 @@
             <input id="startDate" class="input form-control" type="date"
                    form="search-form" name="checkout"  onkeydown="return false"/>
         </div>
+        
         <div class="col-md-1">
             <div class="input-group-btn search-item">
                 <button id="placeinputbutton" class="input btn btn-info input" type="submit" form="search-form">Search</button>
@@ -37,7 +38,7 @@
     <div class="form-group col-md-offset-5 text-center search-item">
         <button class="input btn btn-info ai" type="button" onclick="showOrHideFeatures()">Try our AI-based search</button>
     </div>
-
+	
     <div class="col-md-12" id="featuresView" style="display: none">
         @Html.Partial("~/Views/_ViewFeatures.cshtml")
     </div>

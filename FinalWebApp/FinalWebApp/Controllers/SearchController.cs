@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using FinalWebApp.Dto;
+using FinalWebApp.ML;
 using FinalWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -17,13 +18,48 @@ namespace FinalWebApp.Controllers
     public class SearchController : Controller
 	{ 
 		private readonly MyContext _context;
+		private readonly PredictionEngine _predictionEngine;
 
-		public SearchController(MyContext context)
+		public SearchController(MyContext context, PredictionEngine predictionEngine)
 		{
 			_context = context;
+			_predictionEngine = predictionEngine;
 		}
-    
-        public async Task<IActionResult> Index(ResultModel resultModel)
+
+		[HttpPost]
+		public async Task<IActionResult> Predict(FeaturesModel featuresModel)
+		{
+			var hotelPrice = _predictionEngine.GetPrediction(featuresModel);
+			var hotelModel = _context.Hotel
+				.OrderBy(x => Math.Abs(x.Price - hotelPrice))
+				.Take(2)
+				.Select(x => new HotelModel()
+				{
+					isAiSearch = true,
+					Address = x.Address,
+					City = x.City.Name,
+					Id = x.Id,
+					Name = x.Name,
+					Price = x.Price,
+					Available = x.Capacity - x.Orders.Where(o => (o.CheckInDate <= featuresModel.checkin && o.CheckOutDate >= featuresModel.checkin)
+															|| (o.CheckInDate >= featuresModel.checkin && o.CheckInDate <= featuresModel.checkout)
+															|| (o.CheckInDate <= featuresModel.checkin && o.CheckOutDate >= featuresModel.checkout)
+															).Count()
+			});
+			var resultModel = new ResultModel()
+			{
+				hotels = await hotelModel.ToListAsync(),
+				checkin = featuresModel.checkin,
+				checkout = featuresModel.checkout,
+				isAiSearch = true, 
+				Features = featuresModel
+			};
+
+			return View("Results", resultModel);
+		}
+
+
+		public async Task<IActionResult> Index(ResultModel resultModel)
         {
             var senitized = resultModel.place.Trim().ToUpper();
 

@@ -265,3 +265,15 @@ footer {
 .statistics-graphs {
     width: 800px;
 }
+#placeinputbutton {
+	color: black;
+	width: 80px;
+	height: 35px;
+	background: yellow;
+	transition: width 2s, height 2s;
+}
+
+	#placeinputbutton:hover {
+		color: black;
+		width: 150px;
+	}
