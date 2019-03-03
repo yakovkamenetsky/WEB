@@ -201,7 +201,9 @@ namespace FinalWebApp.Controllers
 				UserId = userId,
 				Email = userEmail,
 				Name = userName,
-				HotelId = orderModel.HotelId
+				HotelId = orderModel.HotelId,
+				CheckInDate = orderModel.CheckInDate,
+				CheckOutDate = orderModel.CheckOutDate
 			};
 
             await _context.Order.AddAsync(order);
