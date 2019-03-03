@@ -19,22 +19,20 @@
                     <td>
                         <div class="col-md-11 form-group feature">
                             <p>Gender</p>
-                            <select asp-items="Html.GetEnumSelectList<Gender>()" class="form-control" id="gender" form="pred" name="Gender">
-                                <option>choose</option>
+                            <select asp-items="Html.GetEnumSelectList<Gender>()" class="form-control" id="gender" form="pred" name="Gender" required>
                             </select>
                         </div>
                     </td>
                     <td>
                         <div class="col-md-11 form-group feature">
                             <p>Age</p>
-                            <input type="number" min="1" max="120" class="form-control" id="age" placeholder="years" form="pred" name="Age"/>
+                            <input type="number" min="1" max="120" class="form-control" id="age" placeholder="years" form="pred" name="Age" required/>
                         </div>
                     </td>
                     <td>
                         <div class="col-md-11 form-group feature">
                             <p>Family status</p>
                             <select asp-items="Html.GetEnumSelectList<FamilyStatus>()" class="form-control" id="familyStatus" form="pred" name="FamilyStatus">
-                                <option>choose</option>
                             </select>
                         </div>
                     </td>
@@ -42,7 +40,6 @@
 						<div class="col-md-11 form-group feature">
 							<p>Profession</p>
 							<select asp-items="Html.GetEnumSelectList<Profession>()" class="form-control" id="profession" form="pred" name="Profession">
-								<option>choose</option>
 							</select>
 				</div>
                     </td>
@@ -52,7 +49,6 @@
 						<div class="col-md-11 form-group feature">
 							<p>Hobby</p>
 							<select asp-items="Html.GetEnumSelectList<Hobby>()" class="form-control" id="hobby" form="pred" name="hobby">
-								<option>choose</option>
 							</select>
 						</div>
                     </td>
@@ -60,7 +56,6 @@
 						<div class="col-md-11 form-group feature">
 							<p>Trip's purpose</p>
 							<select asp-items="Html.GetEnumSelectList<Purpose>()" class="form-control" id="kind" form="pred" name="purpose">
-								<option>choose</option>
 							</select>
 					</div>
                     </td>
