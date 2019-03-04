@@ -2,8 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 <div class="col-md-10 center-block headline">
-    Welcome to <span><img src="~/images/Logos/logo.png" height="60px" class="welcom"/></span>
-
+    Welcome to <span><img src="~/images/Logos/logo.png" height="60" class="welcom"/></span>
 </div>
 <div class="container-fluid">
     <div class="row search-form">
@@ -19,12 +18,12 @@
         
         <div class="col-md-3">
             <label>Check In</label>
-            <input id="endDate" class="input form-control" type="date"
+            <input id="startDate" class="input form-control" type="date"
                    form="search-form" name="checkin"  onkeydown="return false"/>
         </div>
         <div class="col-md-3">
             <label>Check Out</label>
-            <input id="startDate" class="input form-control" type="date"
+            <input id="endDate" class="input form-control" type="date"
                    form="search-form" name="checkout"  onkeydown="return false"/>
         </div>
         
