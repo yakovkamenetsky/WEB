@@ -2,51 +2,52 @@
 
 @{
 	ViewData["Title"] = "Results";
-	var checkin = Model.checkin;
-	var checkout = Model.checkout;
-	var cityName = Model.CityName;
-	var toPrice = Model.toPrice;
-	var place = Model.place;
-	var isAi = Model.isAiSearch;
 }
 <div class="row">
     <div class="col-md-3"></div>
     <aside class="filter hotel-result-list col-md-2">
-        <form action="/search" id="filter" hidden>
-            <input value="@checkin" name="checkin" form="filter" hidden />
-            <input value="@checkout" name="checkout" form="filter" hidden />
-            <input value="@place" name="place" form="filter" hidden />
+        <div>
+            @Model.hotels.Count Resutls for '@Model.place' Between @Model.checkin.ToString("dd/MM/yy").Replace(" ","/") and @Model.checkout.ToString("dd/MM/yy").Replace(" ", "/")
+        </div>
+        <form action="/search" id="filter" hidden method="post"> </form>
+            <input type="datetime" value="@Model.checkin" name="checkin" form="filter" hidden />
+            <input type="datetime" value="@Model.checkout" name="checkout" form="filter" hidden />
+            <input value="@Model.place" name="place" form="filter" hidden />
+       
             @if (!string.IsNullOrEmpty(Model.CityName))
             {
-                <input value="@cityName" name="cityName" form="filter" hidden />
+                <input value="@Model.CityName" name="cityName" form="filter" hidden />
                 <br />
             }
-        </form>
-        <div>
+
             @if (Model.cityAggregation.Count() != 0)
             {
-                <div class="filter-label">Filter by city</div>
+                <div class="filter-label">Filter by city:</div>
+                <br />
                 foreach (var name in Model.cityAggregation)
                 {
-                    <input type="submit" value="@name.CityName" name="cityName" form="filter" />
-                    <br />
+                <div class="small">
+                    <input class="filter-tag" type="submit" value="@name.CityName" name="cityName" form="filter" /><span> (@name.Count)</span>
+                </div>
+                    
                 }
             }
-        </div>
 
-        <div class="filter-label">Filter by price</div>
-        <div>
-            @foreach (var price in Model.PriceAggregation.OrderByDescending(x => x.MaxPrice))
+            @if (Model.PriceAggregation.Count > 0)
             {
-                <div>
-                    Less Then 
-                    <span>
-                        <input type="submit" value="@price.MaxPrice" name="toprice" form="filter" />
-                    </span>
-                </div>
+                <div class="filter-label">Filter by price:</div>
+                <br />  
+                @foreach (var price in Model.PriceAggregation.OrderByDescending(x => x.MaxPrice))
+                {
+                    <div class="small">
+                        Less Then
+                        <span>
+                            <input type="submit" class="filter-tag" value="@price.MaxPrice" name="toprice" form="filter" title="@price.minPrice to @price.MaxPrice"/>
+                        </span>
+                    </div>
+                }
             }
-
-        </div>
+       
     </aside>
     <ul class="hotel-result-list col-md-9 col-md-offset-3">
         @foreach (var hotel in Model.hotels)
@@ -60,6 +61,7 @@
                         @hotel.Name
                         <br />
                     </h2>
+                    <br />
                     <h5>
                         @hotel.Address
                     </h5>
@@ -71,10 +73,10 @@
                         </h2>
                         @{
                             var rooms = "rooms";
-                            if (hotel.Available == 0)
+                            if (hotel.Available <= 0)
                             {
                                  <div class="centertext notavailable">
-                                    Not available any more!
+                                     <b>Sold Out</b>
                                  </div>
                             }
                             else if (hotel.Available == 1)
@@ -93,9 +95,9 @@
                         {
                              <form action="/Search/HotelDetails" method="post" id="offer-form"></form>
                               <div class="input-group-btn">
-                                  <input value="@checkin" name="checkin" form="offer-form" hidden />
-                                <input value="@checkout" name="checkout" form="offer-form" hidden />
-                                <input value="@isAi.ToString()" name="isAiSearch" form="offer-form" hidden />
+                                <input value="@Model.checkin" name="checkin" form="offer-form" hidden />
+                                <input value="@Model.checkout" name="checkout" form="offer-form" hidden />
+                                <input value="@Model.isAiSearch.ToString()" name="isAiSearch" form="offer-form" hidden />
                                 <input value="@Model.Features?.Age" name="userAge" form="offer-form" hidden />
                                 <input value="@Model.Features?.Gender" name="userGender" form="offer-form" hidden />
                                 <input value="@Model.Features?.FamilyStatus" name="userFamilyStatus" form="offer-form" hidden />
