@@ -59,7 +59,7 @@ namespace FinalWebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["CityId"] = new SelectList(_context.City, "Id", "Id");
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Name");
             return View();
         }
 
@@ -80,7 +80,7 @@ namespace FinalWebApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CityId"] = new SelectList(_context.City, "Id", "Id", hotel.CityId);
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Name", hotel.CityId);
             return View(hotel);
         }
 
@@ -101,7 +101,7 @@ namespace FinalWebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["CityId"] = new SelectList(_context.City, "Id", "Id", hotel.CityId);
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Name", hotel.CityId);
             return View(hotel);
         }
 
@@ -141,7 +141,7 @@ namespace FinalWebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CityId"] = new SelectList(_context.City, "Id", "Id", hotel.CityId);
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Name", hotel.CityId);
             return View(hotel);
         }
 
