@@ -43,15 +43,15 @@ function showOrHideFeatures() {
 	var features = document.getElementById("featuresView");
 	if (features.style.display === "none") {
 		features.style.display = "block";
-		document.getElementById("startDate").setAttribute("form", "pred");
 		document.getElementById("endDate").setAttribute("form", "pred");
+		document.getElementById("startDate").setAttribute("form", "pred");
 		document.getElementById("placeinputbutton").style.display = "none";
 	} else {
 		features.style.display = "none";
 		document.getElementById("placeinputbutton").style.display = "block";
 
-		document.getElementById("startDate").setAttribute("form", "search-form");
-		document.getElementById("endDate").setAttribute ("form","search-form");
+		document.getElementById("endDate").setAttribute("form", "search-form");
+		document.getElementById("startDate").setAttribute ("form","search-form");
 	}
 }
 
@@ -101,7 +101,7 @@ $(document).ready(function () {
     });
 
     $("#ok-order").on('click', function (e) {
-        window.history.back();
+        window.location = "/";
     })
    
     $("#orderNow").submit(function (e) {
@@ -194,16 +194,16 @@ $(document).ready(function () {
 	var today = new Date();
 	var tomorrow = new Date(new Date().getTime() + 48 * 60 * 60 * 1000);
 
-	$('#endDate').val(getDateString(today));
-    $('#startDate').val(getDateString(tomorrow));
-    //$('#startDate').val(getDateString(today));
+	$('#startDate').val(getDateString(today));
+    $('#endDate').val(getDateString(tomorrow));
+    //$('#endDate').val(getDateString(today));
 
-    $('#endDate').attr('min', getDateString(today));
-    $('#startDate').attr('min', document.getElementById('endDate').getAttribute('min'));
+    $('#startDate').attr('min', getDateString(today));
+    $('#endDate').attr('min', document.getElementById('startDate').getAttribute('min'));
 
-    $('#endDate').on('change', function () {
-        $('#startDate').val(getDateString(new Date(new Date(document.getElementById('endDate').value).getTime() + 48 * 60 * 60 * 1000)));
-        $('#startDate').attr('min', document.getElementById('endDate').value);
+    $('#startDate').on('change', function () {
+        $('#endDate').val(getDateString(new Date(new Date(document.getElementById('startDate').value).getTime() + 48 * 60 * 60 * 1000)));
+        $('#endDate').attr('min', document.getElementById('startDate').value);
     });
 
 	function getDateString(date) {
