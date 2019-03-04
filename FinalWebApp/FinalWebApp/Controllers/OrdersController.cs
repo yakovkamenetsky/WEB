@@ -59,89 +59,89 @@ namespace FinalWebApp.Controllers
             return View(order);
         }
 
-        // GET: Orders/Create
-        public IActionResult Create()
-        {
-            if (Globals.getConnectedUser(HttpContext.Session) != null)
-            {
-                return View();
-            }
+        //// GET: Orders/Create
+        //public IActionResult Create()
+        //{
+        //    if (Globals.getConnectedUser(HttpContext.Session) != null)
+        //    {
+        //        return View();
+        //    }
 
-            return NotFound();
-        }
+        //    return NotFound();
+        //}
 
-        // POST: Orders/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,CheckInDate,CheckOutDate,UserId,HotelId")] Order order)
-        {
-            if (Globals.getConnectedUser(HttpContext.Session) != null)
-            {
-                if (ModelState.IsValid)
-                {
-                    _context.Add(order);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                return View(order);
-            }
-            return NotFound();
-        }
+        //// POST: Orders/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("Id,Name,Email,CheckInDate,CheckOutDate,UserId,HotelId")] Order order)
+        //{
+        //    if (Globals.getConnectedUser(HttpContext.Session) != null)
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            _context.Add(order);
+        //            await _context.SaveChangesAsync();
+        //            return RedirectToAction(nameof(Index));
+        //        }
+        //        return View(order);
+        //    }
+        //    return NotFound();
+        //}
 
-        // GET: Orders/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //// GET: Orders/Edit/5
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var order = await _context.Order.FindAsync(id);
-            if (order == null || (Globals.getConnectedUser(HttpContext.Session) == null || (!Globals.isAdminConnected(HttpContext.Session) &&
-                   order.UserId != Globals.getConnectedUser(HttpContext.Session).Id)))
-            {
-                return NotFound();
-            }
-            return View(order);
-        }
+        //    var order = await _context.Order.FindAsync(id);
+        //    if (order == null || (Globals.getConnectedUser(HttpContext.Session) == null || (!Globals.isAdminConnected(HttpContext.Session) &&
+        //           order.UserId != Globals.getConnectedUser(HttpContext.Session).Id)))
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(order);
+        //}
 
-        // POST: Orders/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,CheckInDate,CheckOutDate,UserId,HotelId")] Order order)
-        {
-            if (id != order.Id || (Globals.getConnectedUser(HttpContext.Session) == null || (!Globals.isAdminConnected(HttpContext.Session) &&
-                   order.UserId != Globals.getConnectedUser(HttpContext.Session).Id)))
-            {
-                return NotFound();
-            }
+        //// POST: Orders/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,CheckInDate,CheckOutDate,UserId,HotelId")] Order order)
+        //{
+        //    if (id != order.Id || (Globals.getConnectedUser(HttpContext.Session) == null || (!Globals.isAdminConnected(HttpContext.Session) &&
+        //           order.UserId != Globals.getConnectedUser(HttpContext.Session).Id)))
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(order);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!OrderExists(order.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(order);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Update(order);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!OrderExists(order.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(order);
+        //}
 
         // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(int? id, int userId)

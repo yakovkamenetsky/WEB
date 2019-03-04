@@ -1,72 +1,67 @@
 ﻿<!DOCTYPE html>
 <html>
-    <head>
-        <environment include="Development">
-            <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
-            <link rel="stylesheet" href="~/css/features.css" />
-        </environment>
-        <environment exclude="Development">
-            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.2.1/css/bootstrap.min.css"
-                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-            <link rel="stylesheet" href="~/css/features.min.css" asp-append-version="true" />
-        </environment>
-    </head>
-    <body>
-        <table>
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="col-md-11 form-group feature">
-                            <p>Gender</p>
-                            <select asp-items="Html.GetEnumSelectList<Gender>()" class="form-control" id="gender" form="pred" name="Gender" required>
-                            </select>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="col-md-11 form-group feature">
-                            <p>Age</p>
-                            <input type="number" min="1" max="120" class="form-control" id="age" placeholder="years" form="pred" name="Age" required/>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="col-md-11 form-group feature">
-                            <p>Family status</p>
-                            <select asp-items="Html.GetEnumSelectList<FamilyStatus>()" class="form-control" id="familyStatus" form="pred" name="FamilyStatus">
-                            </select>
-                        </div>
-                    </td>
-                    <td>
-						<div class="col-md-11 form-group feature">
-							<p>Profession</p>
-							<select asp-items="Html.GetEnumSelectList<Profession>()" class="form-control" id="profession" form="pred" name="Profession">
-							</select>
-				</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-						<div class="col-md-11 form-group feature">
-							<p>Hobby</p>
-							<select asp-items="Html.GetEnumSelectList<Hobby>()" class="form-control" id="hobby" form="pred" name="hobby">
-							</select>
-						</div>
-                    </td>
-                    <td>
-						<div class="col-md-11 form-group feature">
-							<p>Trip's purpose</p>
-							<select asp-items="Html.GetEnumSelectList<Purpose>()" class="form-control" id="kind" form="pred" name="purpose">
-							</select>
-					</div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <br />
-		<div class="text-center">
-			<form action="/search/Predict" id="pred" method="post">
-				<button class="btn btn-info col-md-4 col-md-offset-4">special search</button>
-			</form>
-		</div>
-    </body>
+<head>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/features.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.2.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/features.min.css" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="col-md-11 form-group feature">
+                        <p>Gender</p>
+                        <select asp-items="Html.GetEnumSelectList<Gender>()" class="form-control" id="gender" form="pred" name="Gender" required></select>
+                    </div>
+                </td>
+                <td>
+                    <div class="col-md-11 form-group feature">
+                        <p>Age</p>
+                        <input type="number" min="1" max="120" class="form-control" id="age" placeholder="years" form="pred" name="Age" required />
+                    </div>
+                </td>
+                <td>
+                    <div class="col-md-11 form-group feature">
+                        <p>Family status</p>
+                        <select asp-items="Html.GetEnumSelectList<FamilyStatus>()" class="form-control" id="familyStatus" form="pred" name="FamilyStatus"></select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="col-md-11 form-group feature">
+                        <p>Profession</p>
+                        <select asp-items="Html.GetEnumSelectList<Profession>()" class="form-control" id="profession" form="pred" name="Profession"></select>
+                    </div>
+                </td>
+                <td>
+                    <div class="col-md-11 form-group feature">
+                        <p>Hobby</p>
+                        <select asp-items="Html.GetEnumSelectList<Hobby>()" class="form-control" id="hobby" form="pred" name="hobby"></select>
+                    </div>
+                </td>
+                <td>
+                    <div class="col-md-11 form-group feature">
+                        <p>Trip's purpose</p>
+                        <select asp-items="Html.GetEnumSelectList<Purpose>()" class="form-control" id="kind" form="pred" name="purpose"></select>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <div class="text-center">
+        <form action="/search/Predict" id="pred" method="post">
+            <button class="btn btn-info special-search">special search</button>
+        </form>
+    </div>
+</body>
 </html>
