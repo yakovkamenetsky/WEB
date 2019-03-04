@@ -54,15 +54,18 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 .statistics-container {
-    padding: 5rem;
-    text-align: center;
     background-color: whitesmoke;
     border-radius: 1rem;
     height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .statistics-container span {
-    margin: 2.5rem;
+    max-width: 50%;
 }
+
 .statistics-container button {
     bottom: 0.5rem;
 }
@@ -278,15 +281,12 @@ footer {
     bottom: 0;
 }
 
-.statistics-graphs {
-    width: 800px;
-}
 #placeinputbutton {
-	color: black;
-	width: 80px;
-	height: 35px;
-	background: yellow;
-	transition: width 2s, height 2s;
+    color: black;
+    width: 80px;
+    height: 35px;
+    background: yellow;
+    transition: width 2s, height 2s;
 }
 
 	#placeinputbutton:hover {
