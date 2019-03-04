@@ -50,7 +50,7 @@
                 </div>
             }
         </div>
-        @if (!Globals.isAdminConnected(Context.Session))
+        @if (Globals.isAdminConnected(Context.Session))
         {
             <form id="StatisticsForm" action="/Home/Statistics" method="post">
                 <input value="Statistics" class="input btn btn-outline-info" id="statisticsButton"
