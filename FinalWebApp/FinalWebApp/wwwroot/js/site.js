@@ -101,8 +101,8 @@ $(document).ready(function () {
     });
 
     $("#ok-order").on('click', function (e) {
-        window.location = "/";
-    })
+        window.location = '/';
+    });
    
     $("#orderNow").submit(function (e) {
         var form = $(this);
