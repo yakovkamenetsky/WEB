@@ -34,7 +34,7 @@ namespace FinalWebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-			services.AddSingleton<PredictionEngine>();
+			services.AddSingleton<Prediction>();
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>

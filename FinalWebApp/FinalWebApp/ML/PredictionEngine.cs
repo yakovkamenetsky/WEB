@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Timers;
 using FinalWebApp.Models;
 using Microsoft.Data.DataView;
 using Microsoft.ML;
@@ -11,24 +12,25 @@ using Microsoft.ML.Data;
 
 namespace FinalWebApp.ML
 {
-	public class PredictionEngine
+	public class Prediction
 	{
 		MLContext mlContext;
-		static readonly string _trainDataPath = Path.Combine(Environment.CurrentDirectory,  "TrainingData.csv");
-		static readonly string _testDataPath = Path.Combine(Environment.CurrentDirectory,  "TestData.csv");
+		static readonly string _trainDataPath = Path.Combine(Environment.CurrentDirectory, "TrainingData.csv");
+		static readonly string _testDataPath = Path.Combine(Environment.CurrentDirectory, "TestData.csv");
 		static readonly string _modelPath = Path.Combine(Environment.CurrentDirectory, "Model.zip");
 		static TextLoader _textLoader;
+		PredictionEngine<OrdersData, HotelPrediction> predictionEngine;
 
-		public PredictionEngine()
+		public Prediction()
 		{
-			 mlContext = new MLContext(seed: 0);
+			mlContext = new MLContext(seed: 0);
 
 			_textLoader = mlContext.Data.CreateTextLoader(new TextLoader.Arguments()
 			{
 				Separators = new[] { ',' },
 				HasHeader = true,
 				Column = new[]
-	{
+				{
 					new TextLoader.Column("Age", DataKind.Num, 0),
 					new TextLoader.Column("Gender", DataKind.Num, 1),
 					new TextLoader.Column("Profession", DataKind.Num, 2),
@@ -37,8 +39,29 @@ namespace FinalWebApp.ML
 					new TextLoader.Column("purpose", DataKind.Num, 5),
 					new TextLoader.Column("PriceForHotelId", DataKind.Num, 6)
 				}
+			});
+
+			Engine();
+
+			var startTimeSpan = TimeSpan.Zero;
+			var periodTimeSpan = TimeSpan.FromMinutes(5);
+			var timer = new System.Threading.Timer((e) =>
+			{
+				Engine();
+			}, null, startTimeSpan, periodTimeSpan);
+
+		}
+
+		public void Engine()
+		{
+			var MLModel = Train(mlContext, _trainDataPath);
+			Evaluate(mlContext, MLModel);
+			ITransformer loadedModel;
+			using (var stream = new FileStream(_modelPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+			{
+				loadedModel = mlContext.Model.Load(stream);
 			}
-);
+			 predictionEngine = loadedModel.CreatePredictionEngine<OrdersData, HotelPrediction>(mlContext);
 		}
 
 		public static ITransformer Train(MLContext mlContext, string dataPath)
@@ -73,9 +96,6 @@ namespace FinalWebApp.ML
 				purpose = 1,
 				PriceForHotelId = 0
 			};
-
-			//var prediction = predictionFunction.Predict(taxiTripSample);
-
 		}
 
 		private static void SaveModelAsFile(MLContext mlContext, ITransformer model)
@@ -85,17 +105,7 @@ namespace FinalWebApp.ML
 		}
 		public int GetPrediction(FeaturesModel model)
 		{
-			var MLModel = Train(mlContext, _trainDataPath);
-			Evaluate(mlContext, MLModel);
-
-			ITransformer loadedModel;
-			using (var stream = new FileStream(_modelPath, FileMode.Open, FileAccess.Read, FileShare.Read))
-			{
-				loadedModel = mlContext.Model.Load(stream);
-			}
-			var predictionFunction = loadedModel.CreatePredictionEngine<OrdersData, HotelPrediction>(mlContext);
-
-			var taxiTripSample = new OrdersData()
+			var userDetails = new OrdersData()
 			{
 				Age = model.Age,
 				Gender = model.Gender,
@@ -106,10 +116,8 @@ namespace FinalWebApp.ML
 				PriceForHotelId = 0 // To predict.
 			};
 
-			var prediction = predictionFunction.Predict(taxiTripSample);
-
-			return (int) prediction.PriceForHotelId;
+			var prediction = predictionEngine.Predict(userDetails);
+			return (int)prediction.PriceForHotelId;
 		}
-
 	}
 }

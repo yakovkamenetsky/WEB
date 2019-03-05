@@ -24,14 +24,20 @@ namespace FinalWebApp.Controllers
         }
 
         // GET: Users
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string userName)
         {
             if (!Globals.isAdminConnected(HttpContext.Session))
             {
                 return NotFound();
             }
-            var myContext = _context.User.Include(u => u.City);
+			var myContext = _context.User.Include(u => u.City);
             HttpContext.Session.SetString("isUserAdmin", "false");
+
+			if (!String.IsNullOrEmpty(userName))
+			{
+				return View(await myContext.Where(x => x.Name.ToUpper().Contains(userName)).ToListAsync());
+			}
+
             return View(await myContext.ToListAsync());
         }
 
@@ -96,7 +102,8 @@ namespace FinalWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Password,Birthday,Gender,CityId,Profession,FamilyStatus,IsAdmin")] User user)
         {
-            if (!Globals.isAdminConnected(HttpContext.Session))
+            if (!Globals.isAdminConnected(HttpContext.Session) &&
+				id != Globals.getConnectedUser(HttpContext.Session)?.Id)
             {
                 return NotFound();
             }
@@ -123,14 +130,28 @@ namespace FinalWebApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+				if(id == Globals.getConnectedUser(HttpContext.Session)?.Id)
+				{
+					string jsonUser = JsonConvert.SerializeObject(user);
+					HttpContext.Session.SetString(Globals.USER_SESSION_KEY, jsonUser);
+
+				}
+
+				if (Globals.isAdminConnected(HttpContext.Session))
+				{
+					return RedirectToAction(nameof(Index));
+				}
+
+				return Redirect("/");
             }
-            ViewData["CityId"] = new SelectList(_context.City, "Id", "Id", user.CityId);
-            return View(user);
+			ViewData["CityId"] = new SelectList(_context.City, "Id", "Name", user.CityId);
+
+			return View(user);
         }
 
-        // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+		// GET: Users/Delete/5
+		public async Task<IActionResult> Delete(int? id)
         {
             if (!Globals.isAdminConnected(HttpContext.Session))
             {

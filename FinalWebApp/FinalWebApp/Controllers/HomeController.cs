@@ -43,6 +43,7 @@ namespace FinalWebApp.Controllers
                 else if (!String.IsNullOrWhiteSpace(confirmPassword) && password.Equals(confirmPassword))
                 {
                     User newUser = new User();
+					newUser.Name = email.Split('@')[0];
                     newUser.Email = email;
                     newUser.Password = password;
 

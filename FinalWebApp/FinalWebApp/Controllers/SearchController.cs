@@ -18,9 +18,9 @@ namespace FinalWebApp.Controllers
     public class SearchController : Controller
 	{ 
 		private readonly MyContext _context;
-		private readonly PredictionEngine _predictionEngine;
+		private readonly Prediction _predictionEngine;
 
-		public SearchController(MyContext context, PredictionEngine predictionEngine)
+		public SearchController(MyContext context, Prediction predictionEngine)
 		{
 			_context = context;
 			_predictionEngine = predictionEngine;
