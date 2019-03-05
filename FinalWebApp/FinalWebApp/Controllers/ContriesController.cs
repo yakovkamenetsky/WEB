@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalWebApp.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace FinalWebApp.Controllers
 {
@@ -19,17 +20,39 @@ namespace FinalWebApp.Controllers
         }
 
         // GET: Countries
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string countryName)
         {
             if (!Globals.isAdminConnected(HttpContext.Session))
             {
                 return NotFound();
             }
-            return View(await _context.Country.ToListAsync());
-        }
+			var myContext = _context.Country;
+			HttpContext.Session.SetString("isUserAdmin", "false");
 
-        // GET: Countries/Details/5
-        public async Task<IActionResult> Details(int? id)
+			if (!String.IsNullOrEmpty(countryName))
+			{
+				var q = from p in _context.Country.Where(x => x.Name.Contains(countryName))
+						join m in _context.City on p.Id equals m.CountryId
+						select new City()
+						{
+							Id = m.Id,
+							Name = m.Name,
+						    Country = m.Country,
+							CountryId = m.CountryId,
+							Hotels = m.Hotels,
+							Users = m.Users
+						};
+				return View("~/Views/Cities/Index.cshtml" ,await q.ToListAsync());
+			}
+
+			return View(await myContext.ToListAsync());
+		}
+
+
+
+
+		// GET: Countries/Details/5
+		public async Task<IActionResult> Details(int? id)
         {
             if (!Globals.isAdminConnected(HttpContext.Session))
             {

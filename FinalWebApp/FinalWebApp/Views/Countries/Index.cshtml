@@ -9,6 +9,13 @@
 <p>
     <a asp-action="Create" class="btn btn-info">+</a>
 </p>
+
+<div class="col-centered">
+	<form action="/countries/index" id="All-cities"></form>
+	<input placeholder="Search all cities in country" name="countryName" type="text" form="All-cities"/>
+	<button class="btn btn-info" type="submit" form="All-cities" hidden>Search all cities in the country</button>
+</div>
+
 <table class="table table-info table-striped">
     <thead class="thead-light">
         <tr>
