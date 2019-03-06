@@ -9,7 +9,13 @@
         @if (!Model.isAiSearch)
         {
             <div>
-                @Model.hotels.Count Resutls for '@Model.place' Between @Model.checkin.ToString("dd/MM/yy").Replace(" ", "/") and @Model.checkout.ToString("dd/MM/yy").Replace(" ", "/")
+                @Model.hotels.Count Resutls for '@Model.place' Between @Model.checkin.ToString("dd/MM/yy").Replace(" ", "/") - @Model.checkout.ToString("dd/MM/yy").Replace(" ", "/")
+                @if (Model.toPrice != 0)
+                {
+                   <div>
+                       And price < @Model.toPrice
+                   </div>
+                }
             </div>
             <form action="/search" id="filter" hidden method="post"> </form>
             <input type="datetime" value="@Model.checkin" name="checkin" form="filter" hidden />
