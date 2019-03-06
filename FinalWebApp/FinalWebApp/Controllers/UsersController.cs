@@ -31,7 +31,7 @@ namespace FinalWebApp.Controllers
                 return NotFound();
             }
 			var myContext = _context.User.Include(u => u.City);
-            HttpContext.Session.SetString("isUserAdmin", "false");
+
 
 			if (!String.IsNullOrEmpty(userName))
 			{
