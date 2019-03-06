@@ -27,7 +27,6 @@ namespace FinalWebApp.Controllers
                 return NotFound();
             }
             var myContext = _context.Hotel.Include(h => h.City);
-			HttpContext.Session.SetString("isUserAdmin", "false");
 
 			if (!String.IsNullOrEmpty(hotelName))
 			{

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<FinalWebApp.Models.Order>
+
+	@{
+		ViewData["Title"] = "ViewOrders";
+	}
+
+	<table class="table table-info table-striped">
+		<thead class="thead-light">
+			<tr>
+				<th scope="col">
+					@Html.DisplayNameFor(model => model.Hotel)
+				</th>
+				<th scope="col">
+					@Html.DisplayNameFor(model => model.Email)
+				</th>
+				<th scope="col">
+					@Html.DisplayNameFor(model => model.CheckInDate)
+				</th>
+				<th scope="col">
+					@Html.DisplayNameFor(model => model.CheckOutDate)
+				</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Hotel.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Email)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.CheckInDate)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.CheckOutDate)
+				</td>
+			</tr>
+			}
+		</tbody>
+	</table>
+</FinalWebApp.Models.Order>

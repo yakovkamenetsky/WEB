@@ -25,6 +25,8 @@ namespace FinalWebApp.ML
 		{
 			mlContext = new MLContext(seed: 0);
 
+
+			// To initialize the _textLoader global variable in order to reuse it for the needed datasets, add the following code after the mlContext initialization:
 			_textLoader = mlContext.Data.CreateTextLoader(new TextLoader.Arguments()
 			{
 				Separators = new[] { ',' },
@@ -55,7 +57,7 @@ namespace FinalWebApp.ML
 		public void Engine()
 		{
 			var MLModel = Train(mlContext, _trainDataPath);
-			Evaluate(mlContext, MLModel);
+			// Evaluate(mlContext, MLModel);
 			ITransformer loadedModel;
 			using (var stream = new FileStream(_modelPath, FileMode.Open, FileAccess.Read, FileShare.Read))
 			{
@@ -64,24 +66,60 @@ namespace FinalWebApp.ML
 			 predictionEngine = loadedModel.CreatePredictionEngine<OrdersData, HotelPrediction>(mlContext);
 		}
 
+
+		// Loads the data.
+		// Extracts and transforms the data.
+		// Trains the model.
+		// Saves the model as .zip file.
+		// Returns the model.
 		public static ITransformer Train(MLContext mlContext, string dataPath)
 		{
+
+			// Load and transform data
 			IDataView dataView = _textLoader.Read(dataPath);
 
+			// When the model is trained and evaluated, by default, the values in the Label column are considered as correct values to be predicted
+			// And combines all of the feature columns into the Features column
 			var pipeline = mlContext.Transforms.CopyColumns(inputColumnName: "PriceForHotelId", outputColumnName: "Label")
 				.Append(mlContext.Transforms.Concatenate("Features", "Age", "Gender", "Profession", "FamilyStatus", "hobby", "purpose"))
 				.Append(mlContext.Regression.Trainers.FastTree()); // Predict a target using a decision tree 
 
+			// Train the model
 			var model = pipeline.Fit(dataView);
+
+			// Save the model
 			SaveModelAsFile(mlContext, model);
+
 			return model;
 		}
 
+
+		// Loads the test dataset.
+		// Creates the regression evaluator.
+		// Evaluates the model and creates metrics.
+		// Displays the metrics.
 		private static void Evaluate(MLContext mlContext, ITransformer model)
 		{
+			// load the test datase
 			IDataView dataView = _textLoader.Read(_testDataPath);
+
+			//use the machine learning model parameter (a transformer) to input the features and return predictions
 			var predictions = model.Transform(dataView);
 			var metrics = mlContext.Regression.Evaluate(predictions, "Label", "Score");
+
+
+			//// For debug only
+			//Console.WriteLine();
+			//Console.WriteLine($"*************************************************");
+			//Console.WriteLine($"*       Model quality metrics evaluation         ");
+			//Console.WriteLine($"*------------------------------------------------");
+
+
+			//// RSquared is another evaluation metric of the regression models. RSquared takes values between 0 and 1. The closer its value is to 1, the better the model is.
+			//Console.WriteLine($"*       R2 Score:      {metrics.RSquared:0.##}");
+
+			////RMS is one of the evaluation metrics of the regression model.The lower it is, the better the model is.
+			//Console.WriteLine($"*       RMS loss:      {metrics.Rms:#.##}");
 		}
 
 		private static void TestSinglePrediction(MLContext mlContext)
