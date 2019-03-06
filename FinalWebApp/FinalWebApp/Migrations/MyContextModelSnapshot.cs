@@ -107,13 +107,15 @@ namespace FinalWebApp.Migrations
 
                     b.Property<DateTime?>("Birthday");
 
-                    b.Property<string>("CityName");
+                    b.Property<int?>("CityId");
 
-                    b.Property<string>("CountryName");
+                    b.Property<string>("Email");
 
                     b.Property<int>("FamilyStatus");
 
                     b.Property<int?>("Gender");
+
+                    b.Property<bool>("IsAdmin");
 
                     b.Property<string>("Name");
 
@@ -122,6 +124,8 @@ namespace FinalWebApp.Migrations
                     b.Property<string>("Profession");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.ToTable("User");
                 });
@@ -144,7 +148,7 @@ namespace FinalWebApp.Migrations
 
             modelBuilder.Entity("FinalWebApp.Models.Order", b =>
                 {
-                    b.HasOne("FinalWebApp.Models.Hotel")
+                    b.HasOne("FinalWebApp.Models.Hotel", "Hotel")
                         .WithMany("Orders")
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -153,6 +157,13 @@ namespace FinalWebApp.Migrations
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FinalWebApp.Models.User", b =>
+                {
+                    b.HasOne("FinalWebApp.Models.City", "City")
+                        .WithMany("Users")
+                        .HasForeignKey("CityId");
                 });
 #pragma warning restore 612, 618
         }

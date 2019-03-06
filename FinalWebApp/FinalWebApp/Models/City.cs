@@ -11,6 +11,7 @@ namespace FinalWebApp.Models
 		public string Name { get; set; }
 		public Country Country { get; set; }
         public int CountryId { get; set; }
-        public ICollection <Hotel> Hotels{ get; set; }
+        public ICollection<Hotel> Hotels { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }

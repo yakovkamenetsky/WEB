@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalWebApp.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace FinalWebApp.Controllers
 {
@@ -19,21 +20,36 @@ namespace FinalWebApp.Controllers
         }
 
         // GET: Hotels
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string hotelName)
         {
-            var databaseContext = _context.Hotel.Include(p => p.City);
-            return View(await databaseContext.ToListAsync());
-        }
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
+            var myContext = _context.Hotel.Include(h => h.City);
+
+			if (!String.IsNullOrEmpty(hotelName))
+			{
+				return View(await myContext.Where(x => x.Name.ToUpper().Contains(hotelName)).ToListAsync());
+			}
+
+			return View(await myContext.ToListAsync());
+		}
 
         // GET: Hotels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
             }
 
-            var hotel = await _context.Hotel.Include(p => p.City)
+            var hotel = await _context.Hotel
+                .Include(h => h.City)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (hotel == null)
             {
@@ -44,13 +60,13 @@ namespace FinalWebApp.Controllers
         }
 
         // GET: Hotels/Create
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            var q = from c in _context.City.Include(c => c.Name)
-                    select new { Value = c.Id, Text = c.Name };
-
-            ViewData["CityId"] = new SelectList(await q.ToListAsync(), "Value", "Text");
-
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Name");
             return View();
         }
 
@@ -59,20 +75,29 @@ namespace FinalWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,CityId")] Hotel hotel)
+        public async Task<IActionResult> Create([Bind("Id,Name,CityId,Address,Capacity,Price")] Hotel hotel)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(hotel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Name", hotel.CityId);
             return View(hotel);
         }
 
         // GET: Hotels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -83,9 +108,7 @@ namespace FinalWebApp.Controllers
             {
                 return NotFound();
             }
-
-            ViewData["CityId"] = new SelectList(_context.City, "Id", "Name", hotel.City);
-
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Name", hotel.CityId);
             return View(hotel);
         }
 
@@ -94,8 +117,12 @@ namespace FinalWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CityId")] Hotel hotel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CityId,Address,Capacity,Price")] Hotel hotel)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (id != hotel.Id)
             {
                 return NotFound();
@@ -121,18 +148,24 @@ namespace FinalWebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CityId"] = new SelectList(_context.City, "Id", "Name", hotel.CityId);
             return View(hotel);
         }
 
         // GET: Hotels/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
             }
 
-            var hotel = await _context.Hotel.Include(p => p.City)
+            var hotel = await _context.Hotel
+                .Include(h => h.City)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (hotel == null)
             {
@@ -147,6 +180,10 @@ namespace FinalWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!Globals.isAdminConnected(HttpContext.Session))
+            {
+                return NotFound();
+            }
             var hotel = await _context.Hotel.FindAsync(id);
             _context.Hotel.Remove(hotel);
             await _context.SaveChangesAsync();

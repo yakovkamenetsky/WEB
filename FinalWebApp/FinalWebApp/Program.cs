@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FinalWebApp.Data.Seeds;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,13 +26,13 @@ namespace FinalWebApp
                     SeedCountries.InitialCountries(services);
                     SeedCities.InitialCities(services);
                     SeedHotels.InitialHotels(services);
-                    /*SeedUsers.InitialUsers(services);
-                    SeedOrders.InitialOrders(services);*/
+                    SeedUsers.InitialUsers(services);
+                    SeedOrders.InitialOrders(services);
                 }
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error ocurred while seeding Games");
+                    logger.LogError(ex, "An error ocurred while seeding data");
                 }
             }
 

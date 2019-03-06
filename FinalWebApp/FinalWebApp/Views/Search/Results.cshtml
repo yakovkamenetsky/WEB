@@ -1,64 +1,143 @@
-﻿@model List<Hotel>;
+﻿@model FinalWebApp.Dto.ResultModel
 
 @{
 	ViewData["Title"] = "Results";
-
 }
+<div class="row">
+    <div class="col-md-3"></div>
+    <aside class="filter hotel-result-list col-md-2">
+        @if (!Model.isAiSearch)
+        {
+            <div>
+                @Model.hotels.Count Resutls for '@Model.place' Between @Model.checkin.ToString("dd/MM/yy").Replace(" ", "/") - @Model.checkout.ToString("dd/MM/yy").Replace(" ", "/")
+                @if (Model.toPrice != 0)
+                {
+                   <div>
+                       And price < @Model.toPrice
+                   </div>
+                }
+            </div>
+            <form action="/search" id="filter" hidden method="post"> </form>
+            <input type="datetime" value="@Model.checkin" name="checkin" form="filter" hidden />
+            <input type="datetime" value="@Model.checkout" name="checkout" form="filter" hidden />
+            <input value="@Model.place" name="place" form="filter" hidden />
 
-<html>
-<head>
-	<environment include="Development">
-		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-		<link rel="stylesheet" href="~/css/features.css" />
-	</environment>
-	<environment exclude="Development">
-		<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.2.1/css/bootstrap.min.css"
-			  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-			  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-		<link rel="stylesheet" href="~/css/features.min.css" asp-append-version="true" />
-	</environment>
-</head>
-<body>
-	<ul class="list-group">
-		@foreach (var hotel in Model)
-		{
-			<li class="list-group-item">
-				<article class="container-fluid" style="background-color:white">
-					<div class="col-md-3 hotel-image list-group-item">
-						<img src="~/images/HotelsImages/@hotel.Id/image.jpg" style="object-fit:cover; width:100%" />
-					</div>
-					<div class="col-md-4 hotel-title list-group-item" style="height:200px">
-						<h2>
-							@hotel.Name
-							<br/>
-							@hotel.Address
-						</h2>
-					</div>
-					<div class="col-md-2 list-group-item" style="height:200px">
-						<div class="hotel-location">
-							<h4>
-								@hotel.Address
-							</h4>
-						</div>
-					</div>
-					<div class="col-md-3 list-group-item" style="height:200px">
-						<div class="hotel-ofer">
-							<h2 class="price">
-								@hotel.Price
-							</h2>
+            @if (!string.IsNullOrEmpty(Model.CityName))
+            {
+                <input value="@Model.CityName" name="cityName" form="filter" hidden />
+                <br />
+            }
 
-							<form action="/Search/HotelDetails" method="get" id="offer-form">
-							</form>
-							<span class="input-group-btn">
-								<button class="btn btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Offer</button>
-							</span>
-						</div>
-					</div>
+            @if (Model.cityAggregation.Count() != 0)
+            {
+                <div class="filter-label">Filter by city:</div>
+                <br />
+                foreach (var name in Model.cityAggregation)
+                {
+                    <div class="small">
+                        <input class="filter-tag" type="submit" value="@name.CityName" name="cityName" form="filter" /><span> (@name.Count)</span>
+                    </div>
 
-				</article>
-			</li>
-		}
+                }
+            }
 
-	</ul>
-</body>
-</html>
+            @if (Model.PriceAggregation.Count > 0)
+            {
+                <div class="filter-label">Filter by price:</div>
+                <br />
+                @foreach (var price in Model.PriceAggregation.OrderByDescending(x => x.MaxPrice))
+                {
+                    <div class="small">
+                        Less Then
+                        <span>
+                            <input type="submit" class="filter-tag" value="@price.MaxPrice" name="toprice" form="filter" title="@price.minPrice to @price.MaxPrice" />
+                        </span>
+                    </div>
+                }
+            }
+        }
+        @if (Model.isAiSearch)
+        {
+            <div>
+                Top @Model.hotels.Count Results for AI results
+            </div>
+        }
+    </aside>
+    <ul class="hotel-result-list col-md-9 col-md-offset-3">
+        @foreach (var hotel in Model.hotels)
+        {
+            <li class="row hotel-result col-md-12">
+                <div class="col-md-4 hotel-image">
+                    <img src="~/images/HotelsImages/@hotel.Id/image.jpg" style="object-fit:cover; width:100%" />
+                </div>
+                <div class="col-md-5 hotel-title" style="height:200px">
+                    <h2>
+                        @hotel.Name
+                        <br />
+                    </h2>
+                    <br />
+                    <h5>
+                        @hotel.Address
+                    </h5>
+                </div>
+                <div class="col-md-3" style="height:200px">
+                    <div class="hotel-ofer center-block">
+                        <h2 class="centertext price">
+                            @hotel.Price<span> $</span>
+                        </h2>
+                        @{
+                            var rooms = "rooms";
+                            if (hotel.Available <= 0)
+                            {
+                                 <div class="centertext notavailable">
+                                     <b>Sold Out</b>
+                                 </div>
+                            }
+                            else if (hotel.Available == 1)
+                            {
+                                rooms = "room";
+                            }
+                            else //if(hotel.Available < 10)
+                            {
+                                <div class="centertext availabe">
+                                    @hotel.Available @rooms left
+                                </div>
+                            }
+                        }
+
+                        @if (hotel.Available>0)
+                        {
+                             <form action="/Search/HotelDetails" method="post" id="offer-form"></form>
+                              <div class="input-group-btn">
+                                <input value="@Model.checkin" name="checkin" form="offer-form" hidden />
+                                <input value="@Model.checkout" name="checkout" form="offer-form" hidden />
+                                <input value="@Model.isAiSearch.ToString()" name="isAiSearch" form="offer-form" hidden />
+                                <input value="@Model.Features?.Age" name="userAge" form="offer-form" hidden />
+                                <input value="@Model.Features?.Gender" name="userGender" form="offer-form" hidden />
+                                <input value="@Model.Features?.FamilyStatus" name="userFamilyStatus" form="offer-form" hidden />
+                                <input value="@Model.Features?.hobby" name="userHobby" form="offer-form" hidden />
+                                <input value="@Model.Features?.purpose" name="userPurpose" form="offer-form" hidden />
+                                <button class="input ordernow btn-info" type="submit" form="offer-form" value="@hotel.Id" name="id">View Details</button>
+                            </div>
+                        }
+                    </div>
+			    </div>
+            </li>
+        }
+        @if (Model.hotels.Count == 0)
+        {
+            var text = "" + Model.place + "'";
+            if (Model.toPrice != 0)
+            {
+                text += " and lower than " + Model.toPrice;
+            }
+
+            <div class="no-results">
+                <h4>
+                    Sorry! Try another search...
+                </h4>
+            </div>
+        }
+
+    </ul>
+</div>

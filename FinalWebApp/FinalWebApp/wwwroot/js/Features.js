@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿/*$(function () {
     var listOfFeatures = document.createElement("UL");
     listOfFeatures.setAttribute("id", "listOfFeatures");
     document.getElementById("featuresView").appendChild(listOfFeatures);
@@ -15,4 +15,4 @@
         document.getElementById("listOfFeatures").appendChild(feature);
 
     }
-});
+});*/
