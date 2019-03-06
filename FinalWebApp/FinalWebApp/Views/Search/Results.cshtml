@@ -6,14 +6,16 @@
 <div class="row">
     <div class="col-md-3"></div>
     <aside class="filter hotel-result-list col-md-2">
-        <div>
-            @Model.hotels.Count Resutls for '@Model.place' Between @Model.checkin.ToString("dd/MM/yy").Replace(" ","/") and @Model.checkout.ToString("dd/MM/yy").Replace(" ", "/")
-        </div>
-        <form action="/search" id="filter" hidden method="post"> </form>
+        @if (!Model.isAiSearch)
+        {
+            <div>
+                @Model.hotels.Count Resutls for '@Model.place' Between @Model.checkin.ToString("dd/MM/yy").Replace(" ", "/") and @Model.checkout.ToString("dd/MM/yy").Replace(" ", "/")
+            </div>
+            <form action="/search" id="filter" hidden method="post"> </form>
             <input type="datetime" value="@Model.checkin" name="checkin" form="filter" hidden />
             <input type="datetime" value="@Model.checkout" name="checkout" form="filter" hidden />
             <input value="@Model.place" name="place" form="filter" hidden />
-       
+
             @if (!string.IsNullOrEmpty(Model.CityName))
             {
                 <input value="@Model.CityName" name="cityName" form="filter" hidden />
@@ -26,28 +28,34 @@
                 <br />
                 foreach (var name in Model.cityAggregation)
                 {
-                <div class="small">
-                    <input class="filter-tag" type="submit" value="@name.CityName" name="cityName" form="filter" /><span> (@name.Count)</span>
-                </div>
-                    
+                    <div class="small">
+                        <input class="filter-tag" type="submit" value="@name.CityName" name="cityName" form="filter" /><span> (@name.Count)</span>
+                    </div>
+
                 }
             }
 
             @if (Model.PriceAggregation.Count > 0)
             {
                 <div class="filter-label">Filter by price:</div>
-                <br />  
+                <br />
                 @foreach (var price in Model.PriceAggregation.OrderByDescending(x => x.MaxPrice))
                 {
                     <div class="small">
                         Less Then
                         <span>
-                            <input type="submit" class="filter-tag" value="@price.MaxPrice" name="toprice" form="filter" title="@price.minPrice to @price.MaxPrice"/>
+                            <input type="submit" class="filter-tag" value="@price.MaxPrice" name="toprice" form="filter" title="@price.minPrice to @price.MaxPrice" />
                         </span>
                     </div>
                 }
             }
-       
+        }
+        @if (Model.isAiSearch)
+        {
+            <div>
+                Top @Model.hotels.Count Results for AI results
+            </div>
+        }
     </aside>
     <ul class="hotel-result-list col-md-9 col-md-offset-3">
         @foreach (var hotel in Model.hotels)
