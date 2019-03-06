@@ -232,6 +232,8 @@ label{
 .order-now-button {
     position: absolute;
     right: 0;
+    background-color:limegreen;
+    color:white
 }
 
 .offer {
