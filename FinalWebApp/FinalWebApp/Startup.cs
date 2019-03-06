@@ -34,7 +34,8 @@ namespace FinalWebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-			services.AddSingleton<PredictionEngine>();
+			// Add singelton class for machine learning
+			services.AddSingleton<Prediction>();
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>

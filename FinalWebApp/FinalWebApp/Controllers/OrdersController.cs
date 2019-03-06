@@ -30,11 +30,11 @@ namespace FinalWebApp.Controllers
             }
             if (Globals.isAdminConnected(HttpContext.Session))
             {
-                return View(await _context.Order.ToListAsync());
+                return View(await _context.Order.Include(x => x.Hotel).ToListAsync());
             }
             else
             {
-                return View(await _context.Order
+                return View(await _context.Order.Include( x=>x.Hotel)
                     .Where(o => o.UserId == Globals.getConnectedUser(HttpContext.Session).Id)
                     .ToListAsync());
             }
@@ -48,7 +48,7 @@ namespace FinalWebApp.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Order
+            var order = await _context.Order.Include(x=>x.Hotel)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (order == null || (Globals.getConnectedUser(HttpContext.Session) == null || (!Globals.isAdminConnected(HttpContext.Session) &&
                    order.UserId != Globals.getConnectedUser(HttpContext.Session).Id)))

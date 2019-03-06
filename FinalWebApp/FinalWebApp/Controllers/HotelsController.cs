@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalWebApp.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace FinalWebApp.Controllers
 {
@@ -19,15 +20,22 @@ namespace FinalWebApp.Controllers
         }
 
         // GET: Hotels
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string hotelName)
         {
             if (!Globals.isAdminConnected(HttpContext.Session))
             {
                 return NotFound();
             }
             var myContext = _context.Hotel.Include(h => h.City);
-            return View(await myContext.ToListAsync());
-        }
+			HttpContext.Session.SetString("isUserAdmin", "false");
+
+			if (!String.IsNullOrEmpty(hotelName))
+			{
+				return View(await myContext.Where(x => x.Name.ToUpper().Contains(hotelName)).ToListAsync());
+			}
+
+			return View(await myContext.ToListAsync());
+		}
 
         // GET: Hotels/Details/5
         public async Task<IActionResult> Details(int? id)

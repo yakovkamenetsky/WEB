@@ -7,6 +7,11 @@
 <p>
     <a asp-action="Create" class="btn btn-info">+</a>
 </p>
+<div class="col-centered">
+	<form action="/users/index" id="search-user"></form>
+	<input placeholder="filter by name" name="userName" type="text" form="search-user"/>
+	<button class="btn btn-info" type="submit" form="search-user" hidden>search</button>
+</div>
 <table class="table table-info table-striped">
     <thead class="thead-light">
         <tr>
