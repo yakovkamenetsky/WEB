@@ -309,4 +309,6 @@ footer {
 }
 #ok-order{
     float: right;
+    padding-right:3rem;
+    padding-left:3rem;
 }

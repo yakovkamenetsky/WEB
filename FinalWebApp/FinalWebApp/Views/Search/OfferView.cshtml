@@ -17,8 +17,21 @@
 
 
 <div class="container ">
-
     <div class="offer">
+        <div class="container row">
+            <div class="col-md-9">
+                <h1>
+                    @Model.Name
+                </h1>
+                <h4>
+                    @Model.Address
+                </h4>
+            </div>
+            <div class="col-md-3">
+                <button onclick="goBack()" class="input btn btn-danger back-button">back</button>
+                <input class="input btn btn-warning order-now-button" type="submit" value="Order now" form="orderNow" />
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-4 hotel-image">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -29,7 +42,7 @@
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="~/images/HotelsImages/@Model.Id/image1.jpg" class="d-block w-100">
+                            <img src="~/images/HotelsImages/@Model.Id/image1.jpg" class="d-block ">
                         </div>
                         <div class="carousel-item">
                             <img src="~/images/HotelsImages/@Model.Id/image2.jpg" class="d-block w-100">
@@ -48,19 +61,18 @@
                     </a>
                 </div>
                 <div class="order-button">
-                    <button onclick="goBack()" class="btn btn-danger back-button">back</button>
-					<form action="/Orders/Confirm" method="post" id="orderNow">
-						<input class="btn btn-warning order-now-button" type="submit" value="Order now" form="orderNow" />
-						<input name="CheckInDate" value="@Model.Checkin" hidden form="orderNow" />
-						<input name="CheckOutDate" value="@Model.Checkout" hidden form="orderNow" />
-						<input name="isAi" value="@Model.isAiSearch.ToString()" hidden form="orderNow" />
-						<input value="@Model.userAge" name="userAge" form="orderNow" hidden />
-						<input value="@Model.userGender" name="userGender" form="orderNow" hidden />
-						<input value="@Model.userFamilyStatus" name="userFamilyStatus" form="orderNow" hidden />
-						<input value="@Model.userHobby" name="userHobby" form="orderNow" hidden />
-						<input value="@Model.userPurpose" name="userPurpose" form="orderNow" hidden />
-						<input name="HotelId" value="@Model.Id" hidden form="orderNow" />
-					</form>
+
+                    <form action="/Orders/Confirm" method="post" id="orderNow">
+                        <input name="CheckInDate" value="@Model.Checkin" hidden form="orderNow" />
+                        <input name="CheckOutDate" value="@Model.Checkout" hidden form="orderNow" />
+                        <input name="isAi" value="@Model.isAiSearch.ToString()" hidden form="orderNow" />
+                        <input value="@Model.userAge" name="userAge" form="orderNow" hidden />
+                        <input value="@Model.userGender" name="userGender" form="orderNow" hidden />
+                        <input value="@Model.userFamilyStatus" name="userFamilyStatus" form="orderNow" hidden />
+                        <input value="@Model.userHobby" name="userHobby" form="orderNow" hidden />
+                        <input value="@Model.userPurpose" name="userPurpose" form="orderNow" hidden />
+                        <input name="HotelId" value="@Model.Id" hidden form="orderNow" />
+                    </form>
                 </div>
             </div>
 
